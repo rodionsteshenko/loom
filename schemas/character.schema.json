@@ -1,0 +1,426 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "character.schema.json",
+  "title": "Character",
+  "description": "Player character or NPC in a Loom campaign",
+  "type": "object",
+  "required": ["id", "name", "type"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier (e.g., char_abc123)"
+    },
+    "name": {
+      "type": "string",
+      "description": "Character's name"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["player_character", "npc_major", "npc_supporting", "npc_extra"],
+      "description": "Character tier determining detail level"
+    },
+    "player_id": {
+      "type": "string",
+      "description": "ID of controlling player (only for player_character)"
+    },
+
+    "race": {
+      "type": "string",
+      "description": "Species/race (human, elf, dwarf, etc.)"
+    },
+    "class": {
+      "type": "string",
+      "description": "Character class (fighter, wizard, rogue, etc.)"
+    },
+    "subclass": {
+      "type": "string",
+      "description": "Class specialization (Champion, Evocation, Assassin, etc.)"
+    },
+    "level": {
+      "type": "integer",
+      "minimum": 1,
+      "default": 1
+    },
+    "experience_points": {
+      "type": "object",
+      "properties": {
+        "current": { "type": "integer", "default": 0 },
+        "next_level": { "type": "integer", "description": "XP needed for next level" }
+      }
+    },
+    "background": {
+      "type": "string",
+      "description": "D&D background (Soldier, Noble, Criminal, Sage, etc.)"
+    },
+    "alignment": {
+      "type": "string",
+      "enum": [
+        "lawful_good", "neutral_good", "chaotic_good",
+        "lawful_neutral", "true_neutral", "chaotic_neutral",
+        "lawful_evil", "neutral_evil", "chaotic_evil"
+      ]
+    },
+
+    "appearance": {
+      "type": "string",
+      "description": "Physical description"
+    },
+    "height": {
+      "type": "string",
+      "description": "Height (e.g., 5'10\", 178cm)"
+    },
+    "weight": {
+      "type": "string",
+      "description": "Weight (e.g., 170 lbs, 77kg)"
+    },
+    "birthday": {
+      "type": "string",
+      "format": "date",
+      "description": "Birth date (use game calendar; age calculated from current game time)"
+    },
+    "voice": {
+      "type": "string",
+      "description": "How they speak, mannerisms, catchphrases"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "AI-generated portrait URL"
+    },
+
+    "origin": {
+      "type": "string",
+      "description": "Where they're from"
+    },
+    "backstory": {
+      "type": "string",
+      "description": "Brief history (few sentences)"
+    },
+    "parents": {
+      "type": "object",
+      "properties": {
+        "mother": { "type": "string" },
+        "father": { "type": "string" },
+        "notes": { "type": "string", "description": "Relationship status, alive/dead, etc." }
+      }
+    },
+    "siblings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "key_people": {
+      "type": "array",
+      "description": "Important people in their life (mentor, rival, lost love, etc.)",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "role": { "type": "string", "description": "mentor, rival, friend, enemy, etc." },
+          "notes": { "type": "string" },
+          "character_id": { "type": "string", "description": "Link to NPC sheet if created" }
+        }
+      }
+    },
+
+    "stats": {
+      "type": "object",
+      "description": "D&D-style ability scores",
+      "properties": {
+        "strength": { "type": "integer", "minimum": 1, "maximum": 20 },
+        "dexterity": { "type": "integer", "minimum": 1, "maximum": 20 },
+        "constitution": { "type": "integer", "minimum": 1, "maximum": 20 },
+        "intelligence": { "type": "integer", "minimum": 1, "maximum": 20 },
+        "wisdom": { "type": "integer", "minimum": 1, "maximum": 20 },
+        "charisma": { "type": "integer", "minimum": 1, "maximum": 20 }
+      }
+    },
+    "saving_throws": {
+      "type": "object",
+      "description": "Saving throw proficiencies and bonuses",
+      "properties": {
+        "strength": { "type": "object", "properties": { "proficient": { "type": "boolean" }, "bonus": { "type": "integer" } } },
+        "dexterity": { "type": "object", "properties": { "proficient": { "type": "boolean" }, "bonus": { "type": "integer" } } },
+        "constitution": { "type": "object", "properties": { "proficient": { "type": "boolean" }, "bonus": { "type": "integer" } } },
+        "intelligence": { "type": "object", "properties": { "proficient": { "type": "boolean" }, "bonus": { "type": "integer" } } },
+        "wisdom": { "type": "object", "properties": { "proficient": { "type": "boolean" }, "bonus": { "type": "integer" } } },
+        "charisma": { "type": "object", "properties": { "proficient": { "type": "boolean" }, "bonus": { "type": "integer" } } }
+      }
+    },
+    "proficiency_bonus": {
+      "type": "integer",
+      "description": "Level-based bonus to proficient skills/saves"
+    },
+    "armor_class": {
+      "type": "integer",
+      "description": "AC for combat calculations"
+    },
+    "initiative_bonus": {
+      "type": "integer",
+      "description": "Modifier for turn order in combat"
+    },
+    "movement_speed": {
+      "type": "integer",
+      "description": "Movement per turn in feet (e.g., 30)"
+    },
+    "passive_perception": {
+      "type": "integer",
+      "description": "10 + perception modifier; always-on awareness"
+    },
+
+    "skills": {
+      "type": "array",
+      "description": "Skill proficiencies with bonuses",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "proficient": { "type": "boolean" },
+          "expertise": { "type": "boolean", "description": "Double proficiency" },
+          "bonus": { "type": "integer" }
+        }
+      }
+    },
+    "tool_proficiencies": {
+      "type": "array",
+      "description": "Tools the character is proficient with",
+      "items": { "type": "string" }
+    },
+    "weapon_proficiencies": {
+      "type": "array",
+      "description": "Weapon categories (simple, martial, specific weapons)",
+      "items": { "type": "string" }
+    },
+    "armor_proficiencies": {
+      "type": "array",
+      "description": "Armor categories (light, medium, heavy, shields)",
+      "items": { "type": "string" }
+    },
+    "feats": {
+      "type": "array",
+      "description": "Special abilities/feats gained at certain levels",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "description": { "type": "string" }
+        }
+      }
+    },
+    "abilities": {
+      "type": "array",
+      "description": "Special abilities, class features, racial traits",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "uses": { "type": "object", "properties": { "current": { "type": "integer" }, "max": { "type": "integer" } } },
+          "recharge": { "type": "string", "description": "short_rest, long_rest, daily, etc." }
+        }
+      }
+    },
+    "languages": {
+      "type": "array",
+      "description": "Languages the character can speak/read",
+      "items": { "type": "string" }
+    },
+
+    "hp": {
+      "type": "object",
+      "properties": {
+        "current": { "type": "integer" },
+        "max": { "type": "integer" },
+        "temp": { "type": "integer", "description": "Temporary HP" }
+      }
+    },
+    "hit_dice": {
+      "type": "object",
+      "description": "Dice for healing during rests",
+      "properties": {
+        "die_type": { "type": "string", "description": "d6, d8, d10, d12" },
+        "current": { "type": "integer" },
+        "max": { "type": "integer" }
+      }
+    },
+    "death_saves": {
+      "type": "object",
+      "description": "Tracking when at 0 HP",
+      "properties": {
+        "successes": { "type": "integer", "minimum": 0, "maximum": 3 },
+        "failures": { "type": "integer", "minimum": 0, "maximum": 3 }
+      }
+    },
+    "exhaustion_level": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 6,
+      "default": 0,
+      "description": "0 = none, 1-5 = increasing penalties, 6 = death"
+    },
+    "resistances": {
+      "type": "array",
+      "description": "Damage types that deal half damage",
+      "items": { "type": "string" }
+    },
+    "immunities": {
+      "type": "array",
+      "description": "Damage types or conditions that have no effect",
+      "items": { "type": "string" }
+    },
+    "vulnerabilities": {
+      "type": "array",
+      "description": "Damage types that deal double damage",
+      "items": { "type": "string" }
+    },
+
+    "mana": {
+      "type": "object",
+      "description": "Magic resource pool (for spellcasters)",
+      "properties": {
+        "current": { "type": "integer" },
+        "max": { "type": "integer" }
+      }
+    },
+    "spell_slots": {
+      "type": "object",
+      "description": "D&D-style spell slots by level",
+      "properties": {
+        "level_1": { "type": "object", "properties": { "current": { "type": "integer" }, "max": { "type": "integer" } } },
+        "level_2": { "type": "object", "properties": { "current": { "type": "integer" }, "max": { "type": "integer" } } },
+        "level_3": { "type": "object", "properties": { "current": { "type": "integer" }, "max": { "type": "integer" } } },
+        "level_4": { "type": "object", "properties": { "current": { "type": "integer" }, "max": { "type": "integer" } } },
+        "level_5": { "type": "object", "properties": { "current": { "type": "integer" }, "max": { "type": "integer" } } },
+        "level_6": { "type": "object", "properties": { "current": { "type": "integer" }, "max": { "type": "integer" } } },
+        "level_7": { "type": "object", "properties": { "current": { "type": "integer" }, "max": { "type": "integer" } } },
+        "level_8": { "type": "object", "properties": { "current": { "type": "integer" }, "max": { "type": "integer" } } },
+        "level_9": { "type": "object", "properties": { "current": { "type": "integer" }, "max": { "type": "integer" } } }
+      }
+    },
+    "spells_known": {
+      "type": "array",
+      "description": "Spells the character has learned",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "level": { "type": "integer", "minimum": 0, "description": "0 for cantrips" },
+          "school": { "type": "string" },
+          "prepared": { "type": "boolean" }
+        }
+      }
+    },
+    "inspiration": {
+      "type": "boolean",
+      "description": "Has inspiration point for advantage",
+      "default": false
+    },
+
+    "carrying_capacity": {
+      "type": "object",
+      "properties": {
+        "current_weight": { "type": "number", "description": "Current carried weight in lbs" },
+        "max_weight": { "type": "number", "description": "STR x 15 typically" }
+      }
+    },
+    "inventory": {
+      "type": "array",
+      "description": "Items carried (including currency)",
+      "items": {
+        "type": "object",
+        "properties": {
+          "item_id": { "type": "string" },
+          "name": { "type": "string" },
+          "quantity": { "type": "integer", "default": 1 },
+          "weight": { "type": "number", "description": "Weight per item in lbs" },
+          "equipped": { "type": "boolean", "default": false },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "ailments": {
+      "type": "array",
+      "description": "Current conditions (poisoned, cursed, exhausted, etc.)",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "severity": { "type": "string", "enum": ["mild", "moderate", "severe"] },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "knowledge": {
+      "type": "array",
+      "description": "Things the character knows (secrets learned, locations discovered, etc.)",
+      "items": { "type": "string" }
+    },
+    "current_location": {
+      "type": "string",
+      "description": "Location ID where character currently is"
+    },
+
+    "personality": {
+      "type": "object",
+      "description": "Personality profile (evolves during play)",
+      "properties": {
+        "traits": {
+          "type": "array",
+          "description": "e.g., brave, cautious, curious, stubborn",
+          "items": { "type": "string" }
+        },
+        "values": {
+          "type": "array",
+          "description": "e.g., loyalty, freedom, knowledge, family",
+          "items": { "type": "string" }
+        },
+        "flaws": {
+          "type": "array",
+          "description": "e.g., hot-tempered, greedy, naive, prideful",
+          "items": { "type": "string" }
+        }
+      }
+    },
+
+    "relationships": {
+      "type": "array",
+      "description": "Relationships with other characters",
+      "items": {
+        "type": "object",
+        "properties": {
+          "character_id": { "type": "string" },
+          "type": { "type": "string", "description": "friend, enemy, romantic, neutral, etc." },
+          "trust_level": { "type": "integer", "minimum": -10, "maximum": 10 },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+
+    "motivation": {
+      "type": "string",
+      "description": "What do they want? (especially for NPCs)"
+    },
+    "secrets": {
+      "type": "array",
+      "description": "Hidden information (for NPCs, hidden from players)",
+      "items": { "type": "string" }
+    },
+
+    "is_alive": {
+      "type": "boolean",
+      "default": true
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}
