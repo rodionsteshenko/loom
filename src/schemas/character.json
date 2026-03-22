@@ -1,0 +1,437 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "loom-character-schema",
+  "title": "Loom Character",
+  "description": "Character schema for Loom D&D game system (72 fields)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "name",
+    "type",
+    "physical_description",
+    "backstory",
+    "stats",
+    "race",
+    "class",
+    "level",
+    "alignment"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier (auto-generated if not provided)"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Character name"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["pc", "npc"],
+      "description": "Player character or non-player character"
+    },
+    "player_id": {
+      "type": ["string", "null"],
+      "description": "Player who controls this character (null for NPCs)"
+    },
+
+    "physical_description": {
+      "type": "string",
+      "minLength": 200,
+      "description": "Detailed physical appearance for image generation. 2-4 paragraphs."
+    },
+    "height": {
+      "type": "string",
+      "description": "e.g., '5\\'10\"' or 'tall'"
+    },
+    "weight": {
+      "type": "string",
+      "description": "e.g., '180 lbs' or 'stocky build'"
+    },
+    "image_url": {
+      "type": ["string", "null"],
+      "description": "Generated portrait URL"
+    },
+    "art_style": {
+      "type": ["string", "null"],
+      "description": "Art style for portrait generation (e.g., 'classic fantasy', 'anime', 'dark souls', 'watercolor', 'oil painting', 'comic book', 'realistic', 'pixel art') or custom prompt"
+    },
+
+    "voice": {
+      "type": "string",
+      "minLength": 100,
+      "description": "How they sound, speech patterns, accent, vocabulary"
+    },
+    "mannerisms": {
+      "type": "string",
+      "minLength": 100,
+      "description": "Physical habits, gestures, body language"
+    },
+
+    "origin": {
+      "type": "string",
+      "description": "Where they're from (place name)"
+    },
+    "backstory": {
+      "type": "string",
+      "minLength": 300,
+      "description": "Full history. 3-6 paragraphs minimum."
+    },
+    "childhood": {
+      "type": "string",
+      "minLength": 150,
+      "description": "Early years, family dynamics, formative experiences"
+    },
+    "parents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "relationship": { "type": "string" },
+          "alive": { "type": "boolean" },
+          "notes": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "siblings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "relationship": { "type": "string" },
+          "alive": { "type": "boolean" },
+          "notes": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "key_people": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "relationship": { "type": "string" },
+          "role_in_life": { "type": "string" },
+          "alive": { "type": "boolean" },
+          "notes": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+
+    "motivation": {
+      "type": "string",
+      "minLength": 100,
+      "description": "What drives them"
+    },
+    "want": {
+      "type": "string",
+      "description": "External goal they're actively pursuing"
+    },
+    "need": {
+      "type": "string",
+      "description": "Internal need for fulfillment (often conflicts with want)"
+    },
+    "wound": {
+      "type": "string",
+      "minLength": 100,
+      "description": "Past trauma that shapes current behavior"
+    },
+    "lie_they_believe": {
+      "type": "string",
+      "description": "False belief about self or world"
+    },
+    "fear": {
+      "type": "string",
+      "description": "Deepest fear"
+    },
+    "arc_direction": {
+      "type": "string",
+      "enum": ["positive", "negative", "flat", "ambiguous"],
+      "description": "Character arc direction"
+    },
+
+    "traits": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Personality traits"
+    },
+    "values": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "What they care about deeply"
+    },
+    "flaws": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Weaknesses, vices, blind spots"
+    },
+    "secrets": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Things they hide"
+    },
+    "archetype": {
+      "type": "string",
+      "enum": [
+        "Innocent", "Orphan", "Hero", "Caregiver", "Explorer",
+        "Rebel", "Lover", "Creator", "Jester", "Sage", "Magician", "Ruler"
+      ],
+      "description": "Jungian archetype"
+    },
+
+    "stats": {
+      "type": "object",
+      "required": ["STR", "DEX", "CON", "INT", "WIS", "CHA"],
+      "properties": {
+        "STR": { "type": "integer", "minimum": 1, "maximum": 30 },
+        "DEX": { "type": "integer", "minimum": 1, "maximum": 30 },
+        "CON": { "type": "integer", "minimum": 1, "maximum": 30 },
+        "INT": { "type": "integer", "minimum": 1, "maximum": 30 },
+        "WIS": { "type": "integer", "minimum": 1, "maximum": 30 },
+        "CHA": { "type": "integer", "minimum": 1, "maximum": 30 }
+      },
+      "additionalProperties": false
+    },
+    "race": {
+      "type": "string",
+      "description": "Species/ancestry"
+    },
+    "class": {
+      "type": "string",
+      "description": "Fighter, Wizard, Rogue, etc."
+    },
+    "subclass": {
+      "type": "string",
+      "description": "Champion, Evocation, Assassin, etc."
+    },
+    "level": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 20,
+      "default": 1
+    },
+    "experience_points": {
+      "type": "integer",
+      "minimum": 0,
+      "default": 0
+    },
+    "background": {
+      "type": "string",
+      "description": "D&D background: Soldier, Noble, Criminal, etc."
+    },
+    "alignment": {
+      "type": "string",
+      "enum": [
+        "lawful_good", "neutral_good", "chaotic_good",
+        "lawful_neutral", "true_neutral", "chaotic_neutral",
+        "lawful_evil", "neutral_evil", "chaotic_evil"
+      ]
+    },
+    "birthday": {
+      "type": "string",
+      "format": "date",
+      "description": "For calculating age from game time"
+    },
+    "languages": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Languages spoken/read"
+    },
+
+    "skills": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Proficient skills"
+    },
+    "tool_proficiencies": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "weapon_proficiencies": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "armor_proficiencies": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "feats": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+
+    "hp": {
+      "type": "object",
+      "required": ["current", "max"],
+      "properties": {
+        "current": { "type": "integer", "minimum": 0 },
+        "max": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": false
+    },
+    "temp_hp": {
+      "type": "integer",
+      "minimum": 0,
+      "default": 0
+    },
+    "armor_class": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "movement_speed": {
+      "type": "integer",
+      "minimum": 0,
+      "default": 30
+    },
+    "initiative_bonus": {
+      "type": "integer"
+    },
+    "saving_throws": {
+      "type": "object",
+      "properties": {
+        "STR": { "type": "integer" },
+        "DEX": { "type": "integer" },
+        "CON": { "type": "integer" },
+        "INT": { "type": "integer" },
+        "WIS": { "type": "integer" },
+        "CHA": { "type": "integer" }
+      },
+      "additionalProperties": false
+    },
+    "hit_dice": {
+      "type": "object",
+      "properties": {
+        "type": { "type": "string", "pattern": "^d[0-9]+$" },
+        "current": { "type": "integer", "minimum": 0 },
+        "max": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": false
+    },
+    "death_saves": {
+      "type": "object",
+      "properties": {
+        "successes": { "type": "integer", "minimum": 0, "maximum": 3 },
+        "failures": { "type": "integer", "minimum": 0, "maximum": 3 }
+      },
+      "additionalProperties": false
+    },
+    "inspiration": {
+      "type": "boolean",
+      "default": false
+    },
+    "resistances": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "immunities": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "vulnerabilities": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+
+    "spell_slots": {
+      "type": "object",
+      "description": "Spell slots by level, each { current, max }",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "current": { "type": "integer", "minimum": 0 },
+          "max": { "type": "integer", "minimum": 0 }
+        }
+      }
+    },
+    "mana": {
+      "type": "object",
+      "properties": {
+        "current": { "type": "integer", "minimum": 0 },
+        "max": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "spells_known": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+
+    "currency": {
+      "type": "object",
+      "properties": {
+        "gp": { "type": "integer", "minimum": 0, "default": 0 },
+        "sp": { "type": "integer", "minimum": 0, "default": 0 },
+        "cp": { "type": "integer", "minimum": 0, "default": 0 }
+      },
+      "additionalProperties": false
+    },
+    "inventory": {
+      "type": "array",
+      "items": { "type": "object" },
+      "description": "Items carried (see inventory schema)"
+    },
+
+    "ailments": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "exhaustion_level": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 6,
+      "default": 0
+    },
+    "knowledge": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "current_location": {
+      "type": "string"
+    },
+    "abilities": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Special abilities, class features, racial traits"
+    },
+
+    "relationships": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "character_id": { "type": "string" },
+          "name": { "type": "string" },
+          "type": { "type": "string" },
+          "description": { "type": "string" },
+          "trust_level": { "type": "integer", "minimum": 1, "maximum": 10 },
+          "notes": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "reputation": {
+      "type": "object",
+      "additionalProperties": { "type": "integer" },
+      "description": "Faction name -> reputation level"
+    },
+
+    "is_alive": {
+      "type": "boolean",
+      "default": true
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

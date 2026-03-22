@@ -1,0 +1,189 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Loom Session",
+  "description": "Schema for a single game session in Loom",
+  "type": "object",
+  "required": ["id", "campaign_id", "sequence"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique session identifier",
+      "pattern": "^[a-f0-9]{8}$"
+    },
+    "campaign_id": {
+      "type": "string",
+      "description": "Parent campaign ID"
+    },
+    "sequence": {
+      "type": "integer",
+      "description": "Session number within campaign",
+      "minimum": 1
+    },
+    "content": {
+      "type": ["object", "null"],
+      "description": "Generated session content",
+      "properties": {
+        "narrative": {
+          "type": "string",
+          "description": "The story text for this session",
+          "minLength": 100
+        },
+        "setting": {
+          "type": "string",
+          "description": "Current location/scene description"
+        },
+        "npcs_present": {
+          "type": "array",
+          "description": "NPCs in this scene",
+          "items": { "type": "string" }
+        },
+        "plot_beat": {
+          "type": ["string", "null"],
+          "description": "Key story moment if any"
+        },
+        "choices": {
+          "type": "array",
+          "description": "Player choices (exactly 4)",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "type": "object",
+            "required": ["id", "text", "dc"],
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 4
+              },
+              "text": {
+                "type": "string",
+                "description": "Short action text player sees",
+                "minLength": 5,
+                "maxLength": 100
+              },
+              "description": {
+                "type": "string",
+                "description": "What this choice entails"
+              },
+              "skill": {
+                "type": ["string", "null"],
+                "description": "Skill check required",
+                "enum": [
+                  null,
+                  "Athletics",
+                  "Acrobatics",
+                  "Sleight of Hand",
+                  "Stealth",
+                  "Arcana",
+                  "History",
+                  "Investigation",
+                  "Nature",
+                  "Religion",
+                  "Animal Handling",
+                  "Insight",
+                  "Medicine",
+                  "Perception",
+                  "Survival",
+                  "Deception",
+                  "Intimidation",
+                  "Performance",
+                  "Persuasion"
+                ]
+              },
+              "ability": {
+                "type": ["string", "null"],
+                "description": "Raw ability check if no skill",
+                "enum": [null, "STR", "DEX", "CON", "INT", "WIS", "CHA"]
+              },
+              "difficulty": {
+                "type": "string",
+                "enum": ["trivial", "easy", "medium", "hard", "extreme"],
+                "default": "medium"
+              },
+              "dc": {
+                "type": "integer",
+                "description": "Difficulty class",
+                "minimum": 1,
+                "maximum": 30
+              }
+            }
+          }
+        }
+      }
+    },
+    "state": {
+      "type": "string",
+      "enum": ["narrative", "choices", "rolling", "outcome", "complete"],
+      "default": "narrative"
+    },
+    "chosen_option": {
+      "type": ["integer", "null"],
+      "description": "Which choice the player made (1-4)",
+      "minimum": 1,
+      "maximum": 4
+    },
+    "roll_result": {
+      "type": ["object", "null"],
+      "description": "Result of the dice roll",
+      "properties": {
+        "natural_roll": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 20
+        },
+        "modifier": {
+          "type": "integer"
+        },
+        "total": {
+          "type": "integer"
+        },
+        "dc": {
+          "type": "integer"
+        },
+        "outcome": {
+          "type": "string",
+          "enum": [
+            "critical_success",
+            "success",
+            "partial_success",
+            "failure",
+            "critical_failure"
+          ]
+        },
+        "margin": {
+          "type": "integer",
+          "description": "How much above/below DC"
+        },
+        "auto_resolved": {
+          "type": "boolean"
+        },
+        "skill": {
+          "type": ["string", "null"]
+        },
+        "ability": {
+          "type": ["string", "null"]
+        },
+        "is_critical": {
+          "type": "boolean"
+        }
+      }
+    },
+    "outcome_narrative": {
+      "type": ["string", "null"],
+      "description": "AI-generated outcome text"
+    },
+    "summary": {
+      "type": ["string", "null"],
+      "description": "Brief summary for context"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": false
+}

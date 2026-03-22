@@ -1,0 +1,132 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Loom Campaign",
+  "description": "Schema for a Loom RPG campaign",
+  "type": "object",
+  "required": ["id", "name", "world", "premise", "character_id"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique campaign identifier",
+      "pattern": "^[a-f0-9]{8}$"
+    },
+    "name": {
+      "type": "string",
+      "description": "Campaign title",
+      "minLength": 1,
+      "maxLength": 100
+    },
+    "world": {
+      "type": "string",
+      "description": "World/setting description",
+      "minLength": 10,
+      "maxLength": 2000
+    },
+    "premise": {
+      "type": "string",
+      "description": "Story premise and hook",
+      "minLength": 10,
+      "maxLength": 2000
+    },
+    "character_id": {
+      "type": "string",
+      "description": "ID of the player character"
+    },
+    "sessions": {
+      "type": "array",
+      "description": "List of session IDs in order",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "current_session": {
+      "type": ["string", "null"],
+      "description": "ID of the current/active session"
+    },
+    "state": {
+      "type": "object",
+      "description": "Persistent world state",
+      "properties": {
+        "known_npcs": {
+          "type": "array",
+          "description": "NPCs the player has met",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "relationship": { "type": "string" },
+              "last_seen": { "type": "string" },
+              "notes": { "type": "string" }
+            }
+          }
+        },
+        "visited_locations": {
+          "type": "array",
+          "description": "Places the player has been",
+          "items": { "type": "string" }
+        },
+        "plot_flags": {
+          "type": "object",
+          "description": "Story flags for branching",
+          "additionalProperties": { "type": "boolean" }
+        },
+        "inventory_changes": {
+          "type": "array",
+          "description": "Items gained/lost during play",
+          "items": {
+            "type": "object",
+            "properties": {
+              "item": { "type": "string" },
+              "action": { "enum": ["gained", "lost", "used"] },
+              "session_id": { "type": "string" }
+            }
+          }
+        },
+        "current_location": {
+          "type": "string",
+          "description": "Where the player currently is"
+        },
+        "current_objective": {
+          "type": "string",
+          "description": "Current story goal"
+        }
+      },
+      "default": {}
+    },
+    "plot_beats": {
+      "type": "array",
+      "description": "Key story moments to hit",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "triggered": { "type": "boolean" },
+          "session_id": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "tags": {
+      "type": "array",
+      "description": "Genre/theme tags",
+      "items": { "type": "string" }
+    },
+    "difficulty_preference": {
+      "type": "string",
+      "enum": ["easy", "normal", "hard", "brutal"],
+      "default": "normal",
+      "description": "Overall difficulty preference"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": false
+}

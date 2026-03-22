@@ -1,31 +1,62 @@
-# Loom
+# Loom 🎲
 
-An AI-powered narrative adventure game. Choose your own adventure meets D&D, with multiplayer turn-based gameplay and AI-generated visuals.
-
-## Core Concept
-
-- **Narrative-first**: Focus on storytelling, not difficulty
-- **AI DM**: Runs the campaign, generates scenes, adapts to player choices
-- **Multiplayer**: Turn-based with time limits, no blocking
-- **Visual**: AI-generated images for scenes and characters
-- **Time-aware**: Variable time scaling (bullet time for combat, fast-forward for travel)
-
-## Game Flow
-
-1. **Character Creation** — Define your character(s)
-2. **Campaign Creation** — AI builds the skeleton (hidden from players): NPCs, locations, items, events, goals
-3. **Session Play** — Present choices → validate → roll if needed → resolve → advance time → update state
+A narrative-focused D&D game system with AI-powered character creation.
 
 ## Project Structure
 
 ```
 loom/
-├── docs/           # Design documents
-├── schemas/        # JSON schemas for game data
-├── src/            # Source code
-└── campaigns/      # Sample campaigns
+├── docs/
+│   ├── CHARACTER_SCHEMA.md    # 75-field character schema
+│   ├── CHARACTER_CREATOR.md   # Character generator design
+│   ├── INVENTORY_SYSTEM.md    # Inventory schema & loader
+│   ├── DESIGN_NOTES.md        # Design decisions
+│   └── GAME_RULES.md          # Game mechanics (TBD)
+├── src/
+│   ├── cli/                   # Command-line tools
+│   │   ├── create_character.py
+│   │   ├── validate_character.py
+│   │   └── create_inventory.py
+│   ├── validators/            # Validation logic
+│   │   ├── character_validator.py
+│   │   └── inventory_validator.py
+│   ├── schemas/               # JSON schemas
+│   │   ├── character.json
+│   │   └── inventory_item.json
+│   └── web/                   # Frontend (Phase 2)
+├── characters/                # Generated characters
+└── tests/
 ```
 
-## Status
+## Roadmap
 
-🚧 In design phase
+### Phase 1: Character Creator CLI ← CURRENT
+- [ ] Character validator (schema compliance, prose minimums, no extra fields)
+- [ ] `loom create-character <prompt>` using Claude subprocess
+- [ ] Portrait generation via nano-banana-pro
+- [ ] JSON output
+
+### Phase 2: Inventory System
+- [ ] Inventory item schema
+- [ ] Inventory validator
+- [ ] Initial inventory creator (from character)
+- [ ] Inventory loader (session prep)
+
+### Phase 3: Web Frontend
+- [ ] Character creation UI with dropdowns
+- [ ] Prompt + inspiration field
+- [ ] Preview panel
+- [ ] Portrait preview with regenerate
+
+### Phase 4: Game Engine (TBD)
+- [ ] Session management
+- [ ] AI DM
+- [ ] Combat resolution
+- [ ] World state tracking
+
+## Philosophy
+
+- **Mechanical foundation** — Full D&D 5e stat support
+- **Narrative depth** — Writer's toolkit (want/need, wound, lie, arc)
+- **Prose sections** — Rich descriptions for storytelling + image gen
+- **AI-native** — Built to work with Claude as co-creator and DM

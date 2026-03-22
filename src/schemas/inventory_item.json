@@ -1,0 +1,111 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "loom-inventory-item-schema",
+  "title": "Loom Inventory Item",
+  "description": "Schema for individual inventory items",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "name", "type", "weight", "quantity"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Item name"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["weapon", "armor", "consumable", "tool", "gear", "treasure", "wondrous", "quest"],
+      "description": "Item category"
+    },
+    "subtype": {
+      "type": "string",
+      "description": "More specific category (e.g., 'martial melee', 'light armor')"
+    },
+    "description": {
+      "type": "string",
+      "description": "Flavor text and appearance"
+    },
+    "weight": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Weight in pounds"
+    },
+    "value": {
+      "type": "object",
+      "properties": {
+        "gp": { "type": "integer", "minimum": 0, "default": 0 },
+        "sp": { "type": "integer", "minimum": 0, "default": 0 },
+        "cp": { "type": "integer", "minimum": 0, "default": 0 }
+      },
+      "additionalProperties": false
+    },
+    "quantity": {
+      "type": "integer",
+      "minimum": 1,
+      "default": 1
+    },
+    "equipped": {
+      "type": "boolean",
+      "default": false
+    },
+    "attunement": {
+      "type": "object",
+      "properties": {
+        "required": { "type": "boolean", "default": false },
+        "attuned": { "type": "boolean", "default": false }
+      },
+      "additionalProperties": false
+    },
+    "magical": {
+      "type": "boolean",
+      "default": false
+    },
+    "rarity": {
+      "type": "string",
+      "enum": ["common", "uncommon", "rare", "very_rare", "legendary", "artifact"],
+      "default": "common"
+    },
+    "properties": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Weapon/armor properties (versatile, finesse, heavy, etc.)"
+    },
+    "damage": {
+      "type": "object",
+      "properties": {
+        "dice": { "type": "string", "pattern": "^\\d+d\\d+$" },
+        "type": { "type": "string" },
+        "versatile_dice": { "type": "string", "pattern": "^\\d+d\\d+$" },
+        "bonus": { "type": "integer" }
+      },
+      "additionalProperties": false
+    },
+    "armor_class": {
+      "type": "object",
+      "properties": {
+        "base": { "type": "integer" },
+        "dex_bonus": { "type": "boolean" },
+        "max_dex": { "type": ["integer", "null"] },
+        "bonus": { "type": "integer" }
+      },
+      "additionalProperties": false
+    },
+    "charges": {
+      "type": "object",
+      "properties": {
+        "current": { "type": "integer", "minimum": 0 },
+        "max": { "type": "integer", "minimum": 0 },
+        "recharge": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "notes": {
+      "type": "string",
+      "description": "Character-specific notes about the item"
+    }
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "total_pages": 40,
+  "categories": [
+    "regions",
+    "cities",
+    "factions",
+    "deities",
+    "races_cultures",
+    "history"
+  ],
+  "pages_by_category": {
+    "regions": [
+      "Sword_Coast",
+      "Western_Heartlands",
+      "North_(region)",
+      "Amn",
+      "Cormyr",
+      "Dalelands"
+    ],
+    "cities": [
+      "Baldur's_Gate",
+      "Waterdeep",
+      "Neverwinter",
+      "Luskan",
+      "Candlekeep",
+      "Athkatla",
+      "Silverymoon",
+      "Mithral_Hall",
+      "Menzoberranzan",
+      "Elturel"
+    ],
+    "factions": [
+      "Harpers",
+      "Zhentarim",
+      "Lords'_Alliance",
+      "Emerald_Enclave",
+      "Order_of_the_Gauntlet",
+      "Cult_of_the_Dragon",
+      "Red_Wizards_of_Thay",
+      "Flaming_Fist"
+    ],
+    "deities": [
+      "Faer\u00fbnian_pantheon",
+      "Tyr",
+      "Mystra",
+      "Sel\u00fbne",
+      "Lathander",
+      "Tempus",
+      "Kelemvor",
+      "Bane_(deity)",
+      "Cyric",
+      "Shar",
+      "Mask_(deity)"
+    ],
+    "races_cultures": [
+      "Elves",
+      "Dwarves",
+      "Halflings",
+      "Dragonborn",
+      "Tieflings",
+      "Drow"
+    ],
+    "history": [
+      "Time_of_Troubles",
+      "Spellplague",
+      "Sundering"
+    ]
+  }
+}
