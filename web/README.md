@@ -1,73 +1,64 @@
-# React + TypeScript + Vite
+# Loom Web App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React frontend + Express backend for the Loom D&D adventure game.
 
-Currently, two official plugins are available:
+## Setup
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+cd server && npm install && cd ..
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Development
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+npm run dev
+```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Runs both frontend (Vite, port 5180) and backend (Express, port 3001) concurrently.
+
+## Frontend (`src/`)
+
+React + Vite + Tailwind CSS.
+
+- `src/pages/` — CharacterGallery, CharacterDetail, CampaignManager, CampaignSettings, GamePlay
+- `src/components/` — CharacterForm, CharacterPreview, PortraitPreview
+- `src/types.ts` — Shared TypeScript interfaces (Character, Session, Campaign, Choice, RollResult)
+- `src/constants/artStyles.ts` — Art style options for image generation
+
+## Backend (`server/`)
+
+Express + OpenAI Agents SDK. Pure TypeScript, no Python.
+
+- `server/index.ts` — API routes
+- `server/pipeline/` — Structured session and choice resolution pipelines
+- `server/agents/` — OpenAI Agents SDK agents and tools
+- `server/utils.ts` — JSON extraction, campaign/character lookup, env validation
+- `server/types.ts` — Re-exports frontend types + server-only types
+
+### API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/characters` | List all characters |
+| POST | `/api/generate` | Generate a new character |
+| POST | `/api/generate-portrait` | Generate a character portrait |
+| POST | `/api/validate` | Validate character JSON |
+| POST | `/api/generate-inventory` | Generate starting inventory |
+| GET | `/api/campaigns` | List all campaigns |
+| GET | `/api/campaigns/:id` | Get campaign with current session |
+| POST | `/api/campaigns` | Create a new campaign |
+| PATCH | `/api/campaigns/:id/settings` | Update campaign settings |
+| GET | `/api/campaigns/:id/sessions` | List campaign sessions |
+| POST | `/api/campaigns/:id/session` | Start a new session |
+| POST | `/api/campaigns/:id/choice` | Make a choice in current session |
+
+### Environment Variables
+
+Create `server/.env`:
+
+```
+OPENAI_API_KEY=sk-...
+OPENAI_MODEL=gpt-5.4-mini
+GEMINI_API_KEY=...
 ```

@@ -11,6 +11,7 @@ export interface Character {
   id: string
   name: string
   type: 'pc' | 'npc'
+  world_id?: string
   race: string
   class: string
   subclass?: string
@@ -111,6 +112,112 @@ export const ARCHETYPES = [
   'Rebel', 'Lover', 'Creator', 'Jester', 'Sage', 'Magician', 'Ruler'
 ]
 
+// ─── World types ───
+
+export interface WorldOverview {
+  tone: string
+  genre: string
+  era: string
+  description: string
+  themes: string[]
+}
+
+export interface WorldTimelineEvent {
+  era: string
+  name: string
+  year_label: string
+  description: string
+  impact: string
+}
+
+export interface WorldHistory {
+  creation_myth: string
+  timeline: WorldTimelineEvent[]
+}
+
+export interface WorldRegion {
+  id: string
+  name: string
+  type: string
+  description: string
+  notable_features: string[]
+  connections: string[]
+  controlling_faction?: string
+}
+
+export interface WorldGeography {
+  overview: string
+  regions: WorldRegion[]
+}
+
+export interface WorldFaction {
+  id: string
+  name: string
+  type: string
+  description: string
+  goals: string
+  methods: string
+  leader: string
+  allies: string[]
+  enemies: string[]
+  territory?: string
+}
+
+export interface WorldDeity {
+  name: string
+  domain: string
+  description: string
+  followers: string
+  symbol: string
+}
+
+export interface WorldReligion {
+  overview: string
+  deities_or_forces: WorldDeity[]
+}
+
+export interface WorldKeyFigure {
+  name: string
+  title: string
+  description: string
+  role: string
+  faction_id?: string
+  alive: boolean
+  location?: string
+}
+
+export interface WorldConceptImage {
+  type: 'landscape' | 'city' | 'landmark'
+  subject: string
+  url: string
+  prompt: string
+}
+
+export interface World {
+  id: string
+  name: string
+  tagline: string
+  status: 'generating' | 'draft' | 'validated' | 'active'
+  art_style: string
+  overview: WorldOverview
+  history: WorldHistory
+  geography: WorldGeography
+  factions: WorldFaction[]
+  religion: WorldReligion
+  key_figures: WorldKeyFigure[]
+  concept_images: WorldConceptImage[]
+  created_at: string
+  updated_at: string
+}
+
+export type WorldSection = 'overview' | 'history' | 'geography' | 'factions' | 'religion' | 'key_figures'
+
+export interface CoherenceIssue {
+  severity: 'error' | 'warning' | 'suggestion'
+  message: string
+  sections: string[]
+}
+
 // Game types
 
 export interface Choice {
@@ -171,6 +278,7 @@ export interface Campaign {
   id: string
   name: string
   world: string
+  world_id?: string
   premise: string
   character_id: string  // Primary/active character (backward compat)
   party: string[]       // All party members (for multiplayer)

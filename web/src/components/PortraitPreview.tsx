@@ -18,21 +18,19 @@ export default function PortraitPreview({ imageUrl, name, onRegenerate, isGenera
         ) : (
           <div className="h-48 flex items-center justify-center text-gray-600">
             <div className="text-center">
-              <div className="text-6xl mb-2">🖼️</div>
-              <p className="text-sm">Portrait generating...</p>
+              <div className="text-6xl mb-2">{isGenerating ? '⏳' : '🖼️'}</div>
+              <p className="text-sm">{isGenerating ? 'Generating portrait...' : 'No portrait yet'}</p>
             </div>
           </div>
         )}
         
-        {imageUrl && (
-          <button
-            onClick={onRegenerate}
-            disabled={isGenerating}
-            className="absolute bottom-3 right-3 px-3 py-2 bg-black/70 hover:bg-black/90 disabled:opacity-50 text-white text-sm rounded-lg backdrop-blur transition-colors flex items-center gap-2"
-          >
-            🔄 Regenerate
-          </button>
-        )}
+        <button
+          onClick={onRegenerate}
+          disabled={isGenerating}
+          className={`${imageUrl ? 'absolute bottom-3 right-3' : 'mt-3'} px-3 py-2 bg-black/70 hover:bg-black/90 disabled:opacity-50 text-white text-sm rounded-lg backdrop-blur transition-colors flex items-center gap-2 mx-auto`}
+        >
+          {isGenerating ? '⏳ Generating...' : imageUrl ? '🔄 Regenerate' : '🎨 Generate Portrait'}
+        </button>
       </div>
     </div>
   )

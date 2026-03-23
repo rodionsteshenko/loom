@@ -3,6 +3,9 @@ import { useState } from 'react'
 import CharacterForm from './components/CharacterForm'
 import CharacterPreview from './components/CharacterPreview'
 import PortraitPreview from './components/PortraitPreview'
+import Landing from './pages/Landing'
+import WorldBuilder from './pages/WorldBuilder'
+import WorldDetail from './pages/WorldDetail'
 import CharacterGallery from './pages/CharacterGallery'
 import CharacterDetail from './pages/CharacterDetail'
 import CampaignManager from './pages/CampaignManager'
@@ -136,7 +139,10 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<CharacterCreator />} />
+        <Route path="/" element={<Landing />} />
+        <Route path="/worlds/new" element={<WorldBuilder />} />
+        <Route path="/worlds/:worldId" element={<WorldDetail />} />
+        <Route path="/characters/new" element={<CharacterCreator />} />
         <Route path="/characters" element={<CharacterGallery />} />
         <Route path="/characters/:characterId" element={<CharacterDetail />} />
         <Route path="/campaigns" element={<CampaignManager />} />

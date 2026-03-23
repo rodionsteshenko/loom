@@ -4,16 +4,42 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Loom is an AI-powered narrative adventure game — choose-your-own-adventure meets D&D with multiplayer turn-based gameplay and AI-generated visuals.
+Loom is an AI-powered narrative adventure game — choose-your-own-adventure meets D&D with multiplayer turn-based gameplay and AI-generated visuals. Pure TypeScript stack (React frontend + Express/OpenAI Agents SDK backend).
 
 ## Architecture
 
-- **Frontend**: React + Vite + Tailwind CSS in `web/` — character creation, gallery, campaign manager, gameplay UI
-- **Backend**: Express API server in `web/server/` — serves character/campaign data, proxies AI requests, generates images
-- **Python tools**: Character creation CLI, validators, game engine in `src/`
-- **State management**: Additive history — all state changes are appended to a changelog (`changelog.jsonl`). Current state is derived by replaying changes. Supports rewind, replay, and snapshots.
-- **Campaign structure**: Each campaign lives under `campaigns/{campaign_id}/` with sessions, images, and campaign.json
-- **AI as DM**: The AI agent uses read/write tools (defined in `docs/ENGINE.md`) to manage game state — get/update characters, advance time, trigger events, roll dice, generate images.
+- **Frontend**: React + Vite + Tailwind CSS in `web/src/` — character creation, gallery, campaign manager, gameplay UI
+- **Backend**: Express API server in `web/server/` — pure TypeScript, no Python dependencies
+- **AI Framework**: OpenAI Agents SDK (`@openai/agents`) with specialized agents for each task
+- **AI Model**: GPT-5.4 Mini via OpenAI API (configurable via `OPENAI_MODEL` env var)
+- **Image Generation**: Google Gemini API (direct REST calls, no Python)
+- **State management**: File-based JSON — campaigns, sessions, characters stored in project root directories
+- **Campaign structure**: Each campaign lives under `campaigns/{campaign_id}/` with sessions and images
+
+## Server Structure
+
+```
+web/server/
+  index.ts                     -- Express routes (thin — delegates to pipelines)
+  types.ts                     -- Shared types (re-exports frontend types + server-only)
+  utils.ts                     -- extractJSON, resolveCampaign, resolveCharacter, validateEnv
+  pipeline/
+    session.ts                 -- 7-step structured session generation pipeline
+    choice.ts                  -- 8-step structured choice resolution pipeline
+  agents/
+    config.ts                  -- OpenAI SDK setup (model, API key)
+    character-creator.ts       -- CharacterCreator agent + validate tool
+    inventory-creator.ts       -- InventoryCreator agent + validate tool
+    campaign-generator.ts      -- CampaignGenerator agent
+    dungeon-master.ts          -- Session, Outcome, Recap agents + prompt builders
+    image-prompt.ts            -- Narrative-to-image-prompt agent
+    tools/
+      dice.ts                  -- D&D 5e dice system (d20, outcomes, contested)
+      difficulty.ts            -- DC analysis, modifiers, auto-succeed/fail
+      validation.ts            -- Character + inventory validation (AJV, pure TS)
+      state.ts                 -- Campaign/session/character file I/O
+      image.ts                 -- Gemini API image generation
+```
 
 ## Running the App
 
@@ -30,26 +56,32 @@ npm run dev
 The backend requires API keys configured in `web/server/.env`:
 
 ```
-OPENCLAW_URL=http://127.0.0.1:18789/v1/chat/completions
-OPENCLAW_TOKEN=<your-token>
-GEMINI_API_KEY=<your-key>
+OPENAI_API_KEY=<your-openai-key>
+OPENAI_MODEL=gpt-5.4-mini
+GEMINI_API_KEY=<your-gemini-key>
 ```
 
 Never commit `.env` files or hardcode API keys.
 
-## Key Design Documents
+## Key Patterns
 
-- `docs/ENGINE.md` — Technical architecture: state management, AI tool interfaces, validation rules, multiplayer sync
-- `docs/GAMEPLAY.md` — Player-facing mechanics: character creation, combat tiers, time system, NPC tiers, goals
+- **Structured pipelines**: Session and choice resolution use step-by-step pipelines with validation gates and logging at each step
+- **Agent per task**: Each AI task (character creation, session generation, outcome narration, recap, image prompts) has its own agent with focused instructions
+- **extractJSON()**: Single utility for parsing agent output — handles markdown fences, proper brace counting
+- **resolveCampaign()/resolveCharacter()**: Single lookup functions, no duplication
+- **Types shared**: Frontend types in `web/src/types.ts` are re-exported by `web/server/types.ts`
 
 ## Schemas
 
-- `schemas/character.schema.json` — JSON Schema (draft-07) for player characters and NPCs
-- `src/schemas/` — Additional schemas for campaigns, sessions, inventory items
+- `src/schemas/character.json` — JSON Schema (draft-07) for player characters
+- `src/schemas/inventory_item.json` — JSON Schema for inventory items
+- `src/schemas/campaign.json` — Campaign schema
+- `src/schemas/session.json` — Session schema
 
 ## Design Constraints
 
 - Narrative-first: storytelling over difficulty/tactics
-- All JSON files must validate against schemas on load, save, and API input
-- Game rules: HP cannot go below 0, location transitions must follow connections, time only moves forward (except rewind)
+- All JSON files must validate against schemas
+- Game rules: HP cannot go below 0, time only moves forward
 - Player death only with consent for dramatic moments; 0 HP = incapacitated, not dead
+- Pure TypeScript — no Python dependencies in the web server
