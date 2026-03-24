@@ -75,7 +75,7 @@ export async function generateSessionPipeline(ctx: GameContext): Promise<Pipelin
     // Step 1: Load campaign story context
     log('[session] Step 1/7: Loading campaign history')
     const previous = getPreviousSessionContext(ctx.campaignDir, ctx.campaign)
-    const fullHistory = buildCampaignStoryContext(ctx.campaignDir, ctx.campaign)
+    const fullHistory = buildCampaignStoryContext(ctx.campaignDir, ctx.campaign, ctx.character)
     if (previous) {
       log(`[session]   Last session: "${previous.summary?.slice(0, 80)}..."`)
     }
@@ -83,10 +83,12 @@ export async function generateSessionPipeline(ctx: GameContext): Promise<Pipelin
 
     // Step 2: Generate narrative + choices via agent
     log('[session] Step 2/7: Generating narrative and choices via AI')
+    const sceneNumber = (ctx.campaign.sessions?.length || 0) + 1
     const prompt = buildSessionPrompt({
-      campaign: { name: ctx.campaign.name, world: ctx.campaign.world, premise: ctx.campaign.premise },
+      campaign: ctx.campaign,
       character: ctx.character,
       previousSession: previous,
+      sceneNumber,
     }) + fullHistory
     const agentResult = await run(sessionGeneratorAgent, prompt, { maxTurns: 5 })
     const agentText = extractAllTextOutput(agentResult.newItems)

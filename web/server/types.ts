@@ -21,6 +21,11 @@ export type {
   WorldKeyFigure,
   WorldConceptImage,
   CoherenceIssue,
+  GameEvent,
+  GameEventType,
+  CampaignNPC,
+  CampaignState,
+  CampaignArc,
 } from '../src/types.js'
 
 import type { Campaign, Character } from '../src/types.js'

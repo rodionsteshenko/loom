@@ -354,6 +354,27 @@ export default function GamePlay() {
                 </div>
               )}
 
+              {/* Campaign state panel */}
+              {campaign.state && (campaign.state as any).items?.length > 0 && (
+                <details className="bg-gray-800/30 border border-gray-700/30 rounded-lg text-sm">
+                  <summary className="px-3 py-2 text-gray-400 cursor-pointer hover:text-gray-300">Inventory & Status</summary>
+                  <div className="px-3 pb-3 space-y-2">
+                    {(campaign.state as any).hp_delta !== 0 && (
+                      <div className="text-red-400">HP: {(campaign.state as any).hp_delta > 0 ? '+' : ''}{(campaign.state as any).hp_delta}</div>
+                    )}
+                    {(campaign.state as any).items?.length > 0 && (
+                      <div><span className="text-gray-500">Items:</span> <span className="text-gray-300">{(campaign.state as any).items.join(', ')}</span></div>
+                    )}
+                    {(campaign.state as any).npcs?.length > 0 && (
+                      <div><span className="text-gray-500">NPCs:</span> <span className="text-gray-300">{(campaign.state as any).npcs.map((n: any) => n.name).join(', ')}</span></div>
+                    )}
+                    {(campaign.state as any).active_quests?.length > 0 && (
+                      <div><span className="text-gray-500">Quests:</span> <span className="text-purple-300">{(campaign.state as any).active_quests.map((q: any) => q.name).join(', ')}</span></div>
+                    )}
+                  </div>
+                </details>
+              )}
+
               {/* Dice roll — shows when rolling */}
               {(rolling || pendingRollResult) && (
                 <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-4">

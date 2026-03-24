@@ -219,6 +219,52 @@ export interface CoherenceIssue {
   sections: string[]
 }
 
+// ─── Campaign State & Events ───
+
+export type GameEventType =
+  | 'hp_change' | 'item_gained' | 'item_lost'
+  | 'npc_encountered' | 'location_entered'
+  | 'knowledge_gained' | 'quest_started' | 'quest_completed'
+  | 'reputation_change'
+
+export interface GameEvent {
+  type: GameEventType
+  [key: string]: any
+}
+
+export interface CampaignNPC {
+  name: string
+  description: string
+  disposition: 'friendly' | 'neutral' | 'hostile' | 'unknown'
+  faction?: string
+  first_met_scene: number
+  last_seen_scene: number
+  alive: boolean
+}
+
+export interface CampaignState {
+  hp_delta: number
+  items: string[]
+  npcs: CampaignNPC[]
+  locations_visited: string[]
+  knowledge: string[]
+  active_quests: { name: string; description: string; started_scene: number }[]
+  completed_quests: { name: string; outcome: string; completed_scene: number }[]
+  reputation: Record<string, number>
+  events_log: GameEvent[]
+}
+
+export interface CampaignArc {
+  type: 'three_act'
+  total_scenes_estimate: number
+  act_1: { name: string; end_scene: number; goal: string }
+  act_2: { name: string; end_scene: number; goal: string }
+  act_3: { name: string; end_scene: number; goal: string }
+  antagonist: string
+  stakes: string
+  themes: string[]
+}
+
 // Game types
 
 export interface Choice {
@@ -271,6 +317,7 @@ export interface Session {
   outcome_image_url?: string    // Generated outcome image
   summary?: string
   story_so_far?: string         // Cumulative story summary
+  events?: GameEvent[]           // Extracted events from this session
   created_at: string
   completed_at?: string
 }
@@ -287,7 +334,8 @@ export interface Campaign {
   party: string[]       // All party members (for multiplayer)
   sessions: string[]
   current_session?: string
-  state: Record<string, unknown>
+  state: CampaignState | Record<string, unknown>
+  arc?: CampaignArc
   intro_image_url?: string  // Generated intro image
   created_at: string
   updated_at: string

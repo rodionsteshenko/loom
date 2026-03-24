@@ -157,12 +157,19 @@ export function getPreviousSessionContext(campaignDir: string, campaign: any): {
  * Build a running story context from ALL completed sessions.
  * This gives the DM full knowledge of what's happened in the campaign.
  */
-export function buildCampaignStoryContext(campaignDir: string, campaign: any): string {
+export function buildCampaignStoryContext(campaignDir: string, campaign: any, character?: any): string {
   if (!campaign.sessions?.length) return ''
 
-  const parts: string[] = []
+  // Structured state summary
+  const stateContext = character ? buildStructuredStateContext(campaign, character) : ''
 
-  for (let i = 0; i < campaign.sessions.length; i++) {
+  // Recent scene summaries (last 5 for narrative flow)
+  const recentCount = 5
+  const sessionCount = campaign.sessions.length
+  const startFrom = Math.max(0, sessionCount - recentCount)
+
+  const parts: string[] = []
+  for (let i = startFrom; i < sessionCount; i++) {
     const session = loadSession(campaignDir, campaign.sessions[i])
     if (!session) continue
 
@@ -173,17 +180,189 @@ export function buildCampaignStoryContext(campaignDir: string, campaign: any): s
     const chosenChoice = choices.find((c: any) => c.id === chosenOption)
 
     let entry = `Scene ${i + 1}`
-    if (summary) {
-      entry += `: ${summary}`
-    }
-    if (chosenChoice) {
-      entry += ` [Chose: "${chosenChoice.text}" → ${rollOutcome || 'unknown'}]`
-    }
+    if (summary) entry += `: ${summary}`
+    if (chosenChoice) entry += ` [Chose: "${chosenChoice.text}" → ${rollOutcome || 'unknown'}]`
 
     parts.push(entry)
   }
 
-  if (parts.length === 0) return ''
+  let result = ''
+  if (stateContext) result += stateContext
+  if (parts.length > 0) {
+    result += `\n\nRECENT SCENES (${parts.length} of ${sessionCount}):\n${parts.join('\n')}`
+  }
 
-  return `\n\nCAMPAIGN HISTORY (${parts.length} scenes so far):\n${parts.join('\n')}`
+  return result
+}
+
+// ─── Campaign State ───
+
+const DEFAULT_CAMPAIGN_STATE = {
+  hp_delta: 0,
+  items: [],
+  npcs: [],
+  locations_visited: [],
+  knowledge: [],
+  active_quests: [],
+  completed_quests: [],
+  reputation: {},
+  events_log: [],
+}
+
+export function getCampaignState(campaign: any): any {
+  const state = campaign.state || {}
+  return { ...DEFAULT_CAMPAIGN_STATE, ...state }
+}
+
+/**
+ * Accumulate extracted events into the campaign state.
+ */
+export function accumulateCampaignState(
+  campaignDir: string,
+  campaign: any,
+  events: any[],
+  sceneNumber: number
+): void {
+  const state = getCampaignState(campaign)
+
+  for (const event of events) {
+    // Always log the event
+    state.events_log.push({ ...event, scene: sceneNumber })
+
+    switch (event.type) {
+      case 'hp_change':
+        state.hp_delta += (event.value || 0)
+        break
+
+      case 'item_gained':
+        if (event.name && !state.items.includes(event.name)) {
+          state.items.push(event.name)
+        }
+        break
+
+      case 'item_lost':
+        state.items = state.items.filter((i: string) => i !== event.name)
+        break
+
+      case 'npc_encountered': {
+        const existing = state.npcs.find((n: any) => n.name === event.name)
+        if (existing) {
+          existing.last_seen_scene = sceneNumber
+          if (event.disposition) existing.disposition = event.disposition
+        } else {
+          state.npcs.push({
+            name: event.name,
+            description: event.description || '',
+            disposition: event.disposition || 'unknown',
+            faction: event.faction || undefined,
+            first_met_scene: sceneNumber,
+            last_seen_scene: sceneNumber,
+            alive: true,
+          })
+        }
+        break
+      }
+
+      case 'location_entered':
+        if (event.name && !state.locations_visited.includes(event.name)) {
+          state.locations_visited.push(event.name)
+        }
+        break
+
+      case 'knowledge_gained':
+        if (event.fact && !state.knowledge.includes(event.fact)) {
+          state.knowledge.push(event.fact)
+        }
+        break
+
+      case 'quest_started':
+        if (event.name && !state.active_quests.some((q: any) => q.name === event.name)) {
+          state.active_quests.push({
+            name: event.name,
+            description: event.description || '',
+            started_scene: sceneNumber,
+          })
+        }
+        break
+
+      case 'quest_completed': {
+        const questIdx = state.active_quests.findIndex((q: any) => q.name === event.name)
+        if (questIdx >= 0) {
+          const quest = state.active_quests.splice(questIdx, 1)[0]
+          state.completed_quests.push({
+            name: quest.name,
+            outcome: event.outcome || 'completed',
+            completed_scene: sceneNumber,
+          })
+        } else {
+          state.completed_quests.push({
+            name: event.name,
+            outcome: event.outcome || 'completed',
+            completed_scene: sceneNumber,
+          })
+        }
+        break
+      }
+
+      case 'reputation_change':
+        if (event.faction) {
+          state.reputation[event.faction] = (state.reputation[event.faction] || 0) + (event.delta || 0)
+        }
+        break
+    }
+  }
+
+  campaign.state = state
+  saveCampaign(campaignDir, campaign)
+}
+
+/**
+ * Build structured campaign state context for the DM prompt.
+ */
+export function buildStructuredStateContext(campaign: any, character: any): string {
+  const state = getCampaignState(campaign)
+  const parts: string[] = ['\nCAMPAIGN STATE:']
+
+  // HP
+  if (character.hp) {
+    const currentHp = Math.max(0, (character.hp.current || character.hp.max) + state.hp_delta)
+    parts.push(`- HP: ${currentHp}/${character.hp.max}${state.hp_delta !== 0 ? ` (${state.hp_delta > 0 ? '+' : ''}${state.hp_delta} from events)` : ''}`)
+  }
+
+  // Items
+  if (state.items.length > 0) {
+    parts.push(`- Items carried: ${state.items.join(', ')}`)
+  }
+
+  // NPCs
+  if (state.npcs.length > 0) {
+    const npcList = state.npcs.map((n: any) => `${n.name} (${n.disposition}${n.faction ? ', ' + n.faction : ''})`).join(', ')
+    parts.push(`- NPCs met: ${npcList}`)
+  }
+
+  // Locations
+  if (state.locations_visited.length > 0) {
+    parts.push(`- Locations visited: ${state.locations_visited.join(', ')}`)
+  }
+
+  // Knowledge
+  if (state.knowledge.length > 0) {
+    parts.push(`- Known facts: ${state.knowledge.join('; ')}`)
+  }
+
+  // Quests
+  if (state.active_quests.length > 0) {
+    parts.push(`- Active quests: ${state.active_quests.map((q: any) => q.name).join(', ')}`)
+  }
+  if (state.completed_quests.length > 0) {
+    parts.push(`- Completed quests: ${state.completed_quests.map((q: any) => `${q.name} (${q.outcome})`).join(', ')}`)
+  }
+
+  // Reputation
+  const repEntries = Object.entries(state.reputation).filter(([_, v]) => v !== 0)
+  if (repEntries.length > 0) {
+    parts.push(`- Reputation: ${repEntries.map(([f, v]) => `${f} ${(v as number) > 0 ? '+' : ''}${v}`).join(', ')}`)
+  }
+
+  return parts.length > 1 ? parts.join('\n') : ''
 }

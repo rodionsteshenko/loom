@@ -4,7 +4,8 @@ import { outcomeNarrationAgent, recapAgent, buildOutcomePrompt, buildRecapPrompt
 import { imagePromptAgent } from '../agents/image-prompt.js'
 import { rollCheck, type CheckResult } from '../agents/tools/dice.js'
 import { getRelevantModifier, checkAutoSucceed, checkAutoFail } from '../agents/tools/difficulty.js'
-import { loadSession, saveSession } from '../agents/tools/state.js'
+import { loadSession, saveSession, loadCampaign, accumulateCampaignState } from '../agents/tools/state.js'
+import { eventExtractorAgent, buildEventExtractionPrompt } from '../agents/event-extractor.js'
 import { generateImage } from '../agents/tools/image.js'
 import { getArtStylePrompt } from '../agents/tools/art-styles.js'
 import { log, extractJSON } from '../utils.js'
@@ -148,19 +149,61 @@ export async function resolveChoicePipeline(ctx: GameContext, choiceId: number):
     }
     log(`[choice]   Recap: "${summary.slice(0, 80)}..."`)
 
+    // Step 5.5: Extract events from outcome
+    log('[choice] Step 5.5/9: Extracting events from outcome')
+    let extractedEvents: any[] = []
+    try {
+      const eventPrompt = buildEventExtractionPrompt({
+        outcomeNarrative,
+        choiceText: choice.text,
+        rollOutcome: checkResult.outcome,
+        characterName: ctx.character.name,
+        sceneNarrative: session.content.narrative || '',
+      })
+      const eventResult = await run(eventExtractorAgent, eventPrompt, { maxTurns: 3 })
+      const eventText = extractAllTextOutput(eventResult.newItems)
+      // Try to parse events — if it fails, just continue without events
+      try {
+        const parsed = JSON.parse(eventText.trim().replace(/```json?\n?/g, '').replace(/```/g, ''))
+        if (Array.isArray(parsed)) {
+          extractedEvents = parsed
+          log(`[choice]   Extracted ${extractedEvents.length} events: ${extractedEvents.map((e: any) => e.type).join(', ')}`)
+        }
+      } catch {
+        // Try extractJSON as fallback
+        try {
+          const { extractJSON } = await import('../utils.js')
+          extractedEvents = extractJSON(eventText, 'array')
+          log(`[choice]   Extracted ${extractedEvents.length} events (fallback)`)
+        } catch {
+          log('[choice]   No events extracted (parse failed)', 'ERROR')
+        }
+      }
+    } catch (e) {
+      log(`[choice]   Event extraction failed: ${e}`, 'ERROR')
+    }
+
+    // Accumulate events into campaign state
+    if (extractedEvents.length > 0) {
+      const sceneNumber = session.sequence || 1
+      accumulateCampaignState(ctx.campaignDir, ctx.campaign, extractedEvents, sceneNumber)
+      log(`[choice]   Campaign state updated with ${extractedEvents.length} events`)
+    }
+
     // Step 6: Update and save session
-    log('[choice] Step 6/8: Saving session')
+    log('[choice] Step 6/9: Saving session')
     session.chosen_option = choiceId
     session.roll_result = rollResult
     session.outcome_narrative = outcomeNarrative
     session.summary = summary
+    session.events = extractedEvents
     session.state = 'complete'
     session.completed_at = new Date().toISOString()
     saveSession(ctx.campaignDir, session)
     log('[choice]   Session saved as complete')
 
     // Step 7: Generate outcome image (blocking)
-    log('[choice] Step 7/8: Generating outcome image')
+    log('[choice] Step 7/9: Generating outcome image')
     const imageUrl = await generateOutcomeImage(ctx.campaignDir, currentSessionId, outcomeNarrative, (ctx.campaign as any).art_style, ctx.character.physical_description)
     if (imageUrl) {
       session.outcome_image_url = imageUrl
@@ -171,7 +214,7 @@ export async function resolveChoicePipeline(ctx: GameContext, choiceId: number):
     }
 
     // Step 8: Assemble response
-    log('[choice] Step 8/8: Complete')
+    log('[choice] Step 8/9: Complete')
     return {
       ok: true,
       data: {

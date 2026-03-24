@@ -411,6 +411,7 @@ app.post('/api/campaigns', async (req, res) => {
     })
     campaign.world_id = world_id || undefined
     campaign.art_style = worldArtStyle || undefined
+    campaign.arc = generated.arc || undefined
     campaign.status = 'draft'
 
     // Generate intro image
@@ -517,6 +518,140 @@ app.patch('/api/campaigns/:id/finalize', async (req, res) => {
     res.json(campaign)
   } catch (error) {
     handleError(res, error, 'Failed to finalize campaign')
+  }
+})
+
+// Complete a campaign and generate wrap-up
+app.post('/api/campaigns/:id/complete', async (req, res) => {
+  try {
+    const { campaignDir, campaign } = resolveCampaign(req.params.id)
+    const character = resolveCharacter(campaign.character_id)
+
+    // Load all sessions
+    const sessionsDir = path.join(campaignDir, 'sessions')
+    const sessions = fs.existsSync(sessionsDir)
+      ? fs.readdirSync(sessionsDir).filter(f => f.endsWith('.json'))
+          .map(f => JSON.parse(fs.readFileSync(path.join(sessionsDir, f), 'utf-8')))
+          .sort((a: any, b: any) => (a.sequence || 0) - (b.sequence || 0))
+      : []
+
+    const { getCampaignState } = await import('./agents/tools/state.js')
+    const campaignState = getCampaignState(campaign)
+
+    // Generate wrap-up
+    log(`[campaign] Generating wrap-up for: ${campaign.name}`)
+    const { campaignWrapUpAgent, buildWrapUpPrompt } = await import('./agents/campaign-wrap-up.js')
+    const wrapUpPrompt = buildWrapUpPrompt({ campaign, character, campaignState, sessions })
+    const agentResult = await run(campaignWrapUpAgent, wrapUpPrompt, { maxTurns: 5 })
+    const agentText = extractAllTextOutput(agentResult.newItems)
+    const wrapUp = extractJSON(agentText, 'object')
+
+    // Save wrap-up on campaign
+    campaign.status = 'completed'
+    campaign.wrap_up = wrapUp
+    campaign.updated_at = new Date().toISOString()
+    fs.writeFileSync(path.join(campaignDir, 'campaign.json'), JSON.stringify(campaign, null, 2))
+
+    log(`[campaign] Wrap-up generated for: ${campaign.name}`)
+    res.json({ campaign, wrap_up: wrapUp })
+  } catch (error) {
+    handleError(res, error, 'Failed to complete campaign')
+  }
+})
+
+// Apply wrap-up updates to character and world
+app.post('/api/campaigns/:id/wrap-up/apply', async (req, res) => {
+  try {
+    const { campaignDir, campaign } = resolveCampaign(req.params.id)
+    if (!campaign.wrap_up) return res.status(400).json({ error: 'No wrap-up generated. Complete the campaign first.' })
+
+    const wrapUp = campaign.wrap_up
+    const { approved_character, approved_world } = req.body || {}
+
+    // Apply character updates
+    if (approved_character !== false && wrapUp.character_updates) {
+      const charFiles = fs.readdirSync(CHARACTERS_DIR).filter(f => f.endsWith('.json'))
+      for (const f of charFiles) {
+        const charPath = path.join(CHARACTERS_DIR, f)
+        const char = JSON.parse(fs.readFileSync(charPath, 'utf-8'))
+        if (char.id === campaign.character_id) {
+          const updates = wrapUp.character_updates
+
+          // XP
+          if (updates.xp_award) char.experience_points = (char.experience_points || 0) + updates.xp_award
+
+          // Items (add to knowledge array as placeholder — no inventory system yet)
+          if (updates.items_to_add?.length) {
+            char.knowledge = char.knowledge || []
+            for (const item of updates.items_to_add) {
+              if (!char.knowledge.includes(`Item: ${item}`)) char.knowledge.push(`Item: ${item}`)
+            }
+          }
+
+          // Knowledge
+          if (updates.knowledge_to_add?.length) {
+            char.knowledge = char.knowledge || []
+            for (const fact of updates.knowledge_to_add) {
+              if (!char.knowledge.includes(fact)) char.knowledge.push(fact)
+            }
+          }
+
+          // Relationships
+          if (updates.new_relationships?.length) {
+            char.relationships = char.relationships || []
+            for (const rel of updates.new_relationships) {
+              char.relationships.push({ ...rel, character_id: null, trust_level: rel.type === 'ally' ? 7 : rel.type === 'enemy' ? 2 : 5, notes: `Met during ${campaign.name}` })
+            }
+          }
+
+          // Backstory addition
+          if (updates.backstory_addition) {
+            char.backstory = (char.backstory || '') + '\n\n' + updates.backstory_addition
+          }
+
+          char.updated_at = new Date().toISOString()
+          fs.writeFileSync(charPath, JSON.stringify(char, null, 2))
+          log(`[wrap-up] Character ${char.name} updated with campaign results`)
+          break
+        }
+      }
+    }
+
+    // Apply world updates
+    if (approved_world !== false && wrapUp.world_updates && campaign.world_id) {
+      try {
+        const { resolveWorld: rw, saveWorld: sw } = await import('./agents/tools/world-state.js')
+        const { worldDir, world } = rw(campaign.world_id)
+        const updates = wrapUp.world_updates
+
+        // Timeline event
+        if (updates.timeline_event) {
+          world.history = world.history || { creation_myth: '', timeline: [] }
+          world.history.timeline = world.history.timeline || []
+          world.history.timeline.push({
+            era: 'Recent',
+            name: updates.timeline_event.name,
+            year_label: 'Recent events',
+            description: updates.timeline_event.description,
+            impact: updates.timeline_event.impact,
+          })
+        }
+
+        world.updated_at = new Date().toISOString()
+        sw(worldDir, world)
+        log(`[wrap-up] World ${world.name} updated with campaign results`)
+      } catch (e) {
+        log(`[wrap-up] World update failed: ${e}`, 'ERROR')
+      }
+    }
+
+    campaign.wrap_up_applied = true
+    campaign.updated_at = new Date().toISOString()
+    fs.writeFileSync(path.join(campaignDir, 'campaign.json'), JSON.stringify(campaign, null, 2))
+
+    res.json({ ok: true, campaign })
+  } catch (error) {
+    handleError(res, error, 'Failed to apply wrap-up')
   }
 })
 

@@ -5,8 +5,16 @@ import { MODEL } from './config.js'
 
 const SESSION_GENERATION_PROMPT = `You are an AI Dungeon Master for a Choose Your Own Adventure RPG called Loom.
 
-You will receive campaign context, character details, and a CAMPAIGN HISTORY showing what has happened so far.
-Build on previous events — reference NPCs the player has met, consequences of past choices, and ongoing plot threads.
+You will receive campaign context, character details, CAMPAIGN STATE (items, NPCs, quests, reputation), and RECENT SCENES.
+
+IMPORTANT — Use the campaign state:
+- Reference items the player carries ("You grip the rusty key..." or "Your map fragment shows...")
+- Have NPCs the player has met remember them and react accordingly
+- Build on active quests — advance them toward resolution
+- React to reputation — hostile factions may send agents, friendly ones offer help
+- Reference locations visited — the player knows these places
+- Use known facts in dialogue and narrative
+
 Do NOT repeat or contradict what happened in previous scenes. Advance the story naturally.
 
 Generate the next story session. Output ONLY valid JSON in this exact format:
@@ -83,12 +91,13 @@ export const recapAgent = new Agent({
 // ─── Helper to build session prompt ───
 
 export function buildSessionPrompt(opts: {
-  campaign: { name: string; world: string; premise: string }
+  campaign: any
   character: any
   previousSession?: { summary: string; outcome: string } | null
   plotDirection?: string
+  sceneNumber?: number
 }): string {
-  const { campaign, character, previousSession, plotDirection } = opts
+  const { campaign, character, previousSession, plotDirection, sceneNumber } = opts
 
   const charSummary = [
     `Name: ${character.name}`,
@@ -99,6 +108,26 @@ export function buildSessionPrompt(opts: {
   ].join('\n')
 
   let prompt = `CAMPAIGN: ${campaign.name}\nWORLD: ${campaign.world}\nPREMISE: ${campaign.premise}\n\nCHARACTER:\n${charSummary}`
+
+  // Arc pacing
+  if (campaign.arc && sceneNumber) {
+    const arc = campaign.arc
+    let actInfo = ''
+    if (sceneNumber <= (arc.act_1?.end_scene || 3)) {
+      actInfo = `Act 1 "${arc.act_1?.name || 'Setup'}" (scene ${sceneNumber} of ~${arc.act_1?.end_scene || 3}). Goal: ${arc.act_1?.goal || 'Establish the world and threat.'}`
+    } else if (sceneNumber <= (arc.act_2?.end_scene || 6)) {
+      actInfo = `Act 2 "${arc.act_2?.name || 'Confrontation'}" (scene ${sceneNumber} of ~${arc.act_2?.end_scene || 6}). Goal: ${arc.act_2?.goal || 'Escalate stakes and complications.'}`
+    } else {
+      actInfo = `Act 3 "${arc.act_3?.name || 'Resolution'}" (scene ${sceneNumber} of ~${arc.total_scenes_estimate || 8}). Goal: ${arc.act_3?.goal || 'Climax and resolution.'}`
+      if (sceneNumber >= (arc.total_scenes_estimate || 8)) {
+        actInfo += ' THIS IS THE FINAL SCENE. Write a satisfying conclusion to the campaign.'
+      }
+    }
+    prompt += `\n\nSTORY ARC:\n${actInfo}`
+    if (arc.antagonist) prompt += `\nAntagonist: ${arc.antagonist}`
+    if (arc.stakes) prompt += `\nStakes: ${arc.stakes}`
+    if (arc.themes?.length) prompt += `\nThemes: ${arc.themes.join(', ')}`
+  }
 
   if (previousSession) {
     prompt += `\n\nPREVIOUS SESSION:\n${previousSession.summary}\nOutcome: ${previousSession.outcome}`
