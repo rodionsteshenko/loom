@@ -1,13 +1,14 @@
 import { useState } from 'react'
 import type { CharacterFormData } from '../types'
-import { RACES, CLASSES, ALIGNMENTS, ART_STYLES } from '../types'
+import { RACES, CLASSES, ALIGNMENTS } from '../types'
 
 interface Props {
   onGenerate: (data: CharacterFormData) => void
   isGenerating: boolean
+  worldName?: string
 }
 
-export default function CharacterForm({ onGenerate, isGenerating }: Props) {
+export default function CharacterForm({ onGenerate, isGenerating, worldName }: Props) {
   const [formData, setFormData] = useState<CharacterFormData>({
     prompt: '',
     race: '',
@@ -30,6 +31,14 @@ export default function CharacterForm({ onGenerate, isGenerating }: Props) {
 
   return (
     <form onSubmit={handleSubmit} className="bg-gray-800/50 border border-gray-700 rounded-lg p-6 space-y-6">
+      {worldName && (
+        <div className="bg-purple-900/20 border border-purple-700/30 rounded-lg px-4 py-3 text-sm">
+          <span className="text-gray-400">Creating character in </span>
+          <span className="text-purple-300 font-medium">{worldName}</span>
+          <span className="text-gray-500 ml-2">(art style inherited from world)</span>
+        </div>
+      )}
+
       <div>
         <label className="block text-sm font-medium text-purple-300 mb-2">
           Character Concept *
@@ -47,9 +56,7 @@ export default function CharacterForm({ onGenerate, isGenerating }: Props) {
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-purple-300 mb-2">
-            Race
-          </label>
+          <label className="block text-sm font-medium text-purple-300 mb-2">Race</label>
           <select
             value={formData.race}
             onChange={(e) => setFormData({ ...formData, race: e.target.value })}
@@ -63,9 +70,7 @@ export default function CharacterForm({ onGenerate, isGenerating }: Props) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-purple-300 mb-2">
-            Class
-          </label>
+          <label className="block text-sm font-medium text-purple-300 mb-2">Class</label>
           <select
             value={formData.class}
             onChange={(e) => setFormData({ ...formData, class: e.target.value })}
@@ -81,9 +86,7 @@ export default function CharacterForm({ onGenerate, isGenerating }: Props) {
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-purple-300 mb-2">
-            Level
-          </label>
+          <label className="block text-sm font-medium text-purple-300 mb-2">Level</label>
           <input
             type="number"
             min={1}
@@ -95,9 +98,7 @@ export default function CharacterForm({ onGenerate, isGenerating }: Props) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-purple-300 mb-2">
-            Alignment
-          </label>
+          <label className="block text-sm font-medium text-purple-300 mb-2">Alignment</label>
           <select
             value={formData.alignment}
             onChange={(e) => setFormData({ ...formData, alignment: e.target.value })}
@@ -109,31 +110,6 @@ export default function CharacterForm({ onGenerate, isGenerating }: Props) {
             ))}
           </select>
         </div>
-      </div>
-
-      <div className="border-t border-gray-700 pt-6">
-        <label className="block text-sm font-medium text-purple-300 mb-2">
-          🎨 Art Style
-        </label>
-        <select
-          value={formData.art_style}
-          onChange={(e) => setFormData({ ...formData, art_style: e.target.value })}
-          className="w-full px-4 py-2 bg-gray-900 border border-gray-600 rounded-lg text-gray-100 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none"
-        >
-          {ART_STYLES.map(style => (
-            <option key={style.value} value={style.value}>{style.label}</option>
-          ))}
-        </select>
-
-        {formData.art_style === 'custom' && (
-          <textarea
-            value={formData.custom_style}
-            onChange={(e) => setFormData({ ...formData, custom_style: e.target.value })}
-            placeholder="Describe your desired art style... e.g., 'moody charcoal sketch with splashes of red'"
-            className="w-full mt-3 px-4 py-3 bg-gray-900 border border-gray-600 rounded-lg text-gray-100 placeholder-gray-500 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none resize-none"
-            rows={2}
-          />
-        )}
       </div>
 
       <button
@@ -150,9 +126,7 @@ export default function CharacterForm({ onGenerate, isGenerating }: Props) {
             Generating...
           </>
         ) : (
-          <>
-            ✨ Generate Character
-          </>
+          <>Generate Character</>
         )}
       </button>
     </form>

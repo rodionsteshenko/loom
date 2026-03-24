@@ -15,8 +15,15 @@ export async function generateImage(opts: {
   prompt: string
   outputPath: string
   resolution?: '1K' | '2K' | '4K'
+  aspectRatio?: 'square' | 'landscape' | 'portrait'
 }): Promise<string | null> {
-  const { prompt, outputPath, resolution = '1K' } = opts
+  const { prompt, outputPath, resolution = '1K', aspectRatio = 'square' } = opts
+
+  const aspectPrefix = aspectRatio === 'landscape'
+    ? 'WIDESCREEN 16:9 aspect ratio, horizontal composition. '
+    : aspectRatio === 'portrait'
+    ? 'PORTRAIT 9:16 aspect ratio, vertical composition. '
+    : 'SQUARE 1:1 aspect ratio. '
 
   const apiKey = getGeminiKey()
   if (!apiKey) {
@@ -29,7 +36,7 @@ export async function generateImage(opts: {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      contents: [{ parts: [{ text: prompt }] }],
+      contents: [{ parts: [{ text: aspectPrefix + prompt }] }],
       generationConfig: {
         responseModalities: ['TEXT', 'IMAGE'],
         imageConfig: { imageSize: resolution },

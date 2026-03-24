@@ -11,6 +11,7 @@ export interface Character {
   id: string
   name: string
   type: 'pc' | 'npc'
+  status?: 'draft' | 'active'
   world_id?: string
   race: string
   class: string
@@ -277,8 +278,10 @@ export interface Session {
 export interface Campaign {
   id: string
   name: string
+  status?: 'draft' | 'active'
   world: string
   world_id?: string
+  art_style?: string
   premise: string
   character_id: string  // Primary/active character (backward compat)
   party: string[]       // All party members (for multiplayer)

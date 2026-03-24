@@ -1,77 +1,89 @@
 import { useState, useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom'
-import { ART_STYLES } from '../constants/artStyles'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 
 interface Campaign {
   id: string
   name: string
   world: string
+  world_id?: string
   premise: string
   art_style?: string
   intro_image_url?: string
+  status?: string
+  character_id?: string
+  party?: string[]
 }
 
 export default function CampaignSettings() {
   const { campaignId } = useParams<{ campaignId: string }>()
   const [campaign, setCampaign] = useState<Campaign | null>(null)
   const [loading, setLoading] = useState(true)
-  const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [success, setSuccess] = useState<string | null>(null)
-  const [selectedStyle, setSelectedStyle] = useState<string>('oil-painting')
+  const [refinePrompt, setRefinePrompt] = useState('')
+  const [refining, setRefining] = useState(false)
+  const [regeneratingImage, setRegeneratingImage] = useState(false)
+  const navigate = useNavigate()
+
+  const isDraft = !campaign?.status || campaign.status === 'draft'
 
   useEffect(() => {
-    const loadCampaign = async () => {
-      try {
-        const res = await fetch(`/api/campaigns/${campaignId}`)
-        if (!res.ok) throw new Error('Campaign not found')
-        const data = await res.json()
-        setCampaign(data)
-        setSelectedStyle(data.art_style || 'oil-painting')
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to load campaign')
-      } finally {
-        setLoading(false)
-      }
-    }
-    loadCampaign()
+    fetch(`/api/campaigns/${campaignId}`)
+      .then(res => { if (!res.ok) throw new Error('Campaign not found'); return res.json() })
+      .then(data => { setCampaign(data); setLoading(false) })
+      .catch(err => { setError(err instanceof Error ? err.message : 'Failed to load'); setLoading(false) })
   }, [campaignId])
 
-  const handleSave = async (regenerateImage: boolean = false) => {
-    setSaving(true)
+  const handleRefine = async () => {
+    if (!refinePrompt.trim()) return
+    setRefining(true)
     setError(null)
-    setSuccess(null)
-    
     try {
-      // Only generate intro image if explicitly requested OR if none exists
-      const shouldGenerateImage = regenerateImage || !campaign?.intro_image_url
-      
+      const res = await fetch(`/api/campaigns/${campaignId}/refine`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: refinePrompt }),
+      })
+      if (!res.ok) throw new Error((await res.json()).error || 'Refinement failed')
+      setCampaign(await res.json())
+      setRefinePrompt('')
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Refinement failed')
+    } finally {
+      setRefining(false)
+    }
+  }
+
+  const handleFinalize = async () => {
+    try {
+      const res = await fetch(`/api/campaigns/${campaignId}/finalize`, { method: 'PATCH' })
+      if (!res.ok) throw new Error('Failed to finalize')
+      setCampaign(await res.json())
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to finalize')
+    }
+  }
+
+  const handleRegenerateImage = async () => {
+    setRegeneratingImage(true)
+    try {
       const res = await fetch(`/api/campaigns/${campaignId}/settings`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          art_style: selectedStyle,
-          generate_intro_image: shouldGenerateImage
-        })
+        body: JSON.stringify({ generate_intro_image: true }),
       })
-      
-      if (!res.ok) throw new Error('Failed to save settings')
-      
+      if (!res.ok) throw new Error('Failed to regenerate image')
       const data = await res.json()
       setCampaign(data.campaign)
-      
-      setSuccess(shouldGenerateImage ? 'Saved with image!' : 'Saved!')
-      setTimeout(() => setSuccess(null), 2000)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to save')
+      setError(err instanceof Error ? err.message : 'Failed to regenerate')
     } finally {
-      setSaving(false)
+      setRegeneratingImage(false)
     }
   }
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-purple-950 flex items-center justify-center">
         <div className="text-purple-400">Loading...</div>
       </div>
     )
@@ -79,7 +91,7 @@ export default function CampaignSettings() {
 
   if (!campaign) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-purple-950 flex items-center justify-center">
         <div className="text-center">
           <div className="text-red-400 mb-4">Campaign not found</div>
           <Link to="/campaigns" className="text-purple-400 hover:underline">Back</Link>
@@ -89,102 +101,115 @@ export default function CampaignSettings() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900">
-      <header className="border-b border-purple-800/50 bg-black/30 backdrop-blur sticky top-0 z-10">
-        <div className="max-w-5xl mx-auto px-4 py-2 flex items-center justify-between">
+    <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-purple-950">
+      <header className="border-b border-gray-800 bg-black/40 backdrop-blur sticky top-0 z-10">
+        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+          <Link to={campaign.world_id ? `/campaigns?world=${campaign.world_id}` : '/campaigns'} className="text-gray-400 hover:text-purple-300 text-sm">
+            ← Back
+          </Link>
           <div className="flex items-center gap-3">
-            <Link to={`/play/${campaignId}`} className="text-gray-400 hover:text-white">←</Link>
-            <div>
-              <h1 className="text-lg font-semibold text-white">Settings</h1>
-              <p className="text-gray-500 text-xs">{campaign.name}</p>
-            </div>
+            <span className={`px-2 py-0.5 rounded text-xs font-medium ${campaign.status === 'active' ? 'bg-purple-600/80 text-purple-100' : 'bg-amber-700/80 text-amber-100'}`}>
+              {campaign.status || 'draft'}
+            </span>
+            {isDraft && (
+              <button
+                onClick={handleFinalize}
+                className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white text-sm rounded-lg transition"
+              >
+                Finalize
+              </button>
+            )}
+            {campaign.status === 'active' && (
+              <button
+                onClick={() => navigate(`/play/${campaign.id}`)}
+                className="px-4 py-1.5 bg-purple-600 hover:bg-purple-500 text-white text-sm rounded-lg transition"
+              >
+                Play
+              </button>
+            )}
           </div>
-          <button
-            onClick={() => handleSave(false)}
-            disabled={saving}
-            className="px-4 py-1.5 bg-purple-600 hover:bg-purple-500 disabled:bg-purple-800 text-white rounded text-sm font-medium transition"
-          >
-            {saving ? 'Saving...' : success || 'Save'}
-          </button>
         </div>
       </header>
 
-      <main className="max-w-5xl mx-auto px-4 py-4">
+      <main className="max-w-6xl mx-auto px-6 py-8">
         {error && (
-          <div className="bg-red-900/50 border border-red-500 rounded p-3 text-red-200 text-sm mb-4">
-            {error}
-          </div>
+          <div className="bg-red-900/50 border border-red-500 rounded-lg p-4 text-red-200 mb-6">{error}</div>
         )}
 
-        {/* Art Style */}
-        <section className="mb-6">
-          <h2 className="text-sm font-medium text-gray-400 mb-2">🎨 Art Style</h2>
-          <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
-            {ART_STYLES.map(style => (
-              <button
-                key={style.id}
-                onClick={() => setSelectedStyle(style.id)}
-                className={`p-2 rounded border text-left transition ${
-                  selectedStyle === style.id
-                    ? 'border-purple-500 bg-purple-900/40'
-                    : 'border-gray-700 bg-gray-800/30 hover:border-gray-600'
-                }`}
-              >
-                <div className="text-white text-sm font-medium truncate">{style.name}</div>
-                <div className="text-gray-500 text-xs truncate">{style.description}</div>
-              </button>
-            ))}
-          </div>
-        </section>
-
-        {/* Intro Image */}
-        <section className="mb-6">
-          <h2 className="text-sm font-medium text-gray-400 mb-2">🖼️ Intro Image (Scene 0)</h2>
-          <div className="bg-gray-800/30 border border-gray-700 rounded p-4">
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Left — Intro Image */}
+          <div className="lg:w-1/3 lg:sticky lg:top-24 lg:self-start">
             {campaign.intro_image_url ? (
-              <div className="space-y-3">
-                <img 
-                  src={campaign.intro_image_url} 
-                  alt="Campaign intro" 
-                  className="w-full max-w-md rounded-lg mx-auto"
-                />
+              <div className="relative group">
+                <img src={campaign.intro_image_url} alt={campaign.name} className="w-full rounded-lg border border-gray-700" />
                 <button
-                  onClick={() => handleSave(true)}
-                  disabled={saving}
-                  className="w-full py-2 bg-gray-700 hover:bg-gray-600 disabled:bg-gray-800 text-white rounded text-sm transition"
+                  onClick={handleRegenerateImage}
+                  disabled={regeneratingImage}
+                  className="absolute bottom-3 right-3 px-3 py-2 bg-black/70 hover:bg-black/90 disabled:opacity-50 text-white text-sm rounded-lg backdrop-blur transition-colors opacity-0 group-hover:opacity-100"
                 >
-                  {saving ? 'Generating...' : '🔄 Regenerate Intro Image'}
+                  {regeneratingImage ? '⏳ Generating...' : '🔄 Regenerate'}
                 </button>
               </div>
             ) : (
-              <div className="text-center py-8">
-                <div className="text-gray-500 mb-3">No intro image yet</div>
+              <div className="w-full aspect-video bg-gray-800 rounded-lg flex flex-col items-center justify-center border border-gray-700 gap-3">
+                <span className="text-4xl">📜</span>
                 <button
-                  onClick={() => handleSave(true)}
-                  disabled={saving}
-                  className="px-6 py-2 bg-purple-600 hover:bg-purple-500 disabled:bg-purple-800 text-white rounded transition"
+                  onClick={handleRegenerateImage}
+                  disabled={regeneratingImage}
+                  className="px-4 py-2 bg-purple-600 hover:bg-purple-500 disabled:opacity-50 text-white text-sm rounded-lg transition"
                 >
-                  {saving ? 'Generating...' : '🎨 Generate Intro Image'}
+                  {regeneratingImage ? 'Generating...' : '🎨 Generate Image'}
                 </button>
               </div>
             )}
           </div>
-        </section>
 
-        {/* Campaign Info */}
-        <section className="bg-gray-800/30 border border-gray-700 rounded p-4">
-          <h2 className="text-sm font-medium text-gray-400 mb-3">📜 Campaign Info</h2>
-          <div className="grid gap-3 text-sm">
+          {/* Right — Campaign Details */}
+          <div className="lg:w-2/3 space-y-6">
             <div>
-              <span className="text-gray-500">World:</span>
-              <span className="text-gray-300 ml-2">{campaign.world}</span>
+              <h1 className="text-3xl font-bold text-gray-100 mb-1">{campaign.name}</h1>
+              <p className="text-gray-500 text-sm">{campaign.world}</p>
             </div>
-            <div>
-              <span className="text-gray-500">Premise:</span>
-              <p className="text-gray-300 mt-1">{campaign.premise}</p>
+
+            <div className="bg-gray-800/30 border border-gray-700/40 rounded-xl p-6">
+              <h2 className="text-sm font-semibold text-purple-400 uppercase tracking-wider mb-3">Premise</h2>
+              <p className="text-gray-300 leading-relaxed whitespace-pre-line">{campaign.premise}</p>
             </div>
+
+            <div className="bg-gray-800/30 border border-gray-700/40 rounded-xl p-6">
+              <h2 className="text-sm font-semibold text-purple-400 uppercase tracking-wider mb-3">Details</h2>
+              <div className="space-y-2 text-sm">
+                <div><span className="text-gray-500">World:</span> <span className="text-gray-300">{campaign.world}</span></div>
+                {campaign.art_style && <div><span className="text-gray-500">Art Style:</span> <span className="text-gray-300">{campaign.art_style}</span></div>}
+                {campaign.party && <div><span className="text-gray-500">Party Size:</span> <span className="text-gray-300">{campaign.party.length} member{campaign.party.length !== 1 ? 's' : ''}</span></div>}
+                {campaign.world_id && (
+                  <Link to={`/worlds/${campaign.world_id}`} className="text-purple-400 hover:text-purple-300 text-sm block mt-2">View World →</Link>
+                )}
+              </div>
+            </div>
+
+            {/* Refine prompt — only in draft mode */}
+            {isDraft && (
+              <div className="flex gap-3">
+                <input
+                  value={refinePrompt}
+                  onChange={e => setRefinePrompt(e.target.value)}
+                  onKeyDown={e => e.key === 'Enter' && handleRefine()}
+                  disabled={refining}
+                  placeholder="Refine this campaign... (e.g., 'make it more political' or 'add a mystery element')"
+                  className="flex-1 bg-gray-800/60 border border-gray-700 rounded-lg px-4 py-3 text-gray-200 placeholder:text-gray-600 focus:outline-none focus:border-purple-500 disabled:opacity-50"
+                />
+                <button
+                  onClick={handleRefine}
+                  disabled={refining || !refinePrompt.trim()}
+                  className="px-6 py-3 bg-purple-600 hover:bg-purple-500 disabled:opacity-50 text-white rounded-lg transition whitespace-nowrap"
+                >
+                  {refining ? 'Updating...' : 'Refine'}
+                </button>
+              </div>
+            )}
           </div>
-        </section>
+        </div>
       </main>
     </div>
   )

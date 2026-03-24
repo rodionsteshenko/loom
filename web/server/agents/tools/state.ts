@@ -152,3 +152,38 @@ export function getPreviousSessionContext(campaignDir: string, campaign: any): {
     outcome: lastSession.outcome_narrative || 'Unknown',
   }
 }
+
+/**
+ * Build a running story context from ALL completed sessions.
+ * This gives the DM full knowledge of what's happened in the campaign.
+ */
+export function buildCampaignStoryContext(campaignDir: string, campaign: any): string {
+  if (!campaign.sessions?.length) return ''
+
+  const parts: string[] = []
+
+  for (let i = 0; i < campaign.sessions.length; i++) {
+    const session = loadSession(campaignDir, campaign.sessions[i])
+    if (!session) continue
+
+    const summary = session.summary
+    const chosenOption = session.chosen_option
+    const rollOutcome = session.roll_result?.outcome
+    const choices = session.content?.choices || []
+    const chosenChoice = choices.find((c: any) => c.id === chosenOption)
+
+    let entry = `Scene ${i + 1}`
+    if (summary) {
+      entry += `: ${summary}`
+    }
+    if (chosenChoice) {
+      entry += ` [Chose: "${chosenChoice.text}" → ${rollOutcome || 'unknown'}]`
+    }
+
+    parts.push(entry)
+  }
+
+  if (parts.length === 0) return ''
+
+  return `\n\nCAMPAIGN HISTORY (${parts.length} scenes so far):\n${parts.join('\n')}`
+}

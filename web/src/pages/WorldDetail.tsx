@@ -132,10 +132,22 @@ export default function WorldDetail() {
               </>
             )}
             <Link
+              to={`/characters?world=${world.id}`}
+              className="px-3 py-1.5 bg-gray-700 hover:bg-gray-600 text-white text-sm rounded-lg transition"
+            >
+              Characters
+            </Link>
+            <Link
+              to={`/campaigns?world=${world.id}`}
+              className="px-3 py-1.5 bg-gray-700 hover:bg-gray-600 text-white text-sm rounded-lg transition"
+            >
+              Campaigns
+            </Link>
+            <Link
               to={`/characters/new?world=${world.id}`}
               className="px-3 py-1.5 bg-purple-600 hover:bg-purple-500 text-white text-sm rounded-lg transition"
             >
-              Create Character
+              + New Character
             </Link>
           </div>
         </div>
@@ -161,8 +173,8 @@ export default function WorldDetail() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
               {world.concept_images.map((img, i) => (
                 <div key={i} className="rounded-xl overflow-hidden border border-gray-700/50">
-                  <img src={img.url} alt={img.subject} className="w-full h-48 object-cover" />
-                  <div className="bg-gray-800/50 px-3 py-2 text-xs text-gray-400">{img.subject}</div>
+                  <img src={img.url} alt={img.subject} className="w-full h-auto" />
+                  <div className="bg-gray-800/50 px-3 py-2 text-xs text-gray-400 capitalize">{img.type}</div>
                 </div>
               ))}
             </div>

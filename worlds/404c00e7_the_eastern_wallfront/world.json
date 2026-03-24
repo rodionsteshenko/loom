@@ -1,0 +1,642 @@
+{
+  "id": "ccb23a14",
+  "name": "The Eastern Wallfront",
+  "art_style": "dark-fantasy",
+  "status": "active",
+  "created_at": "2026-03-23T02:17:38.978Z",
+  "updated_at": "2026-03-23T10:49:30.399Z",
+  "tagline": "A human civilization huddled behind colossal walls, staring into an untamed frontier where forests, ruins, and dungeons still belong to monsters.",
+  "overview": {
+    "description": "The world of the Eastern Wallfront is human-made, human-ruled, and only partially human-owned. Great city-states and fortified bastions cling to pockets of safe ground while vast tracts of wilderness remain ruled by apex beasts, ruin-haunted forests, and dungeon-born horrors. Trade, survival, and ambition all depend on venturing beyond the walls for mana crystals, rare metals, rune-stones, beast materials, and forgotten relics—yet every expedition risks becoming a feast for the dark.\n\nThe eastern edge is the most dangerous and most promising frontier. There, the city of Wallend stands behind a fifty-foot curtain wall, only a few miles from the Blackwood, a sprawling forest that swallows parties, trails, and entire patrols. People speak of untold riches hidden in ancient vaults and monster dens, but also of things that never belonged to the human age. The result is a world of siege-minded optimism: brave, desperate, and always one breach away from disaster.",
+    "themes": [
+      "frontier_survival",
+      "human_resilience",
+      "monster_hunting"
+    ],
+    "tone": "dark_fantasy",
+    "tech_level": "medieval",
+    "magic_level": "common",
+    "scale": "continent",
+    "genre": "fantasy",
+    "era": "unspecified era"
+  },
+  "history": {
+    "ages": [
+      {
+        "id": "age_before_the_walls",
+        "name": "Age of Wild Dominion",
+        "years_ago_start": 6000,
+        "years_ago_end": 1200,
+        "summary": "Before the wall-cities, the land was dominated by colossal beasts, predatory magical ecosystems, and dungeon eruptions that reshaped coastlines and valleys. Human settlements were small, mobile, and constantly hunted, surviving through fire, superstition, and the occasional lucky relic from a dead ruin.",
+        "key_events": [
+          {
+            "name": "First Rune Falls",
+            "years_ago": 5200,
+            "description": "Meteors of glowing stone struck the world and awakened mana-rich veins, making monsters stronger and creating the first rune-bearing ruins. Human survivors learned that some stones could store power, but only at terrible cost.",
+            "consequences": [
+              "Mana becomes a strategic resource",
+              "Ruins begin attracting both monsters and scavengers"
+            ]
+          },
+          {
+            "name": "The Great Hunt Collapse",
+            "years_ago": 1800,
+            "description": "A chain of migratory apex beasts destroyed dozens of nomad clans in a single season, proving that the old ways could not hold against the growing threat. Survivors fled toward defensible terrain and began building permanent walls.",
+            "consequences": [
+              "Permanent city-building becomes the human norm",
+              "Monster migration patterns become a civic obsession"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "age_of_the_walls",
+        "name": "Age of the Walls",
+        "years_ago_start": 1200,
+        "years_ago_end": 220,
+        "summary": "Humans learned to survive by concentrating power into fortified cities, military guilds, and trade routes protected by towers and ward-stones. The first great walls gave stability, but also created a culture that prizes expansion, reclamation, and controlled risk over true exploration.",
+        "key_events": [
+          {
+            "name": "Foundation of Wallend",
+            "years_ago": 980,
+            "description": "Wallend was founded at the edge of a fertile basin and built upward and outward as refugees, soldiers, and smiths arrived. Its huge outer wall became a symbol of human defiance and the gateway to the eastern frontier.",
+            "consequences": [
+              "Wallend becomes a major expedition hub",
+              "The eastern frontier gains organized supply lines"
+            ]
+          },
+          {
+            "name": "The Binding of the Gate Roads",
+            "years_ago": 430,
+            "description": "A network of warded roads and beacon towers was established between the largest settlements, reducing monster raids but also centralizing authority in the hands of those who controlled the roads and the wards.",
+            "consequences": [
+              "Trade flourishes behind protected corridors",
+              "Remote villages become dependent on city protection"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "age_of_frontier_pressure",
+        "name": "Age of Frontier Pressure",
+        "years_ago_start": 220,
+        "years_ago_end": 0,
+        "summary": "The present age is defined by escalating tension between safety and expansion. Cities are crowded, rune supplies are scarce, and the demand for monster materials has made frontier expeditions more lucrative and more deadly. The Blackwood and other untamed zones are no longer just dangers; they are the future fighting back.",
+        "key_events": [
+          {
+            "name": "The Blackwood Breach",
+            "years_ago": 37,
+            "description": "A massive creature breach erupted from the Blackwood and destroyed three outlying watchposts before being repelled. Since then, Wallend has doubled its patrols, but the forest has become more active and more hostile.",
+            "consequences": [
+              "Wallend increases wall garrisons",
+              "Blackwood becomes feared as a living threat"
+            ]
+          },
+          {
+            "name": "The Rune Shortage",
+            "years_ago": 12,
+            "description": "Several major rune mines failed simultaneously, causing shortages of wards, enchantments, and monster-hunting gear. The crisis exposed how dependent human society is on dangerous frontier extraction.",
+            "consequences": [
+              "Faction conflict over relic rights intensifies",
+              "Adventuring parties become economically vital"
+            ]
+          }
+        ]
+      }
+    ],
+    "current_year": "1224 Age of the Walls",
+    "calendar_note": "Years are counted from the Founding Reckoning, with seasons marked by the Wall Bells: Frostwake, Thawfall, Suncrest, and Emberwane.",
+    "creation_myth": "The origins of this world are shrouded in mystery.",
+    "timeline": []
+  },
+  "geography": {
+    "regions": [
+      {
+        "id": "region_wallend",
+        "name": "Wallend",
+        "type": "city_state",
+        "description": "Wallend is the eastern bastion-city, built around a colossal fifty-foot wall that arcs for miles and bristles with watchtowers, ballistae, rune lamps, and monster horns hung as trophies. The city is crowded, practical, and permanently alert, with every district serving the frontier war economy in some way. Its people are proud, exhausted, and keenly aware that their prosperity depends on what dies beyond the gate.\n\nA few miles east, the Blackwood begins—an ominous tree line that seems too dark even at noon. Expeditions depart daily, returning with claws, glands, crystals, and sometimes survivors who are never quite the same. Wallend thrives on salvage, but every caravan, hunter team, and relic dig risks dragging the forest’s attention back home.",
+        "climate": "temperate",
+        "notable_locations": [
+          {
+            "name": "The Fifty-Foot Wall",
+            "type": "fortress",
+            "description": "A massive layered wall with ward-stones, murder slits, and signal towers. Patrols, trials, and desperate last stands all happen here, and breaches are remembered for generations."
+          },
+          {
+            "name": "The Quarry Market",
+            "type": "market",
+            "description": "A rough, noisy market where monster parts, rune scraps, and frontier salvage are bought and sold. It is the best place to find work, rumors, and illegal enchantments."
+          },
+          {
+            "name": "Gatehouse Nine",
+            "type": "city",
+            "description": "The main expedition gate, where hunters register contracts and return to be inspected for curses, parasites, and stolen relics. Many adventurers begin and end their careers here."
+          }
+        ],
+        "connections": [
+          "region_blackwood",
+          "region_briar_steppe"
+        ],
+        "faction_ids": [
+          "faction_wallend_crown",
+          "faction_frontier_wardens",
+          "faction_ash_cartel"
+        ],
+        "adventure_hooks": [
+          "A breach in the wall reveals a tunnel leading to an ancient dungeon beneath the city.",
+          "A caravan carrying critical ward-stones has vanished between Gatehouse Nine and the Blackwood edge."
+        ],
+        "notable_features": []
+      },
+      {
+        "id": "region_blackwood",
+        "name": "The Blackwood",
+        "type": "wilderness",
+        "description": "The Blackwood is a vast eastern forest where the trees grow dense, old, and unnaturally quiet before a strike. Monster dens hide in root-choked hollows, ancient stone doors emerge after storms, and the canopy distorts sound so that a scream can travel too far or not at all. Locals say the forest remembers every person who has ever entered it.\n\nIt is not merely dangerous; it is profitable. The Blackwood produces rare resins, mana-amber, beast cores, rune-bearing fungi, and dungeon entrances that surface like wounds. This makes it the most contested frontier in the world, with licensed hunters, poachers, cultists, and relic-claims all competing under the shadow of things that hunt by smell, sound, and magic alike.",
+        "climate": "varied",
+        "notable_locations": [
+          {
+            "name": "The Rootvault",
+            "type": "dungeon",
+            "description": "A half-buried ruin of black stone and living roots, rumored to contain an intact rune engine. Its halls shift after moonrise, and its lower chambers are guarded by a creature that should not exist."
+          },
+          {
+            "name": "Ashen Hollow",
+            "type": "landmark",
+            "description": "A circular clearing where nothing grows and the air tastes of smoke. Expeditions report seeing old battlefields, ghost lights, and tracks from beasts with too many joints."
+          },
+          {
+            "name": "The Glass Briar",
+            "type": "ruins",
+            "description": "A shattered greenhouse-city swallowed by thorn and crystal. Its walls contain alchemical residues and dangerous artifacts, making it a prime target for salvage teams and thieves."
+          }
+        ],
+        "connections": [
+          "region_wallend",
+          "region_briar_steppe",
+          "region_sunken_march"
+        ],
+        "faction_ids": [
+          "faction_frontier_wardens",
+          "faction_ash_cartel",
+          "faction_order_of_the_ember_sigil"
+        ],
+        "adventure_hooks": [
+          "A map to the Rootvault is being sold in pieces by rival hunters.",
+          "A new monster breed is pushing toward the wall, and its nest lies deep in the Blackwood."
+        ],
+        "notable_features": []
+      },
+      {
+        "id": "region_briar_steppe",
+        "name": "The Briar Steppe",
+        "type": "wilderness",
+        "description": "West of Wallend lies a broad grassland broken by thorn hedges, old roads, and abandoned watch farms. The Briar Steppe is less lethal than the Blackwood, but its roaming packs, sinkholes, and cursed burial mounds make travel uncertain. Small towns survive here by paying protection, maintaining beacon fires, and surrendering a portion of their harvest to armed escorts.\n\nThe Steppe is the corridor between civilization and the unknown, making it a battleground for tariffs, patrol rights, and refugee resettlement. Those who live here resent Wallend’s taxes and fear the eastern frontier’s monsters spilling westward, yet they rely on the city’s walls and mercenaries to keep their children alive.",
+        "climate": "temperate",
+        "notable_locations": [
+          {
+            "name": "Harrow Ford",
+            "type": "town",
+            "description": "A fortified crossing town where caravans, pilgrims, and monster hunters gather. The ford is safe only when the ward-lamps burn, and disappearances increase whenever they fail."
+          },
+          {
+            "name": "The Thrice-Buried Cairn",
+            "type": "dungeon",
+            "description": "An ancient burial mound that has been sealed and unsealed many times. Each opening reveals deeper tunnels, fresh corpses, and relics stamped with forgotten royal seals."
+          },
+          {
+            "name": "Beacon Ridge",
+            "type": "landmark",
+            "description": "A chain of signal towers that can be seen for leagues on a clear day. When the lights go out, something in the Steppe usually notices first."
+          }
+        ],
+        "connections": [
+          "region_wallend",
+          "region_blackwood",
+          "region_sunken_march"
+        ],
+        "faction_ids": [
+          "faction_wallend_crown",
+          "faction_briar_freeholds",
+          "faction_ash_cartel"
+        ],
+        "adventure_hooks": [
+          "A village is withholding tribute because it found a safer route through an old cairn.",
+          "A beacon tower has started signaling in a code nobody in Wallend recognizes."
+        ],
+        "notable_features": []
+      },
+      {
+        "id": "region_sunken_march",
+        "name": "The Sunken March",
+        "type": "wilderness",
+        "description": "South of the main road network lies a wetland of flooded ruins, reed-choked canals, and floating mats of moss that conceal sinkholes and ancient foundations. The Sunken March is rich in alchemical plants, fish-beast carcasses, and drowned relics, but every expedition risks disease, quickmud, and things that move beneath the water with human intelligence.\n\nThe March is where the dead city-states of the older age are slowly resurfacing, one wall and one crypt at a time. Both Wallend and the Ash Cartel want access to its salvage, while local marsh clans and forbidden priests insist some ruins should remain underwater forever.",
+        "climate": "varied",
+        "notable_locations": [
+          {
+            "name": "Flooded Basilica",
+            "type": "ruins",
+            "description": "A submerged temple complex whose upper halls remain dry at low tide. It is said to house a holy relic and a monster that learned to pray."
+          },
+          {
+            "name": "Mireglass Ruin",
+            "type": "dungeon",
+            "description": "A mirror-lined vault half sunk in black water. Those who enter report seeing alternate routes, false companions, and reflections that act before they do."
+          },
+          {
+            "name": "The Reed Market",
+            "type": "market",
+            "description": "A floating market of boats, rafts, and stilts where marsh salvage is traded. It is the best place to hire guides, buy antidotes, and acquire illicit maps."
+          }
+        ],
+        "connections": [
+          "region_blackwood",
+          "region_briar_steppe"
+        ],
+        "faction_ids": [
+          "faction_order_of_the_ember_sigil",
+          "faction_ash_cartel",
+          "faction_march_keepers"
+        ],
+        "adventure_hooks": [
+          "A drowned ruin has surfaced with its doors open for the first time in centuries.",
+          "A marsh guide claims a route to a powerful gem vein, but the route crosses a nest of territorial beasts."
+        ],
+        "notable_features": []
+      }
+    ],
+    "overview": ""
+  },
+  "factions": [
+    {
+      "id": "faction_wallend_crown",
+      "name": "The Crown of Wallend",
+      "type": "government",
+      "description": "The Crown of Wallend governs through emergency law, rationed protection, and absolute control of the wall, gatehouses, and military logistics. They see the frontier as a necessary wound: dangerous, profitable, and never to be trusted. Publicly they promise safety and order; privately they fear that one failed season of monster pressure could collapse the entire city system.",
+      "leader": "Margrave Elian Voss",
+      "headquarters": "High Keep, Wallend",
+      "region_ids": [
+        "region_wallend"
+      ],
+      "goals": [
+        "Hold the wall at any cost",
+        "Centralize all rune and ward production",
+        "Keep frontier wealth flowing into the city"
+      ],
+      "methods": [
+        "military conscription",
+        "permit systems",
+        "taxation of salvage"
+      ],
+      "allies": [
+        "faction_frontier_wardens"
+      ],
+      "enemies": [
+        "faction_ash_cartel",
+        "faction_briar_freeholds"
+      ],
+      "player_hooks": [
+        "Take contracts to defend the wall or escort officials.",
+        "Earn permits, titles, or pardons by serving the city’s interests."
+      ]
+    },
+    {
+      "id": "faction_frontier_wardens",
+      "name": "The Frontier Wardens",
+      "type": "military",
+      "description": "The Wardens are the elite monster-hunting corps assigned to clear routes, recover relics, and respond to breaches. They are admired by civilians and feared by smugglers because they can legally kill almost anything—and frequently do. Their members are practical, brave, and deeply superstitious, knowing that the line between hunter and prey can vanish in a single bad night.",
+      "leader": "Commander Sera Thane",
+      "headquarters": "Gatehouse Nine",
+      "region_ids": [
+        "region_wallend",
+        "region_blackwood",
+        "region_briar_steppe"
+      ],
+      "goals": [
+        "Map and secure more frontier ground",
+        "Destroy breeding dens and breach-sites",
+        "Recover valuable cores and rune materials"
+      ],
+      "methods": [
+        "organized hunts",
+        "beacon patrols",
+        "specialized monster teams"
+      ],
+      "allies": [
+        "faction_wallend_crown",
+        "faction_order_of_the_ember_sigil"
+      ],
+      "enemies": [
+        "faction_ash_cartel"
+      ],
+      "player_hooks": [
+        "Join official expeditions into dangerous zones.",
+        "Be hired as specialists for high-risk hunts or rescue operations."
+      ]
+    },
+    {
+      "id": "faction_ash_cartel",
+      "name": "The Ash Cartel",
+      "type": "merchant",
+      "description": "The Ash Cartel is an aggressive salvage and trade syndicate that profits from monster parts, illegal relics, and black-market enchantments. They pose as legitimate merchants in Wallend while bribing hunters, forging permits, and stripping value from dangerous ruins before the Crown can claim them. Many citizens hate them, but many depend on them for gear they cannot otherwise afford.",
+      "leader": "Lady Veyra Ash",
+      "headquarters": "The Quarry Market, Wallend",
+      "region_ids": [
+        "region_wallend",
+        "region_blackwood",
+        "region_briar_steppe",
+        "region_sunken_march"
+      ],
+      "goals": [
+        "Control salvage pricing and supply",
+        "Monopolize access to rare frontier materials",
+        "Smuggle relics past Crown inspection"
+      ],
+      "methods": [
+        "bribery",
+        "smuggling",
+        "private hunters"
+      ],
+      "allies": [
+        "faction_briar_freeholds"
+      ],
+      "enemies": [
+        "faction_wallend_crown",
+        "faction_frontier_wardens",
+        "faction_order_of_the_ember_sigil"
+      ],
+      "player_hooks": [
+        "Sell monster materials for high profit.",
+        "Take morally gray jobs involving smuggling or relic recovery."
+      ]
+    },
+    {
+      "id": "faction_order_of_the_ember_sigil",
+      "name": "Order of the Ember Sigil",
+      "type": "religious",
+      "description": "The Order of the Ember Sigil treats the frontier as sacred trial, believing fire, sacrifice, and courage are what keep humanity from being erased. They bless hunters, consecrate walls, and purge corrupted relics, but their zeal often puts them at odds with merchants and pragmatic officials. To some they are heroes; to others, fanatics who would burn a city to save its soul.",
+      "leader": "High Pyre Matron Ilyra",
+      "headquarters": "Ashen Chapel, Wallend",
+      "region_ids": [
+        "region_wallend",
+        "region_blackwood",
+        "region_sunken_march"
+      ],
+      "goals": [
+        "Protect humanity from corruption",
+        "Seal or cleanse dangerous ruins",
+        "Expand devotional influence over frontier policy"
+      ],
+      "methods": [
+        "ritual purification",
+        "monster exorcism",
+        "public sermons"
+      ],
+      "allies": [
+        "faction_frontier_wardens"
+      ],
+      "enemies": [
+        "faction_ash_cartel",
+        "faction_march_keepers"
+      ],
+      "player_hooks": [
+        "Receive blessings, cures, or quests to cleanse cursed sites.",
+        "Investigate relics or cult activity under religious authority."
+      ]
+    },
+    {
+      "id": "faction_briar_freeholds",
+      "name": "The Briar Freeholds",
+      "type": "revolutionary",
+      "description": "The Freeholds are a loose alliance of steppe towns, farmers, and caravan masters who resent Wallend’s taxes, conscription, and control over the roads. They want local autonomy, fair trade, and the right to defend their own settlements without being stripped for the city’s wars. They are not unified enough to overthrow the Crown, but they are organized enough to make the frontier costly.",
+      "leader": "Council Speaker Bram Vale",
+      "headquarters": "Harrow Ford",
+      "region_ids": [
+        "region_briar_steppe"
+      ],
+      "goals": [
+        "Reduce Wallend taxes and control",
+        "Build independent defenses and ward towers",
+        "Protect local trade and refugee rights"
+      ],
+      "methods": [
+        "strikes",
+        "road blockades",
+        "community militias"
+      ],
+      "allies": [
+        "faction_ash_cartel"
+      ],
+      "enemies": [
+        "faction_wallend_crown"
+      ],
+      "player_hooks": [
+        "Help defend a village that refuses city authority.",
+        "Broker peace, supplies, or sabotage between steppe towns and Wallend."
+      ]
+    },
+    {
+      "id": "faction_march_keepers",
+      "name": "The March Keepers",
+      "type": "ancient_order",
+      "description": "The March Keepers are an old, secretive custodial order descended from the priests and engineers who once sealed the Sunken March’s worst ruins. They believe certain places must remain undisturbed because what sleeps beneath the water was never meant to be looted. They are suspicious of both the Crown and the Cartel, and they sabotage excavations when they think the world is being pushed too far.",
+      "leader": "Keeper-Militant Neris Quill",
+      "headquarters": "Hidden causeways of the Sunken March",
+      "region_ids": [
+        "region_sunken_march"
+      ],
+      "goals": [
+        "Prevent catastrophic ruin breaches",
+        "Preserve old seals and wards",
+        "Hide or destroy forbidden knowledge"
+      ],
+      "methods": [
+        "misdirection",
+        "ancient wardcraft",
+        "sabotage of digs"
+      ],
+      "allies": [
+        "faction_order_of_the_ember_sigil"
+      ],
+      "enemies": [
+        "faction_ash_cartel",
+        "faction_wallend_crown"
+      ],
+      "player_hooks": [
+        "Be hired to recover a lost seal or map a drowned ruin.",
+        "Choose whether to help preserve a dangerous secret or expose it."
+      ]
+    }
+  ],
+  "religion": {
+    "system": "pantheon",
+    "description": "Religion is practical, frontier-minded, and strongly tied to danger. People do not generally ask whether the gods exist; they ask which powers keep the wall standing, which rites prevent a hunt from going wrong, and which sacrifices are worth a safe return. Temples double as infirmaries, record halls, and monster-burners, while rural people often blend official worship with local charms and ancestor vows.",
+    "deities_or_forces": [
+      {
+        "name": "The Ember Father",
+        "domain": "fire, endurance, purification, courage",
+        "alignment": "lawful_good",
+        "description": "Worshipped by soldiers, hunters, and smiths, the Ember Father is honored through forge oaths, wall torches, and cleansing flames. He is central to frontier life because people believe fire keeps both monsters and corruption at bay. His clergy are heavily involved in battlefield rites and curse-burning.",
+        "faction_ids": [
+          "faction_order_of_the_ember_sigil"
+        ],
+        "region_ids": [
+          "region_wallend",
+          "region_blackwood"
+        ]
+      },
+      {
+        "name": "The Hollow Wild",
+        "domain": "beasts, growth, instinct, predation",
+        "alignment": "true_neutral",
+        "description": "The Hollow Wild is not a single god but a force worshipped by hunters and feared by settlers. It is said to reward strength, adaptation, and survival, but never mercy. Some frontier clans leave offerings to appease it before crossing into the Blackwood, believing every monster is an answer to a broken promise.",
+        "faction_ids": [],
+        "region_ids": [
+          "region_blackwood",
+          "region_briar_steppe",
+          "region_sunken_march"
+        ]
+      },
+      {
+        "name": "Saint of the Last Gate",
+        "domain": "walls, thresholds, defense, final stands",
+        "alignment": "lawful_neutral",
+        "description": "This guardian figure is venerated at gates, bridges, and fortifications. People pray to the Saint before dangerous departures and during sieges, asking for the strength to hold a line when all else fails. Their cult is common in Wallend and among caravan guards.",
+        "faction_ids": [
+          "faction_wallend_crown",
+          "faction_frontier_wardens"
+        ],
+        "region_ids": [
+          "region_wallend",
+          "region_briar_steppe"
+        ]
+      },
+      {
+        "name": "The Drowned Lantern",
+        "domain": "lost roads, secrets, the dead beneath water",
+        "alignment": "chaotic_neutral",
+        "description": "The Drowned Lantern is a feared and half-banned force associated with the Sunken March. Fisherfolk and ruin-divers whisper prayers to it for safe passage, but the March Keepers warn that it guides the curious toward truths they are not meant to survive. Its rites involve mirrors, reeds, and coins cast into black water.",
+        "faction_ids": [
+          "faction_march_keepers"
+        ],
+        "region_ids": [
+          "region_sunken_march"
+        ]
+      }
+    ],
+    "overview": "Religion is practical, frontier-minded, and strongly tied to danger. People do not generally ask whether the gods exist; they ask which powers keep the wall standing, which rites prevent a hunt from going wrong, and which sacrifices are worth a safe return. Temples double as infirmaries, record halls, and monster-burners, while rural people often blend official worship with local charms and ancestor vows."
+  },
+  "key_figures": [
+    {
+      "name": "Margrave Elian Voss",
+      "title": "Ruler of Wallend",
+      "faction_id": "faction_wallend_crown",
+      "region_id": "region_wallend",
+      "description": "Elian Voss is a hard-eyed administrator in layered armor, more statesman than warrior, though he keeps a sword close at hand. He speaks in measured terms about rationing, walls, and necessary losses, but his sleeplessness and old frontier scars betray how much pressure the city is under. He is respected because he never pretends the world is safe.",
+      "motivation": "Keep Wallend standing long enough to outlast the frontier crisis",
+      "secret": "He has ordered covert expeditions into forbidden ruins to find a solution to the rune shortage.",
+      "interaction_hooks": [
+        "Hire or petition him for sanctioned expeditions.",
+        "Expose his secret raids or help cover them up."
+      ],
+      "role": "Ruler of Wallend",
+      "alive": true
+    },
+    {
+      "name": "Commander Sera Thane",
+      "title": "Leader of the Frontier Wardens",
+      "faction_id": "faction_frontier_wardens",
+      "region_id": "region_wallend",
+      "description": "Sera Thane is a broad-shouldered veteran with a scarred visor and a habit of marking maps with tiny monster icons. She is strict, fearless, and visibly tired of politicians second-guessing field realities. Her subordinates trust her because she goes into the dark with them instead of issuing orders from safety.",
+      "motivation": "Reduce frontier deaths without sacrificing the city’s reach",
+      "secret": "She has seen signs that the Blackwood breach was not natural and may be the result of deliberate sabotage.",
+      "interaction_hooks": [
+        "Take high-risk missions directly from her.",
+        "Aid her investigation into the breach or keep her from uncovering the wrong culprit."
+      ],
+      "role": "Leader of the Frontier Wardens",
+      "alive": true
+    },
+    {
+      "name": "Lady Veyra Ash",
+      "title": "Head of the Ash Cartel",
+      "faction_id": "faction_ash_cartel",
+      "region_id": "region_wallend",
+      "description": "Veyra Ash dresses like a noble but carries the smile of someone who knows exactly how much people are willing to pay to survive. She is elegant, charming, and ruthless in business, with agents everywhere salvage changes hands. Many despise her, but everyone knows she can get impossible goods into the city.",
+      "motivation": "Control the frontier supply chain before the Crown strangles private trade",
+      "secret": "She is stockpiling an illegal cache of unstable rune cores that could power a city—or destroy part of Wallend.",
+      "interaction_hooks": [
+        "Negotiate lucrative but risky contracts.",
+        "Discover her cache and decide whether to sell, steal, or expose it."
+      ],
+      "role": "Head of the Ash Cartel",
+      "alive": true
+    },
+    {
+      "name": "High Pyre Matron Ilyra",
+      "title": "Supreme cleric of the Ember Sigil",
+      "faction_id": "faction_order_of_the_ember_sigil",
+      "region_id": "region_wallend",
+      "description": "Ilyra is solemn, sharp-featured, and always faintly smelling of incense and smoke. She preaches that humanity survives only by refusing corruption, though she is kinder in private than her public sermons suggest. Her influence reaches into hospitals, barracks, and funeral pyres alike, making her one of Wallend’s most powerful voices.",
+      "motivation": "Keep dangerous magic from hollowing out human society",
+      "secret": "She doubts the Order’s hardline purges and secretly preserves some forbidden texts for study.",
+      "interaction_hooks": [
+        "Seek purification, healing, or holy sanction.",
+        "Help her decide whether a relic should be destroyed or studied."
+      ],
+      "role": "Supreme cleric of the Ember Sigil",
+      "alive": true
+    },
+    {
+      "name": "Council Speaker Bram Vale",
+      "title": "Voice of the Briar Freeholds",
+      "faction_id": "faction_briar_freeholds",
+      "region_id": "region_briar_steppe",
+      "description": "Bram Vale is a weathered negotiator with a farmer’s hands and a caravanner’s patience. He is not a revolutionary by temperament, but he has become one because he watched too many villages bleed for Wallend’s ambitions. He listens well, speaks plainly, and knows how to turn desperate people into a functioning alliance.",
+      "motivation": "Win real autonomy for the Steppe without provoking annihilation",
+      "secret": "He has secretly been trading with the Ash Cartel to secure weapons for Freehold militias.",
+      "interaction_hooks": [
+        "Broker talks between the Freeholds and Wallend.",
+        "Uncover his backchannel deals or help him keep them hidden."
+      ],
+      "role": "Voice of the Briar Freeholds",
+      "alive": true
+    },
+    {
+      "name": "Keeper-Militant Neris Quill",
+      "title": "Hidden custodian of the Sunken March",
+      "faction_id": "faction_march_keepers",
+      "region_id": "region_sunken_march",
+      "description": "Neris Quill wears reed-colored armor and a hood lined with old seal-script, moving like someone who has spent a lifetime avoiding attention. She is calm, patient, and uncompromising when ancient wards are at risk. To adventurers she can be a guide, a patron, or an obstacle that appears just before a treasure chamber opens.",
+      "motivation": "Preserve the buried seals that keep the March’s worst ruin from waking",
+      "secret": "She knows the exact location of a submerged vault that contains proof the March was once deliberately flooded to imprison something alive.",
+      "interaction_hooks": [
+        "Escort her to a collapsing seal site.",
+        "Choose between helping her hide the vault or forcing the truth into the open."
+      ],
+      "role": "Hidden custodian of the Sunken March",
+      "alive": true
+    }
+  ],
+  "concept_images": [
+    {
+      "type": "landscape",
+      "subject": "Sweeping landscape of Wallend: Wallend is the eastern bastion-city, built around a colossal fifty-fo",
+      "url": "/world-images/404c00e7_the_eastern_wallfront/images/concept_landscape.png",
+      "prompt": "Sweeping fantasy RPG landscape of Wallend, eastern bastion-city encircled by a colossal fifty-foot wall curving for miles, bristling with watchtowers, ballistae, rune lamps, and monstrous trophies. Crowded frontier districts, smoke, supply carts, armored workers, exhausted proud citizens, war economy bustle. Beyond the gate, caravans and hunters depart toward the Blackwood, a vast ominous forest line under a dim sky, unnaturally dark even at noon. Moody, tense, gritty, cinematic scale, sense of constant vigilance and looming threat."
+    },
+    {
+      "type": "city",
+      "subject": "A major city in The Eastern Wallfront",
+      "url": "/world-images/404c00e7_the_eastern_wallfront/images/concept_city.png",
+      "prompt": "A sprawling major city on the Eastern Wallfront, built against an immense fortified border wall, with towering battlements, watchtowers, lantern-lit gates, crowded stone streets, armored patrols, trading caravans, and banners whipping in a cold wind; a tense blend of military discipline and bustling commerce, with war scars on the walls, distant siege engines, smoke from foundries, and a dramatic twilight sky, epic fantasy RPG illustration, richly detailed, atmospheric, cinematic lighting"
+    },
+    {
+      "type": "landmark",
+      "subject": "A notable landmark in The Eastern Wallfront",
+      "url": "/world-images/404c00e7_the_eastern_wallfront/images/concept_landmark.png",
+      "prompt": "A towering landmark on The Eastern Wallfront: a colossal weathered stone bastion fused with jagged iron buttresses, overlooking a mist-choked frontier and endless war-scarred plains. Flickering signal braziers crown the ramparts, banners whip in the wind, and distant siege scars mark ancient battles. Below, narrow gates, supply caravans, and armored sentries create tense motion. Distant thunderclouds and faint firelight in the horizon evoke looming conflict. Cinematic fantasy RPG illustration, epic scale, grim atmosphere, highly detailed, dramatic lighting."
+    }
+  ]
+}

@@ -17,6 +17,10 @@ export default defineConfig({
       '/scene-images': {
         target: 'http://localhost:3001',
         changeOrigin: true
+      },
+      '/world-images': {
+        target: 'http://localhost:3001',
+        changeOrigin: true
       }
     }
   }

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { ART_STYLES } from '../types'
+import GeneratingOverlay from '../components/GeneratingOverlay'
 
 const SCENE_ART_STYLES = [
   { value: 'oil-painting', label: 'Oil Painting' },
@@ -58,6 +58,12 @@ export default function WorldBuilder() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-purple-950">
+      {generating && (
+        <GeneratingOverlay
+          message="Building your world..."
+          subtitle="Generating lore, geography, factions, religion, and concept images"
+        />
+      )}
       <nav className="max-w-3xl mx-auto px-6 py-6">
         <Link to="/" className="text-gray-400 hover:text-purple-300 transition-colors text-sm">
           ← Back

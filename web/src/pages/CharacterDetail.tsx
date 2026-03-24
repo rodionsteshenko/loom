@@ -8,7 +8,11 @@ export default function CharacterDetail() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [generatingPortrait, setGeneratingPortrait] = useState(false)
+  const [refinePrompt, setRefinePrompt] = useState('')
+  const [refining, setRefining] = useState(false)
   const navigate = useNavigate()
+
+  const isDraft = character?.status === 'draft'
 
   useEffect(() => {
     fetch('/api/characters')
@@ -45,6 +49,38 @@ export default function CharacterDetail() {
       setError(err instanceof Error ? err.message : 'Portrait generation failed')
     } finally {
       setGeneratingPortrait(false)
+    }
+  }
+
+  const handleRefine = async () => {
+    if (!refinePrompt.trim() || !character) return
+    setRefining(true)
+    setError(null)
+    try {
+      const res = await fetch(`/api/characters/${characterId}/refine`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: refinePrompt }),
+      })
+      if (!res.ok) throw new Error((await res.json()).error || 'Refinement failed')
+      const updated = await res.json()
+      setCharacter(updated)
+      setRefinePrompt('')
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Refinement failed')
+    } finally {
+      setRefining(false)
+    }
+  }
+
+  const handleFinalize = async () => {
+    try {
+      const res = await fetch(`/api/characters/${characterId}/finalize`, { method: 'PATCH' })
+      if (!res.ok) throw new Error('Failed to finalize')
+      const updated = await res.json()
+      setCharacter(updated)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to finalize')
     }
   }
 
@@ -105,13 +141,28 @@ export default function CharacterDetail() {
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900">
       <header className="border-b border-purple-800/50 bg-black/30 backdrop-blur sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link to="/characters" className="text-purple-400 hover:text-purple-300 flex items-center gap-2">← Back to Gallery</Link>
-          <button
-            onClick={() => navigate(`/campaigns?character=${character.id}`)}
-            className="px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition"
-          >
-            Play as {character.name.split(' ')[0]}
-          </button>
+          <Link to={character.world_id ? `/characters?world=${character.world_id}` : '/characters'} className="text-purple-400 hover:text-purple-300 flex items-center gap-2">← Back</Link>
+          <div className="flex items-center gap-3">
+            <span className={`px-2 py-0.5 rounded text-xs font-medium ${character.status === 'active' ? 'bg-purple-600/80 text-purple-100' : 'bg-amber-700/80 text-amber-100'}`}>
+              {character.status || 'draft'}
+            </span>
+            {isDraft && (
+              <button
+                onClick={handleFinalize}
+                className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white text-sm rounded-lg transition"
+              >
+                Finalize
+              </button>
+            )}
+            {character.status === 'active' && (
+              <button
+                onClick={() => navigate(`/campaigns?character=${character.id}`)}
+                className="px-3 py-1.5 bg-purple-600 hover:bg-purple-500 text-white text-sm rounded-lg transition"
+              >
+                Play as {character.name.split(' ')[0]}
+              </button>
+            )}
+          </div>
         </div>
       </header>
 
@@ -308,6 +359,26 @@ export default function CharacterDetail() {
                 )}
               </Section>
             </div>
+            {/* Refine prompt — only in draft mode */}
+            {isDraft && (
+              <div className="flex gap-3">
+                <input
+                  value={refinePrompt}
+                  onChange={e => setRefinePrompt(e.target.value)}
+                  onKeyDown={e => e.key === 'Enter' && handleRefine()}
+                  disabled={refining}
+                  placeholder="Refine this character... (e.g., 'make them more mysterious' or 'change backstory to include a betrayal')"
+                  className="flex-1 bg-gray-800/60 border border-gray-700 rounded-lg px-4 py-3 text-gray-200 placeholder:text-gray-600 focus:outline-none focus:border-purple-500 disabled:opacity-50"
+                />
+                <button
+                  onClick={handleRefine}
+                  disabled={refining || !refinePrompt.trim()}
+                  className="px-6 py-3 bg-purple-600 hover:bg-purple-500 disabled:opacity-50 text-white rounded-lg transition whitespace-nowrap"
+                >
+                  {refining ? 'Updating...' : 'Refine'}
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </main>

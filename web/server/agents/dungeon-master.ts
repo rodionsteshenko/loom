@@ -5,6 +5,10 @@ import { MODEL } from './config.js'
 
 const SESSION_GENERATION_PROMPT = `You are an AI Dungeon Master for a Choose Your Own Adventure RPG called Loom.
 
+You will receive campaign context, character details, and a CAMPAIGN HISTORY showing what has happened so far.
+Build on previous events — reference NPCs the player has met, consequences of past choices, and ongoing plot threads.
+Do NOT repeat or contradict what happened in previous scenes. Advance the story naturally.
+
 Generate the next story session. Output ONLY valid JSON in this exact format:
 {
   "narrative": "2-4 paragraphs of story text, immersive second-person (you)",

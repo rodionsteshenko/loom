@@ -6,6 +6,7 @@ import { rollCheck, type CheckResult } from '../agents/tools/dice.js'
 import { getRelevantModifier, checkAutoSucceed, checkAutoFail } from '../agents/tools/difficulty.js'
 import { loadSession, saveSession } from '../agents/tools/state.js'
 import { generateImage } from '../agents/tools/image.js'
+import { getArtStylePrompt } from '../agents/tools/art-styles.js'
 import { log, extractJSON } from '../utils.js'
 import type { GameContext, PipelineResult, RollResult, Choice } from '../types.js'
 
@@ -26,19 +27,15 @@ function toFrontendRollResult(result: CheckResult): RollResult {
   }
 }
 
-const SCENE_ART_STYLES: Record<string, string> = {
-  'oil-painting': 'Oil painting style, rich textured brushstrokes, dramatic lighting, classic fantasy art',
-  'classic-fantasy': 'Classic fantasy art style, Larry Elmore, TSR, 1980s D&D, detailed oil painting',
-  'dark-fantasy': 'Dark fantasy art, gritty moody atmosphere, deep shadows, ominous lighting',
-  'watercolor': 'Watercolor illustration, soft flowing colors, ethereal dreamy quality',
-  'digital-art': 'Digital art, clean polished illustration, modern fantasy style',
-  'realistic': 'Photorealistic fantasy, highly detailed, lifelike rendering',
-  'anime': 'Anime illustration style, expressive characters, vibrant',
-}
+// Art styles centralized in agents/tools/art-styles.ts
 
-async function generateImagePrompt(narrative: string): Promise<string> {
+async function generateImagePrompt(narrative: string, characterDesc?: string): Promise<string> {
   try {
-    const result = await run(imagePromptAgent, narrative.substring(0, 1000), { maxTurns: 3 })
+    let input = narrative.substring(0, 1000)
+    if (characterDesc) {
+      input += `\n\nThe main character looks like: ${characterDesc.substring(0, 300)}`
+    }
+    const result = await run(imagePromptAgent, input, { maxTurns: 3 })
     return extractAllTextOutput(result.newItems).trim() || narrative.substring(0, 200)
   } catch {
     return narrative.substring(0, 200)
@@ -49,14 +46,15 @@ async function generateOutcomeImage(
   campaignDir: string,
   sessionId: string,
   outcomeNarrative: string,
-  artStyle?: string
+  artStyle?: string,
+  characterDesc?: string
 ): Promise<string | null> {
   try {
-    const prompt = await generateImagePrompt(outcomeNarrative)
+    const prompt = await generateImagePrompt(outcomeNarrative, characterDesc)
     const campaignId = path.basename(campaignDir)
     const filename = `${sessionId}_outcome.png`
     const outputPath = path.join(campaignDir, filename)
-    const stylePrefix = SCENE_ART_STYLES[artStyle || 'oil-painting'] || SCENE_ART_STYLES['oil-painting']
+    const stylePrefix = getArtStylePrompt(artStyle || 'oil-painting')
 
     await generateImage({ prompt: `${stylePrefix}, cinematic composition: ${prompt}`, outputPath, resolution: '1K' })
     return `/scene-images/${campaignId}/${filename}`
@@ -163,7 +161,7 @@ export async function resolveChoicePipeline(ctx: GameContext, choiceId: number):
 
     // Step 7: Generate outcome image (blocking)
     log('[choice] Step 7/8: Generating outcome image')
-    const imageUrl = await generateOutcomeImage(ctx.campaignDir, currentSessionId, outcomeNarrative, (ctx.campaign as any).art_style)
+    const imageUrl = await generateOutcomeImage(ctx.campaignDir, currentSessionId, outcomeNarrative, (ctx.campaign as any).art_style, ctx.character.physical_description)
     if (imageUrl) {
       session.outcome_image_url = imageUrl
       saveSession(ctx.campaignDir, session)

@@ -3,28 +3,13 @@ import path from 'path'
 import { sessionGeneratorAgent, buildSessionPrompt } from '../agents/dungeon-master.js'
 import { imagePromptAgent } from '../agents/image-prompt.js'
 import { analyzeDifficulty } from '../agents/tools/difficulty.js'
-import { createSession, saveSession, getPreviousSessionContext } from '../agents/tools/state.js'
+import { createSession, saveSession, getPreviousSessionContext, buildCampaignStoryContext } from '../agents/tools/state.js'
 import { generateImage } from '../agents/tools/image.js'
+import { getArtStylePrompt } from '../agents/tools/art-styles.js'
 import { log, extractJSON, validateSessionContent } from '../utils.js'
 import type { GameContext, PipelineResult, Choice } from '../types.js'
 
-const SCENE_ART_STYLES: Record<string, string> = {
-  'oil-painting': 'Oil painting style, rich textured brushstrokes, dramatic lighting, classic fantasy art',
-  'classic-fantasy': 'Classic fantasy art style, Larry Elmore, TSR, 1980s D&D, detailed oil painting',
-  'dark-fantasy': 'Dark fantasy art, gritty moody atmosphere, deep shadows, ominous lighting, FromSoftware aesthetic',
-  'watercolor': 'Watercolor illustration, soft flowing colors, ethereal dreamy quality',
-  'storybook': 'Storybook illustration, whimsical charming style, children\'s book aesthetic',
-  'art-nouveau': 'Art nouveau style, ornate flowing lines, natural motifs, decorative borders',
-  'digital-art': 'Digital art, clean polished illustration, modern fantasy style',
-  'concept-art': 'Concept art, film production quality, detailed environment design',
-  'realistic': 'Photorealistic fantasy, highly detailed, lifelike rendering',
-  'comic-book': 'Comic book art style, bold ink lines, dynamic composition, vivid colors',
-  'anime': 'Anime illustration style, expressive characters, Japanese animation aesthetic, vibrant',
-  'pixel-art': 'Pixel art style, retro game aesthetic, chunky pixels, 16-bit era',
-  'noir': 'Film noir style, high contrast black and white, dramatic shadows, mystery',
-  'gothic': 'Gothic art style, dark romantic atmosphere, Victorian aesthetic, ornate details',
-  'eldritch': 'Eldritch horror art, Lovecraftian aesthetic, unsettling, cosmic dread',
-}
+// Art styles centralized in agents/tools/art-styles.ts
 
 // ─── Helpers ───
 
@@ -42,9 +27,13 @@ function enrichChoices(choices: any[], character: any): Choice[] {
   })
 }
 
-async function generateImagePrompt(narrative: string): Promise<string> {
+async function generateImagePrompt(narrative: string, characterDesc?: string): Promise<string> {
   try {
-    const result = await run(imagePromptAgent, narrative.substring(0, 1000), { maxTurns: 3 })
+    let input = narrative.substring(0, 1000)
+    if (characterDesc) {
+      input += `\n\nThe main character looks like: ${characterDesc.substring(0, 300)}`
+    }
+    const result = await run(imagePromptAgent, input, { maxTurns: 3 })
     return extractAllTextOutput(result.newItems).trim() || narrative.substring(0, 200)
   } catch {
     return narrative.substring(0, 200)
@@ -55,14 +44,15 @@ export async function generateSceneImage(
   campaignDir: string,
   sessionId: string,
   narrative: string,
-  artStyle?: string
+  artStyle?: string,
+  characterDesc?: string
 ): Promise<string | null> {
   try {
-    const prompt = await generateImagePrompt(narrative)
+    const prompt = await generateImagePrompt(narrative, characterDesc)
     const campaignId = path.basename(campaignDir)
     const filename = `${sessionId}_scene.png`
     const outputPath = path.join(campaignDir, filename)
-    const stylePrefix = SCENE_ART_STYLES[artStyle || 'oil-painting'] || SCENE_ART_STYLES['oil-painting']
+    const stylePrefix = getArtStylePrompt(artStyle || 'oil-painting')
 
     await generateImage({ prompt: `${stylePrefix}, cinematic composition: ${prompt}`, outputPath, resolution: '1K' })
     return `/scene-images/${campaignId}/${filename}`
@@ -82,14 +72,14 @@ export interface SessionResponse {
 
 export async function generateSessionPipeline(ctx: GameContext): Promise<PipelineResult<SessionResponse>> {
   try {
-    // Step 1: Load previous session context
-    log('[session] Step 1/7: Loading previous session context')
+    // Step 1: Load campaign story context
+    log('[session] Step 1/7: Loading campaign history')
     const previous = getPreviousSessionContext(ctx.campaignDir, ctx.campaign)
+    const fullHistory = buildCampaignStoryContext(ctx.campaignDir, ctx.campaign)
     if (previous) {
-      log(`[session]   Previous session found: "${previous.summary?.slice(0, 80)}..."`)
-    } else {
-      log('[session]   No previous session (first session)')
+      log(`[session]   Last session: "${previous.summary?.slice(0, 80)}..."`)
     }
+    log(`[session]   Full history: ${ctx.campaign.sessions?.length || 0} previous scenes`)
 
     // Step 2: Generate narrative + choices via agent
     log('[session] Step 2/7: Generating narrative and choices via AI')
@@ -97,7 +87,7 @@ export async function generateSessionPipeline(ctx: GameContext): Promise<Pipelin
       campaign: { name: ctx.campaign.name, world: ctx.campaign.world, premise: ctx.campaign.premise },
       character: ctx.character,
       previousSession: previous,
-    })
+    }) + fullHistory
     const agentResult = await run(sessionGeneratorAgent, prompt, { maxTurns: 5 })
     const agentText = extractAllTextOutput(agentResult.newItems)
     log(`[session]   Agent returned ${agentText.length} chars`)
@@ -127,7 +117,7 @@ export async function generateSessionPipeline(ctx: GameContext): Promise<Pipelin
 
     // Step 6: Generate scene image (blocking)
     log('[session] Step 6/7: Generating scene image')
-    const imageUrl = await generateSceneImage(ctx.campaignDir, session.id, raw.narrative, (ctx.campaign as any).art_style)
+    const imageUrl = await generateSceneImage(ctx.campaignDir, session.id, raw.narrative, (ctx.campaign as any).art_style, ctx.character.physical_description)
     if (imageUrl) {
       session.content.image_url = imageUrl
       saveSession(ctx.campaignDir, session)
