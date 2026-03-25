@@ -123,6 +123,41 @@ function ChoiceCard({ choice, onClick, disabled, selected, dimmed }: {
   )
 }
 
+const EVENT_ICONS: Record<string, { icon: string; color: string }> = {
+  hp_change: { icon: '❤️', color: 'text-red-400' },
+  item_gained: { icon: '🎒', color: 'text-green-400' },
+  item_lost: { icon: '💔', color: 'text-gray-400' },
+  npc_encountered: { icon: '👤', color: 'text-blue-400' },
+  location_entered: { icon: '📍', color: 'text-amber-400' },
+  knowledge_gained: { icon: '💡', color: 'text-purple-400' },
+  quest_started: { icon: '📋', color: 'text-yellow-400' },
+  quest_completed: { icon: '✅', color: 'text-green-400' },
+  reputation_change: { icon: '⚖️', color: 'text-cyan-400' },
+}
+
+function EventBadge({ event }: { event: any }) {
+  const style = EVENT_ICONS[event.type] || { icon: '📌', color: 'text-gray-400' }
+  let text = ''
+  switch (event.type) {
+    case 'hp_change': text = `${event.value > 0 ? '+' : ''}${event.value} HP — ${event.reason || ''}`; break
+    case 'item_gained': text = `Found: ${event.name}`; break
+    case 'item_lost': text = `Lost: ${event.name}`; break
+    case 'npc_encountered': text = `Met ${event.name} (${event.disposition || 'unknown'})`; break
+    case 'location_entered': text = `Entered: ${event.name}`; break
+    case 'knowledge_gained': text = event.fact; break
+    case 'quest_started': text = `Quest: ${event.name}`; break
+    case 'quest_completed': text = `Completed: ${event.name} (${event.outcome || 'done'})`; break
+    case 'reputation_change': text = `${event.faction}: ${event.delta > 0 ? '+' : ''}${event.delta}`; break
+    default: text = JSON.stringify(event)
+  }
+  return (
+    <div className={`flex items-center gap-2 text-sm ${style.color}`}>
+      <span>{style.icon}</span>
+      <span>{text}</span>
+    </div>
+  )
+}
+
 // ─── Main Component ───
 
 export default function GamePlay() {
@@ -136,6 +171,7 @@ export default function GamePlay() {
   const [selectedChoiceId, setSelectedChoiceId] = useState<number | null>(null)
   const [generating, setGenerating] = useState(false)
   const [pendingRollResult, setPendingRollResult] = useState<RollResult | null>(null)
+  const [completing, setCompleting] = useState(false)
 
   const loadData = useCallback(async () => {
     try {
@@ -236,6 +272,20 @@ export default function GamePlay() {
     }
   }
 
+  const handleCompleteCampaign = async () => {
+    setCompleting(true)
+    setError(null)
+    try {
+      const res = await fetch(`/api/campaigns/${campaignId}/complete`, { method: 'POST' })
+      if (!res.ok) throw new Error(await res.text())
+      // Navigate to campaign settings to review wrap-up
+      window.location.href = `/campaigns/${campaignId}/settings`
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to complete campaign')
+      setCompleting(false)
+    }
+  }
+
   // Story so far: summaries of all sessions before the current one
   const buildStorySoFar = (sessionIndex: number): string[] => {
     return sessions.slice(0, sessionIndex)
@@ -274,12 +324,36 @@ export default function GamePlay() {
       {generating && (
         <GeneratingOverlay message="The DM is preparing..." subtitle="Generating narrative, choices, and scene image" />
       )}
+      {completing && (
+        <GeneratingOverlay message="Completing campaign..." subtitle="Generating wrap-up summary and proposed updates" />
+      )}
 
       <header className="border-b border-gray-800 bg-black/40 backdrop-blur sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
           <div>
             <h1 className="text-lg font-bold text-white">{campaign.name}</h1>
-            <p className="text-gray-500 text-xs">{campaign.character?.name}</p>
+            <div className="flex items-center gap-2 text-xs">
+              <span className="text-gray-500">{campaign.character?.name}</span>
+              {campaign.arc && (() => {
+                const arc = campaign.arc as any
+                const sceneNum = sessions.length
+                const total = arc.total_scenes_estimate || 8
+                const act = sceneNum <= (arc.act_1?.end_scene || 3) ? arc.act_1
+                  : sceneNum <= (arc.act_2?.end_scene || 6) ? arc.act_2
+                  : arc.act_3
+                return (
+                  <>
+                    <span className="text-gray-600">|</span>
+                    <span className="text-purple-400">{act?.name || 'Unknown Act'}</span>
+                    <span className="text-gray-600">—</span>
+                    <span className="text-gray-400">Scene {sceneNum} of ~{total}</span>
+                    <div className="w-16 h-1.5 bg-gray-700 rounded-full overflow-hidden">
+                      <div className="h-full bg-purple-500 rounded-full transition-all" style={{ width: `${Math.min(100, (sceneNum / total) * 100)}%` }} />
+                    </div>
+                  </>
+                )
+              })()}
+            </div>
           </div>
           <div className="flex items-center gap-3">
             {/* Page navigation */}
@@ -465,7 +539,7 @@ export default function GamePlay() {
               )}
             </div>
 
-            {/* Right — Outcome narrative + next */}
+            {/* Right — Outcome narrative + events + next */}
             <div className="lg:w-2/3 space-y-6">
               <div className="bg-purple-900/20 border border-purple-700/30 rounded-xl p-6">
                 <h3 className="text-sm font-semibold text-purple-400 uppercase tracking-wider mb-3">What Happened</h3>
@@ -474,16 +548,38 @@ export default function GamePlay() {
                 </div>
               </div>
 
+              {/* Extracted events */}
+              {currentPage.session.events && currentPage.session.events.length > 0 && (
+                <div className="bg-gray-800/30 border border-gray-700/40 rounded-xl p-5">
+                  <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">What Changed</h3>
+                  <div className="space-y-2">
+                    {currentPage.session.events.map((evt: any, i: number) => (
+                      <EventBadge key={i} event={evt} />
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {currentPage.session.summary && (
                 <div className="text-gray-500 text-sm italic">{currentPage.session.summary}</div>
               )}
 
-              {/* Next Scene button — only on the last result page */}
+              {/* Next Scene / Complete Campaign — only on the last result page */}
               {pageIndex === pages.length - 1 && (
-                <button onClick={startNewSession}
-                  className="w-full py-4 bg-purple-600 hover:bg-purple-500 text-white rounded-xl text-lg font-medium transition-all hover:shadow-lg hover:shadow-purple-600/25">
-                  Continue to Next Scene →
-                </button>
+                <div className="space-y-3">
+                  {/* Check if we've reached the final scene according to arc */}
+                  {campaign.arc && sessions.length >= (campaign.arc as any).total_scenes_estimate ? (
+                    <button onClick={handleCompleteCampaign}
+                      className="w-full py-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-lg font-medium transition-all hover:shadow-lg hover:shadow-emerald-600/25">
+                      Complete Campaign
+                    </button>
+                  ) : (
+                    <button onClick={startNewSession}
+                      className="w-full py-4 bg-purple-600 hover:bg-purple-500 text-white rounded-xl text-lg font-medium transition-all hover:shadow-lg hover:shadow-purple-600/25">
+                      Continue to Next Scene →
+                    </button>
+                  )}
+                </div>
               )}
             </div>
           </div>

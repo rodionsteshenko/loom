@@ -81,6 +81,21 @@ export default function CampaignSettings() {
     }
   }
 
+  const handleApplyWrapUp = async () => {
+    try {
+      const res = await fetch(`/api/campaigns/${campaignId}/wrap-up/apply`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ approved_character: true, approved_world: true }),
+      })
+      if (!res.ok) throw new Error('Failed to apply wrap-up')
+      const data = await res.json()
+      setCampaign(data.campaign)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to apply')
+    }
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-purple-950 flex items-center justify-center">
@@ -108,7 +123,11 @@ export default function CampaignSettings() {
             ← Back
           </Link>
           <div className="flex items-center gap-3">
-            <span className={`px-2 py-0.5 rounded text-xs font-medium ${campaign.status === 'active' ? 'bg-purple-600/80 text-purple-100' : 'bg-amber-700/80 text-amber-100'}`}>
+            <span className={`px-2 py-0.5 rounded text-xs font-medium ${
+              campaign.status === 'completed' ? 'bg-emerald-600/80 text-emerald-100' :
+              campaign.status === 'active' ? 'bg-purple-600/80 text-purple-100' :
+              'bg-amber-700/80 text-amber-100'
+            }`}>
               {campaign.status || 'draft'}
             </span>
             {isDraft && (
@@ -206,6 +225,91 @@ export default function CampaignSettings() {
                 >
                   {refining ? 'Updating...' : 'Refine'}
                 </button>
+              </div>
+            )}
+
+            {/* Campaign wrap-up — shown after completion */}
+            {(campaign as any).wrap_up && (
+              <div className="space-y-6">
+                <div className="h-px bg-gradient-to-r from-transparent via-purple-700 to-transparent" />
+                <h2 className="text-xl font-bold text-emerald-400">Campaign Complete</h2>
+
+                {/* Summary */}
+                {(campaign as any).wrap_up.campaign_summary && (
+                  <div className="bg-gray-800/30 border border-gray-700/40 rounded-xl p-6">
+                    <h3 className="text-sm font-semibold text-purple-400 uppercase tracking-wider mb-3">Campaign Journal</h3>
+                    <p className="text-gray-300 leading-relaxed whitespace-pre-line">{(campaign as any).wrap_up.campaign_summary}</p>
+                  </div>
+                )}
+
+                {/* Character updates */}
+                {(campaign as any).wrap_up.character_updates && (
+                  <div className="bg-gray-800/30 border border-emerald-700/30 rounded-xl p-6">
+                    <h3 className="text-sm font-semibold text-emerald-400 uppercase tracking-wider mb-3">Character Updates</h3>
+                    <div className="space-y-2 text-sm">
+                      {(campaign as any).wrap_up.character_updates.xp_award > 0 && (
+                        <div className="text-yellow-400">+{(campaign as any).wrap_up.character_updates.xp_award} XP</div>
+                      )}
+                      {(campaign as any).wrap_up.character_updates.items_to_add?.length > 0 && (
+                        <div><span className="text-gray-500">Items gained:</span> <span className="text-green-400">{(campaign as any).wrap_up.character_updates.items_to_add.join(', ')}</span></div>
+                      )}
+                      {(campaign as any).wrap_up.character_updates.new_relationships?.length > 0 && (
+                        <div><span className="text-gray-500">New relationships:</span> <span className="text-blue-400">{(campaign as any).wrap_up.character_updates.new_relationships.map((r: any) => `${r.name} (${r.type})`).join(', ')}</span></div>
+                      )}
+                      {(campaign as any).wrap_up.character_updates.backstory_addition && (
+                        <div className="mt-3">
+                          <span className="text-gray-500">Backstory addition:</span>
+                          <p className="text-gray-300 mt-1 italic">{(campaign as any).wrap_up.character_updates.backstory_addition}</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* World updates */}
+                {(campaign as any).wrap_up.world_updates && (
+                  <div className="bg-gray-800/30 border border-cyan-700/30 rounded-xl p-6">
+                    <h3 className="text-sm font-semibold text-cyan-400 uppercase tracking-wider mb-3">World Updates</h3>
+                    <div className="space-y-2 text-sm">
+                      {(campaign as any).wrap_up.world_updates.timeline_event && (
+                        <div>
+                          <span className="text-gray-500">New historical event:</span>
+                          <span className="text-gray-300 ml-1">{(campaign as any).wrap_up.world_updates.timeline_event.name}</span>
+                          <p className="text-gray-400 text-xs mt-1">{(campaign as any).wrap_up.world_updates.timeline_event.description}</p>
+                        </div>
+                      )}
+                      {(campaign as any).wrap_up.world_updates.faction_changes?.length > 0 && (
+                        <div>
+                          <span className="text-gray-500">Faction changes:</span>
+                          {(campaign as any).wrap_up.world_updates.faction_changes.map((c: any, i: number) => (
+                            <div key={i} className="text-gray-300 ml-4 text-xs">• {c.faction}: {c.change}</div>
+                          ))}
+                        </div>
+                      )}
+                      {(campaign as any).wrap_up.world_updates.npc_changes?.length > 0 && (
+                        <div>
+                          <span className="text-gray-500">NPC changes:</span>
+                          {(campaign as any).wrap_up.world_updates.npc_changes.map((c: any, i: number) => (
+                            <div key={i} className="text-gray-300 ml-4 text-xs">• {c.name}: {c.change}</div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* Apply button */}
+                {!(campaign as any).wrap_up_applied && (
+                  <button
+                    onClick={handleApplyWrapUp}
+                    className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-medium transition"
+                  >
+                    Apply Updates to Character & World
+                  </button>
+                )}
+                {(campaign as any).wrap_up_applied && (
+                  <div className="text-center text-emerald-400 text-sm py-3">Updates applied to character and world.</div>
+                )}
               </div>
             )}
           </div>
