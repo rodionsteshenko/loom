@@ -567,18 +567,36 @@ export default function GamePlay() {
               {/* Next Scene / Complete Campaign — only on the last result page */}
               {pageIndex === pages.length - 1 && (
                 <div className="space-y-3">
-                  {/* Check if we've reached the final scene according to arc */}
-                  {campaign.arc && sessions.length >= (campaign.arc as any).total_scenes_estimate ? (
-                    <button onClick={handleCompleteCampaign}
-                      className="w-full py-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-lg font-medium transition-all hover:shadow-lg hover:shadow-emerald-600/25">
-                      Complete Campaign
-                    </button>
-                  ) : (
-                    <button onClick={startNewSession}
-                      className="w-full py-4 bg-purple-600 hover:bg-purple-500 text-white rounded-xl text-lg font-medium transition-all hover:shadow-lg hover:shadow-purple-600/25">
-                      Continue to Next Scene →
-                    </button>
-                  )}
+                  {(() => {
+                    const arc = campaign.arc as any
+                    const target = arc?.total_scenes_estimate || 999
+                    const atTarget = sessions.length >= target
+                    const pastTarget = sessions.length > target
+                    const hardLimit = sessions.length >= Math.ceil(target * 1.5)
+
+                    return (
+                      <>
+                        {/* Always show Continue unless hard limit */}
+                        {!hardLimit && (
+                          <button onClick={startNewSession}
+                            className={`w-full py-4 ${pastTarget ? 'bg-gray-700 hover:bg-gray-600' : 'bg-purple-600 hover:bg-purple-500'} text-white rounded-xl text-lg font-medium transition-all`}>
+                            {pastTarget ? 'Continue (past target)' : 'Continue to Next Scene →'}
+                          </button>
+                        )}
+                        {/* Show Complete when at or past target */}
+                        {atTarget && (
+                          <button onClick={handleCompleteCampaign}
+                            className="w-full py-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-lg font-medium transition-all hover:shadow-lg hover:shadow-emerald-600/25">
+                            {hardLimit ? 'Complete Campaign (final scene)' : 'Complete Campaign'}
+                          </button>
+                        )}
+                        {/* Hint when approaching target */}
+                        {!atTarget && sessions.length >= target - 2 && (
+                          <p className="text-gray-500 text-sm text-center">The climax approaches... {target - sessions.length} scene{target - sessions.length !== 1 ? 's' : ''} until the target.</p>
+                        )}
+                      </>
+                    )
+                  })()}
                 </div>
               )}
             </div>

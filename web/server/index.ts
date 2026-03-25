@@ -376,7 +376,15 @@ app.get('/api/campaigns/:id', async (req, res) => {
 
 app.post('/api/campaigns', async (req, res) => {
   try {
-    const { name: hintName, premise: hintPremise, character_id, party, world_id } = req.body
+    const { name: hintName, premise: hintPremise, character_id, party, world_id, campaign_length } = req.body
+
+    // Map campaign length to scene counts
+    const lengthConfig: Record<string, { min: number; max: number; target: number }> = {
+      short: { min: 5, max: 6, target: 5 },
+      standard: { min: 8, max: 10, target: 9 },
+      epic: { min: 15, max: 20, target: 17 },
+    }
+    const length = lengthConfig[campaign_length || 'standard'] || lengthConfig.standard
     if (!character_id) return res.status(400).json({ error: 'Select at least one character' })
 
     const partyMembers = party || [character_id]
@@ -396,7 +404,7 @@ app.post('/api/campaigns', async (req, res) => {
 
     // Always generate campaign details via AI
     log(`[campaign] Generating campaign for ${lead.name} in ${worldName || 'unspecified world'}`)
-    const agentPrompt = `Generate a campaign for:\nCharacter: ${lead.name}\nRace: ${lead.race}\nClass: ${lead.class}\nBackstory: ${lead.backstory?.substring(0, 300) || 'unknown'}\nMotivation: ${lead.motivation || 'unknown'}\nWound: ${lead.wound || 'unknown'}${worldContext}${hintName ? `\nCampaign name hint: ${hintName}` : ''}${hintPremise ? `\nPremise hint: ${hintPremise}` : ''}`
+    const agentPrompt = `Generate a campaign for:\nCharacter: ${lead.name}\nRace: ${lead.race}\nClass: ${lead.class}\nBackstory: ${lead.backstory?.substring(0, 300) || 'unknown'}\nMotivation: ${lead.motivation || 'unknown'}\nWound: ${lead.wound || 'unknown'}${worldContext}\n\nCAMPAIGN LENGTH: ${length.target} scenes (${length.min}-${length.max} range). Set total_scenes_estimate to ${length.target}. Divide the three acts proportionally.${hintName ? `\nCampaign name hint: ${hintName}` : ''}${hintPremise ? `\nPremise hint: ${hintPremise}` : ''}`
 
     const agentResult = await run(campaignGeneratorAgent, agentPrompt)
     const agentText = extractAllTextOutput(agentResult.newItems)

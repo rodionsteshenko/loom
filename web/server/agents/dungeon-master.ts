@@ -109,24 +109,34 @@ export function buildSessionPrompt(opts: {
 
   let prompt = `CAMPAIGN: ${campaign.name}\nWORLD: ${campaign.world}\nPREMISE: ${campaign.premise}\n\nCHARACTER:\n${charSummary}`
 
-  // Arc pacing
+  // Arc pacing with guardrails
   if (campaign.arc && sceneNumber) {
     const arc = campaign.arc
+    const target = arc.total_scenes_estimate || 8
+    const hardLimit = Math.ceil(target * 1.5)
+    const isOverTarget = sceneNumber > target
+    const isForcedEnd = sceneNumber >= hardLimit
+
     let actInfo = ''
-    if (sceneNumber <= (arc.act_1?.end_scene || 3)) {
-      actInfo = `Act 1 "${arc.act_1?.name || 'Setup'}" (scene ${sceneNumber} of ~${arc.act_1?.end_scene || 3}). Goal: ${arc.act_1?.goal || 'Establish the world and threat.'}`
-    } else if (sceneNumber <= (arc.act_2?.end_scene || 6)) {
-      actInfo = `Act 2 "${arc.act_2?.name || 'Confrontation'}" (scene ${sceneNumber} of ~${arc.act_2?.end_scene || 6}). Goal: ${arc.act_2?.goal || 'Escalate stakes and complications.'}`
+    if (isForcedEnd) {
+      actInfo = `FINAL SCENE (hard limit reached). You MUST write a conclusive ending NOW. Resolve all plot threads. The story ends here, for better or worse.`
+    } else if (sceneNumber >= target) {
+      actInfo = `Act 3 "${arc.act_3?.name || 'Resolution'}" — scene ${sceneNumber} (target was ${target}). The story has gone longer than expected. Begin wrapping up. Move toward a clear resolution within the next 1-2 scenes.`
+    } else if (sceneNumber >= target - 1) {
+      actInfo = `Act 3 "${arc.act_3?.name || 'Resolution'}" — CLIMAX SCENE (scene ${sceneNumber} of ~${target}). This should be the dramatic high point. ${arc.act_3?.goal || 'Climax and resolution.'}`
+    } else if (sceneNumber > (arc.act_2?.end_scene || Math.floor(target * 0.75))) {
+      actInfo = `Act 3 "${arc.act_3?.name || 'Resolution'}" (scene ${sceneNumber} of ~${target}). Goal: ${arc.act_3?.goal || 'Build toward the climax.'}`
+    } else if (sceneNumber > (arc.act_1?.end_scene || Math.floor(target * 0.35))) {
+      actInfo = `Act 2 "${arc.act_2?.name || 'Confrontation'}" (scene ${sceneNumber} of ~${target}). Goal: ${arc.act_2?.goal || 'Escalate stakes and complications.'}`
     } else {
-      actInfo = `Act 3 "${arc.act_3?.name || 'Resolution'}" (scene ${sceneNumber} of ~${arc.total_scenes_estimate || 8}). Goal: ${arc.act_3?.goal || 'Climax and resolution.'}`
-      if (sceneNumber >= (arc.total_scenes_estimate || 8)) {
-        actInfo += ' THIS IS THE FINAL SCENE. Write a satisfying conclusion to the campaign.'
-      }
+      actInfo = `Act 1 "${arc.act_1?.name || 'Setup'}" (scene ${sceneNumber} of ~${target}). Goal: ${arc.act_1?.goal || 'Establish the world and threat.'}`
     }
+
     prompt += `\n\nSTORY ARC:\n${actInfo}`
     if (arc.antagonist) prompt += `\nAntagonist: ${arc.antagonist}`
     if (arc.stakes) prompt += `\nStakes: ${arc.stakes}`
     if (arc.themes?.length) prompt += `\nThemes: ${arc.themes.join(', ')}`
+    if (isOverTarget && !isForcedEnd) prompt += `\nNote: Campaign is ${sceneNumber - target} scene(s) past target. Prioritize resolution over new complications.`
   }
 
   if (previousSession) {

@@ -15,7 +15,7 @@ export default function CampaignManager() {
   const worldId = searchParams.get('world')
   const navigate = useNavigate()
 
-  const [formData, setFormData] = useState({ name: '', premise: '' })
+  const [formData, setFormData] = useState({ name: '', premise: '', length: 'standard' as 'short' | 'standard' | 'epic' })
   const [selectedParty, setSelectedParty] = useState<string[]>(() => {
     const preselected = searchParams.get('character')
     return preselected ? [preselected] : []
@@ -81,6 +81,7 @@ export default function CampaignManager() {
         body: JSON.stringify({
           name: formData.name || undefined,
           premise: formData.premise || undefined,
+          campaign_length: formData.length,
           character_id: selectedParty[0],
           party: selectedParty,
           world_id: worldId || undefined,
@@ -177,6 +178,33 @@ export default function CampaignManager() {
                     placeholder="Auto-generated from backstory & world"
                     className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:border-purple-500 focus:outline-none"
                   />
+                </div>
+              </div>
+
+              {/* Campaign Length */}
+              <div>
+                <label className="block text-gray-300 text-sm mb-2">Campaign Length</label>
+                <div className="grid grid-cols-3 gap-3">
+                  {([
+                    { value: 'short' as const, label: 'Short', desc: '5-6 scenes', time: '~20 min' },
+                    { value: 'standard' as const, label: 'Standard', desc: '8-10 scenes', time: '~45 min' },
+                    { value: 'epic' as const, label: 'Epic', desc: '15-20 scenes', time: '~90 min' },
+                  ]).map(opt => (
+                    <button
+                      key={opt.value}
+                      type="button"
+                      onClick={() => setFormData({ ...formData, length: opt.value })}
+                      className={`p-3 rounded-lg border-2 text-left transition ${
+                        formData.length === opt.value
+                          ? 'border-purple-500 bg-purple-900/20'
+                          : 'border-gray-700 bg-gray-900/50 hover:border-gray-600'
+                      }`}
+                    >
+                      <div className="text-white font-medium text-sm">{opt.label}</div>
+                      <div className="text-gray-400 text-xs">{opt.desc}</div>
+                      <div className="text-gray-500 text-xs">{opt.time}</div>
+                    </button>
+                  ))}
                 </div>
               </div>
 
