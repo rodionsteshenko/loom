@@ -417,13 +417,22 @@ app.post('/api/campaigns', async (req, res) => {
       characterId: character_id,
       party: partyMembers,
     })
-    campaign.world_id = world_id || undefined
-    campaign.art_style = worldArtStyle || undefined
+    // Inherit world from character if not explicitly provided
+    const effectiveWorldId = world_id || lead.world_id
+    let effectiveArtStyle = worldArtStyle
+    if (!effectiveArtStyle && effectiveWorldId) {
+      try {
+        const { world: w } = resolveWorld(effectiveWorldId)
+        effectiveArtStyle = w.art_style || ''
+      } catch {}
+    }
+    campaign.world_id = effectiveWorldId || undefined
+    campaign.art_style = effectiveArtStyle || undefined
     campaign.arc = generated.arc || undefined
     campaign.status = 'draft'
 
     // Generate intro image
-    const imageUrl = await generateSceneImage(campaignDir, 'intro', generated.premise, worldArtStyle)
+    const imageUrl = await generateSceneImage(campaignDir, 'intro', generated.premise, effectiveArtStyle)
     if (imageUrl) {
       campaign.intro_image_url = imageUrl
     }

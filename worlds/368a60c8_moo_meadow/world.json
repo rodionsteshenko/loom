@@ -1,0 +1,592 @@
+{
+  "id": "e2d45db6",
+  "name": "Moo Meadow",
+  "art_style": "watercolor",
+  "status": "active",
+  "created_at": "2026-03-26T02:28:25.714Z",
+  "updated_at": "2026-03-26T02:29:26.769Z",
+  "tagline": "A cheerful countryside where a spirited cow family turns everyday mishaps into barnyard adventures.",
+  "overview": {
+    "description": "Moo Meadow is a bright, rolling pastoral world of fences, puddles, orchards, muddy lanes, and cozy farmhouses, where the biggest dramas are lost ribbons, runaway carts, and mysterious hoofprints in the turnip patch. Life is gentle and communal, but beneath the warmth of daily chores lies a constant tug between tradition and change: old farming ways, new inventions, and the pride of families who think their pasture is the best pasture in the valley. The world feels playful and safe, yet every field hides room for curious exploration, small rivalries, and lessons learned the hard way.\n\nCows here are the center of society, with each family known for its recipes, songs, crafts, and favorite grazing spots. Children roam freely, elders gossip from porches, and seasonal festivals bring the whole meadow together. The core tension of Moo Meadow is simple but fertile: everyone wants comfort, belonging, and a place to call home, but sharing land, water, and attention is never as easy as it sounds. That makes it perfect for lighthearted quests, friendly competition, and small mysteries with big emotional stakes.",
+    "themes": [
+      "family",
+      "community",
+      "everyday_adventure",
+      "friendship",
+      "gentle_rivalry"
+    ],
+    "tone": "whimsical",
+    "tech_level": "medieval",
+    "magic_level": "uncommon",
+    "scale": "region",
+    "genre": "fantasy",
+    "era": "unspecified era"
+  },
+  "history": {
+    "ages": [
+      {
+        "id": "age_the_first_grazing",
+        "name": "The First Grazing",
+        "years_ago_start": 5000,
+        "years_ago_end": 1200,
+        "summary": "The oldest songs say the meadows were once wild and untended until the first cow clans learned to follow the seasons, mend fences with woven reeds, and settle disputes by sharing milk and mulch. This age defined the customs of hospitality, field-boundaries, and communal feasts that still shape everyday life.",
+        "key_events": [
+          {
+            "name": "The Milkbloom Covenant",
+            "years_ago": 4200,
+            "description": "The first major clan leaders agreed to share springs, grazing rights, and barn labor during drought years. The covenant is still cited whenever neighbors argue over fences or water troughs.",
+            "consequences": [
+              "shared_water_laws",
+              "festival_of_thanks"
+            ]
+          },
+          {
+            "name": "The Reed Fence Accord",
+            "years_ago": 3100,
+            "description": "After a season of stampeding cattle and ruined gardens, the clans standardized boundary markers made of reeds, bells, and painted stones. Modern property lines still follow this tradition.",
+            "consequences": [
+              "formal_farm_boundaries",
+              "boundary_keepers_guild"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "age_the_hedge_years",
+        "name": "The Hedge Years",
+        "years_ago_start": 1200,
+        "years_ago_end": 180,
+        "summary": "As the meadow communities grew richer, they also grew fussier. Orchard owners, dairy keepers, and market families began competing for prestige, leading to polite feuds, elaborate festivals, and the rise of local councils. This era created the social rules and rivalries that still fuel village life.",
+        "key_events": [
+          {
+            "name": "The Great Jam Quarrel",
+            "years_ago": 760,
+            "description": "A disagreement over who invented strawberry jam split the market towns for a generation, eventually inspiring the tradition of public tastings and shared recipe days so no one family could claim every treat.",
+            "consequences": [
+              "recipe_guilds",
+              "annual_tasting_fair"
+            ]
+          },
+          {
+            "name": "The Bellweather Flood",
+            "years_ago": 240,
+            "description": "A sudden flood reshaped the valley, washing away old lanes and revealing ancient stonework beneath the mud. Many believe the buried ruins still hold lost tools, charms, and forgotten family records.",
+            "consequences": [
+              "ruin_discoveries",
+              "new_river_paths"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "age_the_muddy_present",
+        "name": "The Muddy Present",
+        "years_ago_start": 180,
+        "years_ago_end": 0,
+        "summary": "The current age is defined by cheerful prosperity mixed with constant small-scale tension. New wind pumps, improved carts, and brighter lanterns make life easier, but they also upset older families and reveal long-hidden secrets in the fields. The meadow is peaceful, yet change keeps splashing mud into everyone’s shoes.",
+        "key_events": [
+          {
+            "name": "The Lantern Road Built",
+            "years_ago": 80,
+            "description": "A network of lamp-posts and gravel paths connected the settlements, making travel safer at night and boosting trade. It also gave thieves and pranksters more places to hide.",
+            "consequences": [
+              "safer_trade",
+              "night_mischief"
+            ]
+          },
+          {
+            "name": "The Hollow Orchard Discovery",
+            "years_ago": 12,
+            "description": "Workers digging under an old orchard uncovered a sealed stone chamber beneath the roots. Since then, odd dreams, missing tools, and glowing hoofprints have been reported nearby.",
+            "consequences": [
+              "ancient_mystery",
+              "supernatural_whispers"
+            ]
+          }
+        ]
+      }
+    ],
+    "current_year": "1482 Meadow Reckoning",
+    "calendar_note": "Years are counted from the founding of the first shared milking festival; seasons are marked by Blossom, Hay, Harvest, and Frost turns.",
+    "creation_myth": "The origins of this world are shrouded in mystery.",
+    "timeline": []
+  },
+  "geography": {
+    "regions": [
+      {
+        "id": "region_greentop_pastures",
+        "name": "Greentop Pastures",
+        "type": "kingdom",
+        "description": "The heartland of Moo Meadow, Greentop is a patchwork of soft hills, white fences, apple trees, and well-loved farmhouses. Most families live here, and most social drama begins here too: harvest contests, lost calves, borrowed tools, and disputes over the tastiest clover. The region is comfortable and prosperous, but its social fabric depends on everyone agreeing to keep the peace.\n\nAdventurers can find hidden root-cellars, old boundary stones, and the occasional sinkhole opening into older tunnels below the fields. The land looks harmless, but it rewards curiosity, community service, and a willingness to chase trouble into a ditch.",
+        "climate": "temperate",
+        "notable_locations": [
+          {
+            "name": "Puddledown Farm",
+            "type": "town",
+            "description": "A bustling family farm and social center where many small adventures begin. Its muddiest lane is famous for lost boots, secret meetings, and races that always end in laughter."
+          },
+          {
+            "name": "The Clover Bell Barn",
+            "type": "fortress",
+            "description": "A large communal barn with a bell tower used for festivals, alarms, and evening calls. Beneath the hayloft are old storage rooms that sometimes hide forgotten maps and strange noises."
+          },
+          {
+            "name": "The Boundary Stones",
+            "type": "landmark",
+            "description": "Ancient painted stones marking old grazing lines. They are said to shift on foggy mornings, making them useful for mysteries, treasure hunts, and accidental trespassing."
+          }
+        ],
+        "connections": [
+          "region_milkwater_marsh",
+          "region_sunberry_orchards"
+        ],
+        "faction_ids": [
+          "faction_haymound_council",
+          "faction_milker_masons",
+          "faction_mudcap_pranksters"
+        ],
+        "adventure_hooks": [
+          "A calf has vanished near the Boundary Stones, and the tracks end in a patch of glowing mud.",
+          "Someone is sabotaging the Clover Bell Barn before the Harvest Sing."
+        ],
+        "notable_features": []
+      },
+      {
+        "id": "region_milkwater_marsh",
+        "name": "Milkwater Marsh",
+        "type": "wilderness",
+        "description": "Milkwater Marsh lies east of the farms, where reeds, mist, and mirror-still pools make the world feel soft and strange. The marsh provides herbs, freshwater, and rare glowing fungi, but it also swallows carts, hides ruins, and confuses even experienced travelers. Locals treat it with respect and a little fear.\n\nThe marsh is home to hermits, mushroom gatherers, and old drainage works from before the current settlements. Strange lights appear at night, and some say the reeds remember voices. The region is a perfect place for exploratory quests, rescue missions, and supernatural riddles with a friendly, storybook edge.",
+        "climate": "varied",
+        "notable_locations": [
+          {
+            "name": "The Soggy Shrine",
+            "type": "temple",
+            "description": "A tiny shrine built on stilts above the reeds, visited by those seeking luck, lost items, or answers from the marsh spirits. Offerings of milk and marigolds are said to calm the waters."
+          },
+          {
+            "name": "Whisperroot Hollow",
+            "type": "ruins",
+            "description": "Half-submerged stone arches and root-choked chambers from an older settlement. Adventurers find puzzles, old tools, and signs that something still lives below the waterline."
+          },
+          {
+            "name": "Glowcap Dell",
+            "type": "landmark",
+            "description": "A cluster of luminous mushrooms used for lantern dye and medicine. It is beautiful at dusk, but the glow attracts insects, creatures, and the occasional curious spirit."
+          }
+        ],
+        "connections": [
+          "region_greentop_pastures",
+          "region_sunberry_orchards",
+          "region_ashbarrow_hills"
+        ],
+        "faction_ids": [
+          "faction_whispered_hoof",
+          "faction_milker_masons"
+        ],
+        "adventure_hooks": [
+          "A spirit in the Soggy Shrine claims the marsh is being drained by hidden hands.",
+          "A flooded ruin beneath Whisperroot Hollow may contain a missing council seal."
+        ],
+        "notable_features": []
+      },
+      {
+        "id": "region_sunberry_orchards",
+        "name": "Sunberry Orchards",
+        "type": "city_state",
+        "description": "Sunberry Orchards is a prosperous cluster of markets, cider presses, and trellised lanes where fruit growers, jam makers, and traders compete for prestige. The air is always sweet with boiling preserves and baked tarts, and the locals measure success in both coins and compliments. Friendly on the surface, it is the most politically tense place in the meadow.\n\nThe orchards are home to lively festivals, recipe duels, and trade negotiations that can decide the fate of entire harvests. Hidden beneath the cheerful commerce are smugglers’ tunnels, family vaults, and stubborn disputes over who controls the best routes to the rest of the valley.",
+        "climate": "temperate",
+        "notable_locations": [
+          {
+            "name": "The Jam Market",
+            "type": "market",
+            "description": "A famous open-air market where preserves, pies, and ciders are traded under brightly painted awnings. It is ideal for rumors, bargains, and the occasional thief in a flour sack."
+          },
+          {
+            "name": "Cider Crown Hall",
+            "type": "academy",
+            "description": "A guild hall and tasting school where apprentices learn pressing, blending, and ceremonial hospitality. Rival families use it to build influence as much as to teach craft."
+          },
+          {
+            "name": "The Hollow Orchard",
+            "type": "dungeon",
+            "description": "An old orchard with a sealed chamber beneath the roots and strange glowing hoofprints nearby. It has become the center of local mystery, fear, and whispered treasure stories."
+          }
+        ],
+        "connections": [
+          "region_greentop_pastures",
+          "region_milkwater_marsh"
+        ],
+        "faction_ids": [
+          "faction_orchard_exchange",
+          "faction_haymound_council",
+          "faction_mudcap_pranksters"
+        ],
+        "adventure_hooks": [
+          "A recipe vault has been opened, and someone stole the secret cider blend.",
+          "The Hollow Orchard chamber is pulsing with light each time the moon rises."
+        ],
+        "notable_features": []
+      },
+      {
+        "id": "region_ashbarrow_hills",
+        "name": "Ashbarrow Hills",
+        "type": "wilderness",
+        "description": "West of the main farms, the Ashbarrow Hills are wind-carved slopes dotted with old cairns, sheep paths, and burned black stones from forgotten fires. The hills are less cheerful than the lowlands, and older families avoid discussing what happened there during the Age of the Hedge Years. Yet the place is rich in buried relics and stubborn independence.\n\nTravelers come here to mine clay, search tombs, or visit the reclusive keepers who claim to hear the hills humming at night. The terrain is rough, the weather changes quickly, and the old barrows beneath the grass make excellent places for ancient secrets and low-stakes monster trouble.",
+        "climate": "varied",
+        "notable_locations": [
+          {
+            "name": "Barrowgate Cairn",
+            "type": "ruins",
+            "description": "A ring of standing stones around a buried hill tomb. It is rumored to open only when someone speaks a forgotten family name in the rain."
+          },
+          {
+            "name": "Emberknoll Watch",
+            "type": "fortress",
+            "description": "A small lookout fort guarding the western paths. It is manned by practical protectors who worry about smugglers, spirits, and things that move underground."
+          },
+          {
+            "name": "The Singing Quarry",
+            "type": "landmark",
+            "description": "A half-collapsed stone quarry where wind through the cuts produces eerie music. Miners and musicians alike visit it, but nobody stays after sunset."
+          }
+        ],
+        "connections": [
+          "region_greentop_pastures",
+          "region_milkwater_marsh"
+        ],
+        "faction_ids": [
+          "faction_emberknoll_watch",
+          "faction_whispered_hoof"
+        ],
+        "adventure_hooks": [
+          "Barrowgate Cairn has opened for the first time in generations.",
+          "A patrol from Emberknoll vanished after following singing from the quarry."
+        ],
+        "notable_features": []
+      }
+    ],
+    "overview": ""
+  },
+  "factions": [
+    {
+      "id": "faction_haymound_council",
+      "name": "The Haymound Council",
+      "type": "government",
+      "description": "The Haymound Council governs the main farms and settlements of the meadow through consensus, barn meetings, and endless committee snacks. They are publicly seen as sensible, kind, and slightly overworked. In practice, they struggle to keep peace between proud families, manage land disputes, and respond to the strange happenings around the Hollow Orchard without causing panic.",
+      "leader": "Chaircow Bess Willowhoof",
+      "headquarters": "Clover Bell Barn, Greentop Pastures",
+      "region_ids": [
+        "region_greentop_pastures",
+        "region_sunberry_orchards"
+      ],
+      "goals": [
+        "maintain_peace",
+        "protect_tradition",
+        "contain_local_mysteries"
+      ],
+      "methods": [
+        "mediation",
+        "festival_edicts",
+        "barn patrols"
+      ],
+      "allies": [
+        "faction_emberknoll_watch"
+      ],
+      "enemies": [
+        "faction_mudcap_pranksters",
+        "faction_orchard_exchange"
+      ],
+      "player_hooks": [
+        "Solve disputes before they become feuds.",
+        "Serve as special helpers investigating odd events around the farms."
+      ]
+    },
+    {
+      "id": "faction_orchard_exchange",
+      "name": "The Orchard Exchange",
+      "type": "merchant",
+      "description": "A powerful network of jam-makers, cider traders, and caravan brokers who control much of the meadow’s food trade. They present themselves as generous patrons of festivals and apprenticeship, but many believe they manipulate prices and hoard valuable recipes to keep rival families dependent.",
+      "leader": "Master Presser Tilda Crispstem",
+      "headquarters": "Cider Crown Hall, Sunberry Orchards",
+      "region_ids": [
+        "region_sunberry_orchards"
+      ],
+      "goals": [
+        "expand_trade",
+        "secure_recipe_secrets",
+        "influence_council_votes"
+      ],
+      "methods": [
+        "contracts",
+        "gifts",
+        "supply_control"
+      ],
+      "allies": [
+        "faction_milker_masons"
+      ],
+      "enemies": [
+        "faction_haymound_council",
+        "faction_mudcap_pranksters"
+      ],
+      "player_hooks": [
+        "Escort valuable goods through dangerous routes.",
+        "Investigate suspicious changes in prices and missing recipes."
+      ]
+    },
+    {
+      "id": "faction_mudcap_pranksters",
+      "name": "The Mudcap Pranksters",
+      "type": "criminal",
+      "description": "A loose band of mischievous cows and clever calves who specialize in harmless theft, elaborate jokes, and embarrassing the proud. They are not truly malicious, but their pranks can cause real damage when they target food stores, council notices, or festival arrangements. Many villagers secretly enjoy them until they are the victim.",
+      "leader": "Self-appointed Captain Nib Nibblehorn",
+      "headquarters": "A tunnel network beneath the lantern road",
+      "region_ids": [
+        "region_greentop_pastures",
+        "region_sunberry_orchards"
+      ],
+      "goals": [
+        "humiliate_bullies",
+        "steal_tasty_goods",
+        "expose_corruption"
+      ],
+      "methods": [
+        "disguises",
+        "sneak_routes",
+        "practical_jokes"
+      ],
+      "allies": [],
+      "enemies": [
+        "faction_haymound_council",
+        "faction_orchard_exchange"
+      ],
+      "player_hooks": [
+        "Join a heist that turns out to be for a good cause.",
+        "Track them down only to discover they know a useful secret."
+      ]
+    },
+    {
+      "id": "faction_whispered_hoof",
+      "name": "The Whispered Hoof",
+      "type": "ancient_order",
+      "description": "An old, secretive order that listens to the marsh, the barrows, and the dreams of cows born under strange stars. They believe the land remembers every oath and every betrayal. Villagers view them as spooky but occasionally helpful, especially when lost things, forgotten names, or restless spirits are involved.",
+      "leader": "Murmur-Sister Vale Reedeye",
+      "headquarters": "Soggy Shrine and hidden reed lodges",
+      "region_ids": [
+        "region_milkwater_marsh",
+        "region_ashbarrow_hills"
+      ],
+      "goals": [
+        "interpret_omens",
+        "guard_buried_secrets",
+        "prevent_waking_forces"
+      ],
+      "methods": [
+        "dream_reading",
+        "ritual_offerings",
+        "secret_watch"
+      ],
+      "allies": [
+        "faction_emberknoll_watch"
+      ],
+      "enemies": [
+        "faction_orchard_exchange"
+      ],
+      "player_hooks": [
+        "Seek guidance for supernatural mysteries.",
+        "Help recover a relic before it awakens something beneath the marsh."
+      ]
+    },
+    {
+      "id": "faction_emberknoll_watch",
+      "name": "The Emberknoll Watch",
+      "type": "military",
+      "description": "A disciplined but friendly frontier watch that patrols the Ashbarrow Hills, protects travelers, and keeps an eye on strange lights in the quarry and barrows. They are respected for their reliability, though some accuse them of taking old warnings too seriously. They prefer practical solutions, sturdy boots, and honest reports.",
+      "leader": "Captain Mottle Stonehorn",
+      "headquarters": "Emberknoll Watch, Ashbarrow Hills",
+      "region_ids": [
+        "region_ashbarrow_hills",
+        "region_greentop_pastures"
+      ],
+      "goals": [
+        "secure_routes",
+        "stop_smuggling",
+        "investigate_ruins"
+      ],
+      "methods": [
+        "patrols",
+        "searches",
+        "field_reports"
+      ],
+      "allies": [
+        "faction_haymound_council",
+        "faction_whispered_hoof"
+      ],
+      "enemies": [
+        "faction_mudcap_pranksters"
+      ],
+      "player_hooks": [
+        "Join patrols into dangerous hills.",
+        "Assist with a ruin investigation that may explain local hauntings."
+      ]
+    }
+  ],
+  "religion": {
+    "system": "animist",
+    "description": "Religion in Moo Meadow is less about distant heavens and more about living relationships with the land, the barn, the marsh, and the old stones. Cows leave small offerings of milk, flowers, and polished pebbles at places they believe hold memory and luck. Most people are practical believers: if a shrine helps the harvest, the fence, or a lost calf, it is worth respecting. The line between faith and local superstition is delightfully blurry.",
+    "deities_or_forces": [
+      {
+        "name": "The Green Hearth",
+        "domain": "home, harvest, hospitality",
+        "alignment": "neutral_good",
+        "description": "The Green Hearth is honored wherever families gather to share food and shelter. Shrines are built from woven grass, warm stones, and painted bowls. It is most important during winter and disputes, when people need reminders that a home can be bigger than a single family.",
+        "faction_ids": [
+          "faction_haymound_council"
+        ],
+        "region_ids": [
+          "region_greentop_pastures",
+          "region_sunberry_orchards"
+        ]
+      },
+      {
+        "name": "The Reed Mother",
+        "domain": "marshes, memory, lost things",
+        "alignment": "true_neutral",
+        "description": "The Reed Mother is associated with fog, reeds, and the quiet return of forgotten objects. People offer milk into the water when they need guidance or when they want a missing thing found without asking too many questions. Her followers are often gentle, patient, and suspicious of loud promises.",
+        "faction_ids": [
+          "faction_whispered_hoof"
+        ],
+        "region_ids": [
+          "region_milkwater_marsh"
+        ]
+      },
+      {
+        "name": "The Bell in the Mud",
+        "domain": "warnings, change, accidents, unexpected truth",
+        "alignment": "chaotic_neutral",
+        "description": "This force is invoked when a sudden disaster reveals a hidden problem. The Bell in the Mud is not malicious, but it is never convenient. Its signs include broken cart wheels, oddly ringing fences, and muddy hoofprints that point where no hoof should be.",
+        "faction_ids": [
+          "faction_mudcap_pranksters",
+          "faction_emberknoll_watch"
+        ],
+        "region_ids": [
+          "region_greentop_pastures",
+          "region_ashbarrow_hills",
+          "region_sunberry_orchards"
+        ]
+      }
+    ],
+    "overview": "Religion in Moo Meadow is less about distant heavens and more about living relationships with the land, the barn, the marsh, and the old stones. Cows leave small offerings of milk, flowers, and polished pebbles at places they believe hold memory and luck. Most people are practical believers: if a shrine helps the harvest, the fence, or a lost calf, it is worth respecting. The line between faith and local superstition is delightfully blurry."
+  },
+  "key_figures": [
+    {
+      "name": "Bess Willowhoof",
+      "title": "Chaircow of the Haymound Council",
+      "faction_id": "faction_haymound_council",
+      "region_id": "region_greentop_pastures",
+      "description": "Bess is a broad-shouldered, patient cow with a neat blue ribbon and the calm voice of someone who has settled every argument twice. She looks endlessly tired in a kind way, always carrying note cards, biscuits, and spare fence markers. Despite her gentle manner, she can be surprisingly firm when the meadow’s peace is at stake.",
+      "motivation": "Keep the community safe and prevent small problems from becoming feuds.",
+      "secret": "She has been quietly investigating the Hollow Orchard for years and knows more about the sealed chamber than she admits.",
+      "interaction_hooks": [
+        "Hire the players to mediate a dispute.",
+        "Ask them to investigate an incident she cannot publicize."
+      ],
+      "role": "Chaircow of the Haymound Council",
+      "alive": true
+    },
+    {
+      "name": "Tilda Crispstem",
+      "title": "Master Presser of the Orchard Exchange",
+      "faction_id": "faction_orchard_exchange",
+      "region_id": "region_sunberry_orchards",
+      "description": "Tilda is impeccably dressed, sharp-eyed, and always smells faintly of cinnamon, apples, and ambition. She speaks warmly in public and coldly in private, with the habit of smiling right before making a difficult demand. Many admire her business sense, even as they distrust the way she turns every kindness into leverage.",
+      "motivation": "Expand the Orchard Exchange’s influence and secure her family’s legacy.",
+      "secret": "Her vault contains a map to a forgotten route beneath the orchards leading to the buried chamber beneath the Hollow Orchard.",
+      "interaction_hooks": [
+        "Negotiate a trade deal or escort a caravan.",
+        "Discover whether her generosity is genuine or strategic."
+      ],
+      "role": "Master Presser of the Orchard Exchange",
+      "alive": true
+    },
+    {
+      "name": "Nib Nibblehorn",
+      "title": "Self-appointed Captain of the Mudcap Pranksters",
+      "faction_id": "faction_mudcap_pranksters",
+      "region_id": "region_greentop_pastures",
+      "description": "Nib is a quick-footed calf with a crooked grin, a paint-stained scarf, and a talent for vanishing behind hay bales at exactly the wrong moment. They act silly on purpose, but their cleverness makes them hard to dismiss. Nib cares deeply about fairness, though they express it through chaos, jokes, and dramatic entrances.",
+      "motivation": "Expose selfishness, embarrass the powerful, and make life more fun for ordinary cows.",
+      "secret": "Nib has heard voices from beneath the Hollow Orchard and is frightened by how much they sound like someone calling them by name.",
+      "interaction_hooks": [
+        "Catch them mid-prank and decide whether to arrest or recruit them.",
+        "Use their network of tunnels to reach a hidden location."
+      ],
+      "role": "Self-appointed Captain of the Mudcap Pranksters",
+      "alive": true
+    },
+    {
+      "name": "Vale Reedeye",
+      "title": "Murmur-Sister of the Whispered Hoof",
+      "faction_id": "faction_whispered_hoof",
+      "region_id": "region_milkwater_marsh",
+      "description": "Vale is an elderly cow with pale eyes, reed-woven jewelry, and a voice that seems to come from both nearby and far away. She is kind without being soft, and her calm presence makes even frightened travelers lower their voices. Her hands are always stained with marsh herbs and ink from dream records.",
+      "motivation": "Prevent the old buried powers from waking and keep memory from being lost.",
+      "secret": "She knows the true name of the force sleeping beneath the orchard, but speaking it aloud could trigger the awakening.",
+      "interaction_hooks": [
+        "Seek prophecy, healing, or a lost object.",
+        "Help her perform a ritual in a flooded ruin."
+      ],
+      "role": "Murmur-Sister of the Whispered Hoof",
+      "alive": true
+    },
+    {
+      "name": "Captain Mottle Stonehorn",
+      "title": "Commander of the Emberknoll Watch",
+      "faction_id": "faction_emberknoll_watch",
+      "region_id": "region_ashbarrow_hills",
+      "description": "Mottle is sturdy, practical, and famous for wearing the same weatherproof cloak in every season. He has a no-nonsense way of speaking, but he is deeply protective of the farmers and travelers under his watch. His troops trust him because he never asks them to do anything he would not do first.",
+      "motivation": "Keep the roads safe and prevent the hills from hiding another disaster.",
+      "secret": "He recovered a broken relic from Barrowgate Cairn and believes it reacts to the same magic present in the Hollow Orchard.",
+      "interaction_hooks": [
+        "Join a patrol or rescue mission.",
+        "Bring him evidence from a ruin and earn a dangerous favor."
+      ],
+      "role": "Commander of the Emberknoll Watch",
+      "alive": true
+    },
+    {
+      "name": "Pippa Glowcap",
+      "title": "Marsh herbalist and mushroom guide",
+      "faction_id": "faction_whispered_hoof",
+      "region_id": "region_milkwater_marsh",
+      "description": "Pippa is a cheerful, mud-splashed herbalist with a basket full of luminous mushrooms and too many questions for her own good. She is brave in the marsh, curious about old stones, and always willing to trade a story for a snack. People underestimate her because she seems whimsical, which is usually a mistake.",
+      "motivation": "Find a cure for the strange dreams affecting the orchard and marsh alike.",
+      "secret": "She has already entered the flooded chamber once and came back with a glowing seed that should not be kept indoors.",
+      "interaction_hooks": [
+        "Guide the players through the marsh.",
+        "Trade medicine or clues for help retrieving a dangerous plant."
+      ],
+      "role": "Marsh herbalist and mushroom guide",
+      "alive": true
+    }
+  ],
+  "concept_images": [
+    {
+      "type": "landscape",
+      "subject": "Sweeping landscape of Greentop Pastures: The heartland of Moo Meadow, Greentop is a patchwork of sof",
+      "url": "/world-images/368a60c8_moo_meadow/images/concept_landscape.png",
+      "prompt": "Sweeping fantasy pastoral landscape of Greentop Pastures, the heartland of Moo Meadow: soft rolling hills, white picket fences, apple orchards, well-loved farmhouses, hay bales, and sunlit clover fields under a warm golden sky. Hidden root-cellars, old boundary stones, and a suspicious sinkhole revealing ancient tunnels subtly break the peaceful scene. Include a weary but capable adventurer walking the lane, muddy boots and travel cloak, peering into the sinkhole with cautious curiosity while carrying a lantern and satchel. Mood is cozy yet lightly mysterious, prosperous and communal, with hints of village drama and adventure beneath the idyllic surface."
+    },
+    {
+      "type": "city",
+      "subject": "A major city in Moo Meadow",
+      "url": "/world-images/368a60c8_moo_meadow/images/concept_city.png",
+      "prompt": "A sprawling fantasy capital in Moo Meadow, where emerald fields merge into bustling stone avenues lined with milk-white towers, dairy markets, and flower-draped bridges over glittering canals. Lush rolling hills surround the city, dotted with windmills and grazing cattle, while glowing lanterns and banners flutter in a soft golden breeze. Crowded plazas, artisan stalls, and grand farm-to-palace architecture create a lively, prosperous mood. Include a traveler character wandering the streets, interacting with market vendors and admiring the city, to show scale and life. Warm sunlight, whimsical medieval detail, vibrant greens and creams, epic yet cozy atmosphere."
+    },
+    {
+      "type": "landmark",
+      "subject": "A notable landmark in Moo Meadow",
+      "url": "/world-images/368a60c8_moo_meadow/images/concept_landmark.png",
+      "prompt": "A whimsical fantasy RPG scene of a notable landmark in Moo Meadow: a giant ancient stone arch wrapped in wildflowers and hanging moss, overlooking rolling emerald pastures dotted with glowing mushrooms and grazing cows. Soft golden sunrise light, gentle mist, and drifting pollen create a serene, magical mood. A curious adventurer stands at the base of the arch, touching weathered runes carved into the stone, with a cloak fluttering in the breeze. In the distance, a crystal-clear stream winds through hay bales and wooden fences, with tiny fairy lights sparkling above the meadow, richly detailed, painterly, enchanting atmosphere."
+    }
+  ]
+}

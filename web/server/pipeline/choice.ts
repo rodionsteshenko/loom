@@ -204,7 +204,17 @@ export async function resolveChoicePipeline(ctx: GameContext, choiceId: number):
 
     // Step 7: Generate outcome image (blocking)
     log('[choice] Step 7/9: Generating outcome image')
-    const imageUrl = await generateOutcomeImage(ctx.campaignDir, currentSessionId, outcomeNarrative, (ctx.campaign as any).art_style, ctx.character.physical_description)
+    // Resolve art style: campaign → world → character → default
+    let artStyle = (ctx.campaign as any).art_style
+    if (!artStyle && (ctx.campaign as any).world_id) {
+      try {
+        const { resolveWorld } = await import('../agents/tools/world-state.js')
+        const { world } = resolveWorld((ctx.campaign as any).world_id)
+        artStyle = world.art_style
+      } catch {}
+    }
+    if (!artStyle) artStyle = (ctx.character as any).art_style
+    const imageUrl = await generateOutcomeImage(ctx.campaignDir, currentSessionId, outcomeNarrative, artStyle, ctx.character.physical_description)
     if (imageUrl) {
       session.outcome_image_url = imageUrl
       saveSession(ctx.campaignDir, session)

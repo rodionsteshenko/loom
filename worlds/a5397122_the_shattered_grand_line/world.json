@@ -1,0 +1,688 @@
+{
+  "id": "0be448e6",
+  "name": "The Shattered Grand Line",
+  "art_style": "anime",
+  "status": "draft",
+  "created_at": "2026-03-25T00:24:06.613Z",
+  "updated_at": "2026-03-25T00:24:06.613Z",
+  "tagline": "A world of impossible seas, broken empires, and one ultimate prize that can rewrite history.",
+  "overview": {
+    "description": "The Shattered Grand Line is a world of endless islands scattered across violent seas where weather, gravity, and history itself seem to disobey reason. Ancient ruins, strange creatures, and lost technologies lie beneath a thin skin of modern kingdoms, pirate havens, and imperial fortresses. Every nation knows the same truth: the sea is too vast to control, but too rich to ignore.\n\nIn the present age, the World Throne and its allied navy try to preserve order by suppressing forbidden knowledge and crushing rebels, pirates, and archaeologists alike. Against them stand pirate crews seeking freedom, scholars hunting the truth of the Void Century, and revolutionary cells hoping to topple the old world. The greatest tension in the world is not simply power, but history itself: the past was deliberately buried, and whoever uncovers it may inherit a future that can save or destroy everything.",
+    "themes": [
+      "freedom_vs_control",
+      "lost_history",
+      "found_family"
+    ],
+    "tone": "heroic",
+    "tech_level": "renaissance",
+    "magic_level": "common",
+    "scale": "world",
+    "genre": "fantasy",
+    "era": "unspecified era"
+  },
+  "history": {
+    "ages": [
+      {
+        "id": "age_ancient_kingdoms",
+        "name": "Age of Ancient Kingdoms",
+        "years_ago_start": 8000,
+        "years_ago_end": 900,
+        "summary": "Before the World Throne, the world was divided among advanced island kingdoms that traded, warred, and built marvels from sea-stone, sky-iron, and strange lost sciences. Their rivalries shaped the first great routes and the first forbidden weapons.",
+        "key_events": [
+          {
+            "name": "The First Sea Routes",
+            "years_ago": 7600,
+            "description": "Navigators mapped the dangerous currents between islands using star charts, living compasses, and giant sea kings' migration paths. These routes still define trade and piracy today.",
+            "consequences": [
+              "grand_line_navigation",
+              "island_trade_empires"
+            ]
+          },
+          {
+            "name": "The Void War",
+            "years_ago": 1100,
+            "description": "A coalition of rulers erased an ancient empire from records after a catastrophic war over forbidden weapons and a mysterious inherited will. Many ruins, names, and lineages were hidden or destroyed.",
+            "consequences": [
+              "forbidden_history",
+              "world_throne_legitimacy"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "age_world_throne",
+        "name": "Age of the World Throne",
+        "years_ago_start": 900,
+        "years_ago_end": 120,
+        "summary": "The victors of the Void War founded a global order of allied kingdoms, the navy, and the scholar suppression system known as the Sealed Archives. Peace came at the cost of truth, and the seas became patrolled highways.",
+        "key_events": [
+          {
+            "name": "Founding of the World Throne",
+            "years_ago": 880,
+            "description": "The surviving victors forged a unified political order and declared themselves guardians of peace. In practice, they monopolized law, shipping, and historical narrative.",
+            "consequences": [
+              "naval_hegemony",
+              "archival_censorship"
+            ]
+          },
+          {
+            "name": "Creation of the Bounty System",
+            "years_ago": 240,
+            "description": "Privateers, rebels, and pirate captains were assigned bounties to turn the world's violence into a managed pressure valve. It made outlaws famous and turned pursuit into a profession.",
+            "consequences": [
+              "pirate_economy",
+              "state_sanctioned_hunting"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "age_great_pirate_dawn",
+        "name": "Age of the Great Pirate Dawn",
+        "years_ago_start": 120,
+        "years_ago_end": 0,
+        "summary": "A legendary pirate king's final claim that the greatest treasure lies at the end of the sea ignited a new era of exploration, rebellion, and opportunism. The oceans are now crowded with crews chasing dreams, power, and lost truth.",
+        "key_events": [
+          {
+            "name": "The Pirate King's Execution",
+            "years_ago": 120,
+            "description": "The execution of the era's most infamous pirate turned his death into a challenge heard across every sea. Thousands set out to chase the treasure he named, and the government has never fully recovered control.",
+            "consequences": [
+              "pirate_flood",
+              "global_exploration"
+            ]
+          },
+          {
+            "name": "The Rising of the Revolutionary Army",
+            "years_ago": 40,
+            "description": "Cells of defectors, freed slaves, and idealists began coordinated attacks on slaving ports, tribute routes, and corrupt governors. They do not seek simple chaos; they want to end the World Throne's rule entirely.",
+            "consequences": [
+              "open_rebellion",
+              "imperial_crackdown"
+            ]
+          }
+        ]
+      }
+    ],
+    "current_year": "1524 A.P. (After the Pirate King's Promise)",
+    "calendar_note": "Time is measured by the Pirate King's final declaration. Most islands keep local calendars, but sailors and governments use A.P. dating for treaties, bounties, and navigation logs.",
+    "creation_myth": "The origins of this world are shrouded in mystery.",
+    "timeline": []
+  },
+  "geography": {
+    "regions": [
+      {
+        "id": "region_east_blue_reaches",
+        "name": "East Blue Reaches",
+        "type": "archipelago",
+        "description": "A relatively calm sea of scattered islands, merchant ports, and small kingdoms where many pirates begin their careers. It is considered the safest ocean, which means it is heavily policed and politically useful to the World Throne. Beneath the placid trade routes lie smuggler tunnels, hidden depots, and forgotten battlefields from earlier wars.",
+        "climate": "varied",
+        "notable_locations": [
+          {
+            "name": "Shellport",
+            "type": "town",
+            "description": "A bustling harbor town where navy patrols, smugglers, and rookie crews all cross paths. Its taverns are full of rumors, and its docks hide contraband inside fish crates and prayer barrels."
+          },
+          {
+            "name": "Crescent Reef Graveyard",
+            "type": "ruins",
+            "description": "A maze of half-sunken ships and coral-covered cannons that marks the site of an old blockade. Divers seek treasure there, but something in the waters has learned to imitate ship bells."
+          }
+        ],
+        "connections": [
+          "region_red_line_falls",
+          "region_west_blue_vault",
+          "region_grand_line_entry"
+        ],
+        "faction_ids": [
+          "faction_world_throne_navy",
+          "faction_straw_pirates",
+          "faction_undersea_brokers"
+        ],
+        "adventure_hooks": [
+          "A rookie crew is framed for smuggling and must clear its name before a naval tribunal arrives.",
+          "An old chart from Crescent Reef points toward a route that should not exist."
+        ],
+        "notable_features": []
+      },
+      {
+        "id": "region_grand_line_entry",
+        "name": "Grand Line Entry",
+        "type": "contested",
+        "description": "The threshold sea where compasses fail, storms gather without warning, and every island seems to have a story attached to a massacre, prophecy, or miracle. It is the world’s most coveted route because it leads to legends, but it has also swallowed countless fleets. Control of the entry means control of who gets to chase history.",
+        "climate": "varied",
+        "notable_locations": [
+          {
+            "name": "Reverse Current Gate",
+            "type": "landmark",
+            "description": "A violent channel where water flows in impossible directions. Skilled navigators can slip through, but most ships are shattered or stranded on hidden shelves."
+          },
+          {
+            "name": "Logstone Atoll",
+            "type": "market",
+            "description": "A lawless floating market where logbooks, maps, and route secrets are more valuable than gold. Everyone here is buying or selling the right to continue sailing."
+          }
+        ],
+        "connections": [
+          "region_east_blue_reaches",
+          "region_sky_archipelago",
+          "region_dead_waters"
+        ],
+        "faction_ids": [
+          "faction_world_throne_navy",
+          "faction_red_hair_pirates",
+          "faction_undersea_brokers"
+        ],
+        "adventure_hooks": [
+          "A rival crew offers passage through the Gate if the party steals a chart from a navy admiral.",
+          "A sea-current anomaly is trapping ships in a repeating loop, and someone is using it to hide a prison convoy."
+        ],
+        "notable_features": []
+      },
+      {
+        "id": "region_west_blue_vault",
+        "name": "West Blue Vault",
+        "type": "archipelago",
+        "description": "A dense web of islands known for libraries, assassins, shipyards, and old family fortunes hidden in ledgers. Many of the world's greatest historians and criminals come from here, because knowledge and secrecy are the two strongest currencies. The region is a battleground of quiet wars fought with forged documents, blackmail, and stolen maps.",
+        "climate": "temperate",
+        "notable_locations": [
+          {
+            "name": "Pillar City of Verdigris",
+            "type": "city",
+            "description": "A wealthy city built around ancient stone pillars engraved with erased names. Its elite sponsor expeditions, while its undercity launders bounty money and forbidden books."
+          },
+          {
+            "name": "The Sable Library",
+            "type": "academy",
+            "description": "A hidden archive run by scholars who copy banned texts before the government can seize them. The stacks are protected by traps, codes, and one very old librarian who remembers too much."
+          }
+        ],
+        "connections": [
+          "region_east_blue_reaches",
+          "region_red_line_falls",
+          "region_dead_waters"
+        ],
+        "faction_ids": [
+          "faction_ohara_scholars",
+          "faction_world_throne_navy",
+          "faction_undersea_brokers"
+        ],
+        "adventure_hooks": [
+          "A scholar begs the party to recover pages stolen from the Sable Library before they are burned publicly.",
+          "A noble house hires mercenaries to retrieve a family crest that is actually a key to a sealed ruin."
+        ],
+        "notable_features": []
+      },
+      {
+        "id": "region_red_line_falls",
+        "name": "Red Line Falls",
+        "type": "wilderness",
+        "description": "A towering red mountain range and cliff-sea barrier that cuts the world’s oceans into dangerous halves. Massive waterfalls, hidden tunnels, and cliffside fortresses make it a strategic choke point where armies, smugglers, and skyfishers all struggle for access. Legends say the mountain is hollow in places, full of old roads and sealed engines.",
+        "climate": "varied",
+        "notable_locations": [
+          {
+            "name": "Marysia Pass",
+            "type": "fortress",
+            "description": "A heavily fortified crossing overseen by the navy and the allied kingdoms. Smugglers try to slip through its maintenance tunnels, while rebels seek to collapse its supply lines."
+          },
+          {
+            "name": "The Hollow Steps",
+            "type": "dungeon",
+            "description": "Ancient stairways carved inside the mountain that descend into a forgotten engine chamber. Strange voices echo there, and the walls are covered in symbols matching no modern nation."
+          }
+        ],
+        "connections": [
+          "region_grand_line_entry",
+          "region_west_blue_vault",
+          "region_sky_archipelago"
+        ],
+        "faction_ids": [
+          "faction_world_throne_navy",
+          "faction_revolutionary_army",
+          "faction_ancient_engineers"
+        ],
+        "adventure_hooks": [
+          "The party is asked to escort a rebel courier through a fortress no one can openly cross.",
+          "An earthquake exposes a sealed tunnel leading to a machine that may alter tides across entire seas."
+        ],
+        "notable_features": []
+      },
+      {
+        "id": "region_sky_archipelago",
+        "name": "Sky Archipelago",
+        "type": "floating",
+        "description": "A chain of islands suspended by ancient currents, rare minerals, and forgotten technology. Cloud crops, windmills, and airship docks make this region a marvel, but its isolation has bred proud clans and dangerous raiders. Many surface nations dismiss the sky islands as myths until their ships are taken from above.",
+        "climate": "magical",
+        "notable_locations": [
+          {
+            "name": "Cloudspire Port",
+            "type": "city",
+            "description": "A bright city of rope bridges and aerial docks where merchants trade in wind-crystals and sky-sea maps. Visitors quickly learn that falling is not the worst thing that can happen here."
+          },
+          {
+            "name": "The Upper Ruin",
+            "type": "ruins",
+            "description": "A broken temple-city of an older sky civilization that may predate the current world order. Its murals depict ships sailing through stars and a giant eye watching the world."
+          }
+        ],
+        "connections": [
+          "region_grand_line_entry",
+          "region_red_line_falls",
+          "region_dead_waters"
+        ],
+        "faction_ids": [
+          "faction_skypiean_clans",
+          "faction_world_throne_navy",
+          "faction_red_hair_pirates"
+        ],
+        "adventure_hooks": [
+          "The clans demand help repelling sky pirates who are stealing sacred windstones.",
+          "A mural in the Upper Ruin hints at a route to the final island, but only if a lost instrument can be recovered."
+        ],
+        "notable_features": []
+      },
+      {
+        "id": "region_dead_waters",
+        "name": "Dead Waters",
+        "type": "wasteland",
+        "description": "A nightmare sea of wrecks, fog banks, and cursed currents where navigation devices rot and crews vanish. Some call it the world's graveyard, others a sanctuary for fugitives because even the navy fears to pursue there. The water sometimes whispers in voices of the dead, and islands appear only when blood has been spilled nearby.",
+        "climate": "magical",
+        "notable_locations": [
+          {
+            "name": "Blackwake Trench",
+            "type": "dungeon",
+            "description": "A deep trench filled with sunken temples, broken warships, and something enormous moving below. Divers return with strange relics or missing memories."
+          },
+          {
+            "name": "The Lantern Isle",
+            "type": "town",
+            "description": "A refuge settlement lit by ghost-lanterns that guide ships through the fog. Its residents trade in secrets, funerary rites, and the names of the lost."
+          }
+        ],
+        "connections": [
+          "region_grand_line_entry",
+          "region_west_blue_vault",
+          "region_sky_archipelago"
+        ],
+        "faction_ids": [
+          "faction_undersea_brokers",
+          "faction_world_throne_navy",
+          "faction_whitebeard_pirates"
+        ],
+        "adventure_hooks": [
+          "A missing crew may still be alive inside Blackwake Trench, but rescuing them means waking what sleeps below.",
+          "The Lantern Isle offers safe passage in exchange for retrieving the names of sailors erased from a navy manifest."
+        ],
+        "notable_features": []
+      }
+    ],
+    "overview": ""
+  },
+  "factions": [
+    {
+      "id": "faction_world_throne_navy",
+      "name": "World Throne Navy",
+      "type": "military",
+      "description": "The navy enforces the World Throne's peace with overwhelming force, bounties, blockades, and public examples. Officially, they protect trade and civilians; in practice, they control information and decide which histories are allowed to survive. Many admirals are honorable, but the institution serves stability first and truth last.",
+      "leader": "Fleet Admiral Seryn Voss",
+      "headquarters": "Marysia Pass and the Capital Fleet",
+      "region_ids": [
+        "region_east_blue_reaches",
+        "region_grand_line_entry",
+        "region_west_blue_vault",
+        "region_red_line_falls",
+        "region_dead_waters",
+        "region_sky_archipelago"
+      ],
+      "goals": [
+        "preserve_world_order",
+        "suppress_forbidden_history"
+      ],
+      "methods": [
+        "blockades",
+        "bounty_hunting",
+        "censorship"
+      ],
+      "allies": [],
+      "enemies": [
+        "faction_straw_pirates",
+        "faction_revolutionary_army",
+        "faction_ohara_scholars",
+        "faction_red_hair_pirates"
+      ],
+      "player_hooks": [
+        "Take a lawful commission to hunt a dangerous pirate or smuggler.",
+        "Expose corruption inside the navy and decide whether to reform or break it."
+      ]
+    },
+    {
+      "id": "faction_straw_pirates",
+      "name": "Straw Pirates",
+      "type": "criminal",
+      "description": "A wandering pirate crew known for impossible luck, fierce loyalty, and a habit of crashing into larger political storms. They are not conquerors; they are dream-chasers who protect their own and oppose anyone who steals freedom from others. Their reputation grows wherever they liberate a village, embarrass an admiral, or uncover a hidden truth.",
+      "leader": "Monkey D. Luffy",
+      "headquarters": "The Thousand Sunny",
+      "region_ids": [
+        "region_east_blue_reaches",
+        "region_grand_line_entry",
+        "region_west_blue_vault",
+        "region_red_line_falls",
+        "region_sky_archipelago",
+        "region_dead_waters"
+      ],
+      "goals": [
+        "find_the_greatest_treasure",
+        "protect_friends_and_allies"
+      ],
+      "methods": [
+        "direct_action",
+        "unpredictable_alliances",
+        "reckless_heroism"
+      ],
+      "allies": [
+        "faction_ohara_scholars",
+        "faction_revolutionary_army"
+      ],
+      "enemies": [
+        "faction_world_throne_navy",
+        "faction_undersea_brokers"
+      ],
+      "player_hooks": [
+        "Join a chaotic but principled crew for a voyage or rescue mission.",
+        "Compete with them for a treasure, then ally after discovering a common enemy."
+      ]
+    },
+    {
+      "id": "faction_ohara_scholars",
+      "name": "Ohara Scholars",
+      "type": "academic",
+      "description": "A covert network of archaeologists, linguists, and historians preserving the truth of the erased age. They are hunted as criminals because their work threatens the official story, yet they believe knowledge is the only way to end the cycle of tyranny. Their methods are careful, secretive, and often dependent on brave escorts or smugglers.",
+      "leader": "Professor Nico Robin",
+      "headquarters": "The Sable Library and hidden field camps",
+      "region_ids": [
+        "region_west_blue_vault",
+        "region_east_blue_reaches",
+        "region_dead_waters"
+      ],
+      "goals": [
+        "reconstruct_the_void_century",
+        "preserve_lost_texts"
+      ],
+      "methods": [
+        "deciphering",
+        "smuggling",
+        "expedition_support"
+      ],
+      "allies": [
+        "faction_straw_pirates",
+        "faction_revolutionary_army"
+      ],
+      "enemies": [
+        "faction_world_throne_navy"
+      ],
+      "player_hooks": [
+        "Escort an archaeological expedition into a sealed ruin.",
+        "Trade protection for fragments of forbidden maps and ancient knowledge."
+      ]
+    },
+    {
+      "id": "faction_revolutionary_army",
+      "name": "Revolutionary Army",
+      "type": "revolutionary",
+      "description": "A loose but disciplined network of freed captives, defectors, and idealists working to topple oppressive governors and weaken the World Throne. Unlike pirates, they seek a new political order rather than personal freedom alone, and they are willing to operate in secret for years to achieve it. Their actions inspire hope, fear, and brutal retaliation in equal measure.",
+      "leader": "Commander Dragon",
+      "headquarters": "Hidden island bases and moving safehouses",
+      "region_ids": [
+        "region_red_line_falls",
+        "region_west_blue_vault",
+        "region_east_blue_reaches"
+      ],
+      "goals": [
+        "overthrow_world_throne_rule",
+        "end_slavery_and_tribute"
+      ],
+      "methods": [
+        "insurrection",
+        "liberation_raids",
+        "propaganda"
+      ],
+      "allies": [
+        "faction_straw_pirates",
+        "faction_ohara_scholars"
+      ],
+      "enemies": [
+        "faction_world_throne_navy"
+      ],
+      "player_hooks": [
+        "Carry messages or supplies between hidden cells.",
+        "Choose whether to support their cause directly or pursue your own agenda while benefiting from the chaos."
+      ]
+    },
+    {
+      "id": "faction_red_hair_pirates",
+      "name": "Red Hair Pirates",
+      "type": "criminal",
+      "description": "A feared elite pirate crew that values balance, deterrence, and the maintenance of a dangerous freedom on the seas. They are not interested in ruling kingdoms, but they will intervene when the world's balance tips too far toward tyranny or catastrophe. Many captains respect them as a crew that can end a war before it begins.",
+      "leader": "Shanks",
+      "headquarters": "The Red Fortune and roaming fleets",
+      "region_ids": [
+        "region_grand_line_entry",
+        "region_sky_archipelago"
+      ],
+      "goals": [
+        "preserve_sea_balance",
+        "prevent_apocalyptic_treasure_wars"
+      ],
+      "methods": [
+        "deterrence",
+        "elite_strikes",
+        "diplomacy_by_force"
+      ],
+      "allies": [
+        "faction_straw_pirates"
+      ],
+      "enemies": [
+        "faction_world_throne_navy",
+        "faction_undersea_brokers"
+      ],
+      "player_hooks": [
+        "Be hired to escort a secret meeting between rival captains.",
+        "Prove your worth in a high-stakes challenge and earn a powerful, cautious ally."
+      ]
+    },
+    {
+      "id": "faction_undersea_brokers",
+      "name": "Undersea Brokers",
+      "type": "merchant",
+      "description": "A shadowy commercial network that moves goods, people, and information through submerged routes, hidden submersibles, and bribe-friendly ports. They profit from war and peace alike, selling passage to anyone with enough coin or leverage. Publicly they are logistics experts; privately they are kingmakers who know where every secret door leads.",
+      "leader": "Broker-Matron Calypso",
+      "headquarters": "Lantern Isle and submerged depots",
+      "region_ids": [
+        "region_east_blue_reaches",
+        "region_grand_line_entry",
+        "region_west_blue_vault",
+        "region_dead_waters"
+      ],
+      "goals": [
+        "control_hidden_trade_routes",
+        "monopolize_salvage"
+      ],
+      "methods": [
+        "smuggling",
+        "debt_binding",
+        "information_routing"
+      ],
+      "allies": [
+        "faction_world_throne_navy"
+      ],
+      "enemies": [
+        "faction_straw_pirates",
+        "faction_red_hair_pirates"
+      ],
+      "player_hooks": [
+        "Buy illegal passage or equipment for a dangerous voyage.",
+        "Break their monopoly by raiding a depot or turning their ledgers against them."
+      ]
+    }
+  ],
+  "religion": {
+    "system": "pantheon",
+    "description": "Religion in the Shattered Grand Line is fragmented, local, and practical. Sailors pray to winds, islands honor ancestors, and scholars treat myths as coded history. Official temples often support the World Throne, but many common people believe the world is guided by larger forces that favor those who follow their own dream with conviction. Sacred relics, inherited wills, and ritual promises matter as much as sermons.",
+    "deities_or_forces": [
+      {
+        "name": "The Sea Mother",
+        "domain": "oceans, storms, sailors, and passage",
+        "alignment": "true_neutral",
+        "description": "Worshipped with offerings of salt, rope, and first catch, the Sea Mother is said to test the worthy with storms and reward the stubborn with safe passage. Her shrines are common in ports and on lonely islands, and many captains invoke her before entering dangerous waters.",
+        "faction_ids": [],
+        "region_ids": [
+          "region_east_blue_reaches",
+          "region_grand_line_entry",
+          "region_dead_waters"
+        ]
+      },
+      {
+        "name": "The Whispering Archive",
+        "domain": "memory, history, names, and buried truth",
+        "alignment": "lawful_neutral",
+        "description": "A force revered by scholars and feared by rulers, the Whispering Archive is believed to preserve every forgotten name and broken vow. Its followers copy texts by hand, memorize lineages, and perform rites for the dead so that nothing truly disappears unless someone chooses to erase it.",
+        "faction_ids": [
+          "faction_ohara_scholars"
+        ],
+        "region_ids": [
+          "region_west_blue_vault",
+          "region_dead_waters"
+        ]
+      },
+      {
+        "name": "The Unbound Wind",
+        "domain": "freedom, travel, rebellion, and daring",
+        "alignment": "chaotic_good",
+        "description": "A force of motion rather than form, the Unbound Wind is honored by pirates, revolutionaries, and wanderers who refuse to be caged. Its symbols are torn sails, open horizons, and broken chains, and its blessings are said to appear when someone chooses risk over obedience for the sake of others.",
+        "faction_ids": [
+          "faction_straw_pirates",
+          "faction_revolutionary_army",
+          "faction_red_hair_pirates"
+        ],
+        "region_ids": [
+          "region_grand_line_entry",
+          "region_sky_archipelago",
+          "region_red_line_falls"
+        ]
+      }
+    ],
+    "overview": "Religion in the Shattered Grand Line is fragmented, local, and practical. Sailors pray to winds, islands honor ancestors, and scholars treat myths as coded history. Official temples often support the World Throne, but many common people believe the world is guided by larger forces that favor those who follow their own dream with conviction. Sacred relics, inherited wills, and ritual promises matter as much as sermons."
+  },
+  "key_figures": [
+    {
+      "name": "Monkey D. Luffy",
+      "title": "Captain of the Straw Pirates",
+      "faction_id": "faction_straw_pirates",
+      "region_id": "region_east_blue_reaches",
+      "description": "A grinning, reckless young captain with an impossible appetite and an even more impossible refusal to back down. He appears simple at first glance, but his instinct for loyalty, justice, and bold action draws allies from the smallest villages to the largest wars. He is a living spark that other people cannot help but follow.",
+      "motivation": "To become the freest person on the sea and protect his friends.",
+      "secret": "His seemingly absurd luck often aligns with an inherited will tied to the world's oldest unfinished promise.",
+      "interaction_hooks": [
+        "Race him to a treasure and see whether he treats you as a rival or a friend.",
+        "Ask for help and be prepared for a solution that is terrible for stealth but perfect for morale."
+      ],
+      "role": "Captain of the Straw Pirates",
+      "alive": true
+    },
+    {
+      "name": "Fleet Admiral Seryn Voss",
+      "title": "Commander of the World Throne Navy",
+      "faction_id": "faction_world_throne_navy",
+      "region_id": "region_red_line_falls",
+      "description": "A severe, brilliant admiral in immaculate white dress who believes stability is worth any necessary cruelty. She is not a cackling tyrant; she is a strategist who sees chaos as a wound that only overwhelming force can cauterize. Her speeches are calm, her punishments swift, and her doubts carefully buried.",
+      "motivation": "To preserve the world from another catastrophic war.",
+      "secret": "She has seen evidence that the World Throne was founded on a lie, and she is terrified that revealing it would collapse civilization.",
+      "interaction_hooks": [
+        "Receive a grim legal offer to hunt a mutual threat.",
+        "Confront her with evidence and decide whether she becomes an enemy, an uneasy ally, or a tragic obstacle."
+      ],
+      "role": "Commander of the World Throne Navy",
+      "alive": true
+    },
+    {
+      "name": "Professor Nico Robin",
+      "title": "Archaeologist of the Sable Library",
+      "faction_id": "faction_ohara_scholars",
+      "region_id": "region_west_blue_vault",
+      "description": "A quiet, elegant scholar whose calm voice hides immense resolve and a habit of surviving when entire institutions try to erase her. She carries herself like someone always reading three threats ahead, but she is warm with children, sailors, and anyone burdened by the past. Her presence makes ruins feel less empty and secrets feel less safe.",
+      "motivation": "To uncover the truth of the erased age and preserve it for the future.",
+      "secret": "She knows the location of a key ruin connected to the final island, but sharing it could endanger everyone who protects her.",
+      "interaction_hooks": [
+        "Hire her expertise for a ruin expedition.",
+        "Protect her from an assassination attempt and earn a powerful scholar ally."
+      ],
+      "role": "Archaeologist of the Sable Library",
+      "alive": true
+    },
+    {
+      "name": "Commander Dragon",
+      "title": "Leader of the Revolutionary Army",
+      "faction_id": "faction_revolutionary_army",
+      "region_id": "region_red_line_falls",
+      "description": "A broad-shouldered revolutionary with a weathered face and a voice that carries like a storm warning. He speaks little in public, but when he does, people listen because his plans are grounded in logistics, not slogans. He inspires trust by taking risks he would never demand of others.",
+      "motivation": "To end the World Throne's system of slavery, tribute, and inherited power.",
+      "secret": "He is secretly tracking a bloodline connected to the erased age, believing it may be crucial to breaking the navy's monopoly on history.",
+      "interaction_hooks": [
+        "Smuggle supplies to a hidden cell under pursuit.",
+        "Debate whether his revolution can remain moral if it wins through enough violence."
+      ],
+      "role": "Leader of the Revolutionary Army",
+      "alive": true
+    },
+    {
+      "name": "Shanks",
+      "title": "Captain of the Red Hair Pirates",
+      "faction_id": "faction_red_hair_pirates",
+      "region_id": "region_grand_line_entry",
+      "description": "A relaxed, red-haired captain with a disarming smile and an aura that makes hardened pirates and admirals alike pay attention. He seems easygoing until the balance of the seas is threatened, at which point he moves with shocking speed and purpose. Few people can tell whether he is a guardian, a gambler, or something in between.",
+      "motivation": "To keep the world from tipping into an age of uncontrollable ruin.",
+      "secret": "He knows more about the final island than he publicly admits, and he has chosen to delay the race for reasons he has never explained.",
+      "interaction_hooks": [
+        "Be invited to a private negotiation between rival crews.",
+        "Earn his respect by surviving a test of nerve rather than strength."
+      ],
+      "role": "Captain of the Red Hair Pirates",
+      "alive": true
+    },
+    {
+      "name": "Broker-Matron Calypso",
+      "title": "Queen of the Undersea Brokers",
+      "faction_id": "faction_undersea_brokers",
+      "region_id": "region_dead_waters",
+      "description": "A polished, dangerous merchant prince who dresses like a noble and speaks like a buyer appraising ships at auction. She controls a vast net of informants, divers, and smugglers, and she smiles most when others are desperate. She prefers leverage to bloodshed, but she is utterly ruthless when profit or secrecy is at stake.",
+      "motivation": "To monopolize hidden routes before the navy or pirates can seize them.",
+      "secret": "Her ledgers contain the names of several high-ranking officials, pirates, and revolutionaries who have all purchased the same forbidden map.",
+      "interaction_hooks": [
+        "Negotiate for passage through cursed waters.",
+        "Steal or expose her ledgers to turn her network against itself."
+      ],
+      "role": "Queen of the Undersea Brokers",
+      "alive": true
+    }
+  ],
+  "concept_images": [
+    {
+      "type": "landscape",
+      "subject": "Sweeping landscape of East Blue Reaches: A relatively calm sea of scattered islands, merchant ports,",
+      "url": "/world-images/a5397122_the_shattered_grand_line/images/concept_landscape.png",
+      "prompt": "Sweeping fantasy RPG seascape of the East Blue Reaches: a calm, sunlit ocean dotted with scattered islands, merchant ports, and small island kingdoms linked by busy trade routes, with patrol ships and watchtowers enforcing order for the World Throne. In the foreground, a lone pirate explorer stands on a rocky shore beside crates and a weathered map, scanning the horizon; their presence hints at new beginnings. Beneath the placid waters, subtle clues reveal smuggler tunnels, hidden depots, and submerged ruins from forgotten wars. Serene yet tense mood, wide cinematic composition, rich detail, tranquil seas hiding danger and intrigue."
+    },
+    {
+      "type": "city",
+      "subject": "A major city in The Shattered Grand Line",
+      "url": "/world-images/a5397122_the_shattered_grand_line/images/concept_city.png",
+      "prompt": "A vast major city in The Shattered Grand Line, built across jagged floating basalt islands and linked by glowing bridges of crystal and rope, with towering spires, crowded market terraces, airships drifting overhead, and fractured sea below reflecting moonlight. The atmosphere is bustling yet perilous, with banners whipping in the wind, lanterns glowing through mist, and distant storm clouds gathering at the horizon. Include a lone adventurer on a cliffside overlook, cloak billowing, studying the sprawling city and gripping a map, as gulls circle and magical currents shimmer through the air. Epic, cinematic fantasy RPG illustration, richly detailed, high contrast."
+    },
+    {
+      "type": "landmark",
+      "subject": "A notable landmark in The Shattered Grand Line",
+      "url": "/world-images/a5397122_the_shattered_grand_line/images/concept_landmark.png",
+      "prompt": "A colossal broken highway of floating stone and shattered marble arches suspended over a stormy abyss, the Shattered Grand Line landmark stretching into the distance like a ruined celestial causeway. Jagged fragments drift in midair, linked by glowing rune bridges and hanging chains, with ancient banners torn by wind. Cracked pillars, moss, and salt-stained relics suggest forgotten empires. Epic fantasy RPG mood, dramatic clouds, lightning, mist, and luminous magical runoff spilling into the void. A lone traveler stands on a fractured edge, cloak whipping in the gale, gazing across the perilous landmark while interacting with a dangling rope bridge and scattered debris."
+    }
+  ]
+}

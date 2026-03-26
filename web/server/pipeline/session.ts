@@ -119,7 +119,17 @@ export async function generateSessionPipeline(ctx: GameContext): Promise<Pipelin
 
     // Step 6: Generate scene image (blocking)
     log('[session] Step 6/7: Generating scene image')
-    const imageUrl = await generateSceneImage(ctx.campaignDir, session.id, raw.narrative, (ctx.campaign as any).art_style, ctx.character.physical_description)
+    // Resolve art style: campaign → world → character → default
+    let artStyle = (ctx.campaign as any).art_style
+    if (!artStyle && (ctx.campaign as any).world_id) {
+      try {
+        const { resolveWorld } = await import('../agents/tools/world-state.js')
+        const { world } = resolveWorld((ctx.campaign as any).world_id)
+        artStyle = world.art_style
+      } catch {}
+    }
+    if (!artStyle) artStyle = (ctx.character as any).art_style
+    const imageUrl = await generateSceneImage(ctx.campaignDir, session.id, raw.narrative, artStyle, ctx.character.physical_description)
     if (imageUrl) {
       session.content.image_url = imageUrl
       saveSession(ctx.campaignDir, session)
