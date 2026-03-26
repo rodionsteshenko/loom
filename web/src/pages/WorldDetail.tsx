@@ -278,7 +278,11 @@ function SectionContent({ world, section }: { world: World; section: WorldSectio
     case 'overview':
       return (
         <div className="space-y-4">
-          <p className="text-gray-300 leading-relaxed whitespace-pre-line">{world.overview?.description}</p>
+          <div className="space-y-3">
+            {(world.overview?.description || '').split(/\n\n+/).filter((p: string) => p.trim()).map((p: string, i: number) => (
+              <p key={i} className="text-gray-300 leading-relaxed">{p.trim()}</p>
+            ))}
+          </div>
           {world.overview?.themes && (
             <div className="flex gap-2 flex-wrap">
               {world.overview.themes.map((t, i) => (
@@ -295,7 +299,11 @@ function SectionContent({ world, section }: { world: World; section: WorldSectio
           {world.history?.creation_myth && (
             <div>
               <h4 className="text-sm font-semibold text-purple-400 uppercase tracking-wider mb-2">Creation Myth</h4>
-              <p className="text-gray-300 leading-relaxed whitespace-pre-line">{world.history.creation_myth}</p>
+              <div className="space-y-3">
+                {(world.history.creation_myth || '').split(/\n\n+/).filter((p: string) => p.trim()).map((p: string, i: number) => (
+                  <p key={i} className="text-gray-300 leading-relaxed">{p.trim()}</p>
+                ))}
+              </div>
             </div>
           )}
           {world.history?.timeline && (

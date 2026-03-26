@@ -194,7 +194,7 @@ export default function CampaignSettings() {
 
             <div className="bg-gray-800/30 border border-gray-700/40 rounded-xl p-6">
               <h2 className="text-sm font-semibold text-purple-400 uppercase tracking-wider mb-3">Premise</h2>
-              <p className="text-gray-300 leading-relaxed whitespace-pre-line">{campaign.premise}</p>
+              <p className="text-gray-300 leading-relaxed">{campaign.premise}</p>
             </div>
 
             <div className="bg-gray-800/30 border border-gray-700/40 rounded-xl p-6">
@@ -240,7 +240,7 @@ export default function CampaignSettings() {
                 {(campaign as any).wrap_up.campaign_summary && (
                   <div className="bg-gray-800/30 border border-gray-700/40 rounded-xl p-6">
                     <h3 className="text-sm font-semibold text-purple-400 uppercase tracking-wider mb-3">Campaign Journal</h3>
-                    <p className="text-gray-300 leading-relaxed whitespace-pre-line">{(campaign as any).wrap_up.campaign_summary}</p>
+                    <p className="text-gray-300 leading-relaxed">{(campaign as any).wrap_up.campaign_summary}</p>
                   </div>
                 )}
 

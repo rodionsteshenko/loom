@@ -129,10 +129,15 @@ export default function CharacterDetail() {
 
   const ProseField = ({ label, value }: { label: string; value?: string | null }) => {
     if (!value) return null
+    const paragraphs = value.split(/\n\n+/).filter(p => p.trim())
     return (
       <div className="mb-4">
-        <div className="text-gray-500 text-sm mb-1">{label}</div>
-        <p className="text-gray-300 leading-relaxed whitespace-pre-line">{value}</p>
+        <div className="text-gray-500 text-sm mb-2">{label}</div>
+        <div className="space-y-3">
+          {paragraphs.map((p, i) => (
+            <p key={i} className="text-gray-300 leading-relaxed">{p.trim()}</p>
+          ))}
+        </div>
       </div>
     )
   }

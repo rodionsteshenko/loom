@@ -5,3 +5,18 @@
 body {
   @apply bg-gray-900 text-gray-100;
 }
+
+/* More paragraph spacing in prose blocks for readability */
+.prose p + p {
+  margin-top: 1.25em;
+}
+
+/* Paragraph spacing for plain text blocks */
+.paragraph-spaced {
+  white-space: pre-line;
+}
+.paragraph-spaced br + br {
+  display: block;
+  content: '';
+  margin-top: 0.75em;
+}
