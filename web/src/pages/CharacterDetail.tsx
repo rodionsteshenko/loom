@@ -141,7 +141,11 @@ export default function CharacterDetail() {
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900">
       <header className="border-b border-purple-800/50 bg-black/30 backdrop-blur sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link to={character.world_id ? `/characters?world=${character.world_id}` : '/characters'} className="text-purple-400 hover:text-purple-300 flex items-center gap-2">← Back</Link>
+          <div className="flex items-center gap-3">
+            <Link to="/" className="text-purple-400 hover:text-purple-300 font-bold text-sm">Loom</Link>
+            <span className="text-gray-700">|</span>
+            <Link to={character.world_id ? `/characters?world=${character.world_id}` : '/characters'} className="text-gray-400 hover:text-purple-300 text-sm">← Characters</Link>
+          </div>
           <div className="flex items-center gap-3">
             <span className={`px-2 py-0.5 rounded text-xs font-medium ${character.status === 'active' ? 'bg-purple-600/80 text-purple-100' : 'bg-amber-700/80 text-amber-100'}`}>
               {character.status || 'draft'}

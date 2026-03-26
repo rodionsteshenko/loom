@@ -107,7 +107,9 @@ export default function WorldDetail() {
       {/* Header */}
       <header className="border-b border-gray-800 bg-black/40 backdrop-blur sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link to="/" className="text-gray-400 hover:text-purple-300 text-sm">← Back</Link>
+          <div className="flex items-center gap-3">
+            <Link to="/" className="text-purple-400 hover:text-purple-300 font-bold text-sm">Loom</Link>
+          </div>
           <div className="flex items-center gap-3">
             <span className={`px-2 py-0.5 rounded text-xs font-medium ${statusColors[world.status]}`}>
               {world.status}

@@ -121,9 +121,10 @@ export default function CampaignManager() {
       <header className="border-b border-gray-800 bg-black/40 backdrop-blur sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div>
-            <Link to={backLink} className="text-gray-400 hover:text-purple-300 text-sm">
-              ← {world ? `Back to ${world.name}` : 'Back'}
-            </Link>
+            <div className="flex items-center gap-3">
+              <Link to="/" className="text-purple-400 hover:text-purple-300 font-bold text-sm">Loom</Link>
+              {world && <><span className="text-gray-700">|</span><Link to={backLink} className="text-gray-400 hover:text-purple-300 text-sm">← {world.name}</Link></>}
+            </div>
             <h1 className="text-2xl font-bold text-gray-100 mt-1">
               {world ? `${world.name} — Campaigns` : 'Campaigns'}
             </h1>

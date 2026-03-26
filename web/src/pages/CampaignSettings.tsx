@@ -119,9 +119,11 @@ export default function CampaignSettings() {
     <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-purple-950">
       <header className="border-b border-gray-800 bg-black/40 backdrop-blur sticky top-0 z-10">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link to={campaign.world_id ? `/campaigns?world=${campaign.world_id}` : '/campaigns'} className="text-gray-400 hover:text-purple-300 text-sm">
-            ← Back
-          </Link>
+          <div className="flex items-center gap-3">
+            <Link to="/" className="text-purple-400 hover:text-purple-300 font-bold text-sm">Loom</Link>
+            <span className="text-gray-700">|</span>
+            <Link to={campaign.world_id ? `/campaigns?world=${campaign.world_id}` : '/campaigns'} className="text-gray-400 hover:text-purple-300 text-sm">← Campaigns</Link>
+          </div>
           <div className="flex items-center gap-3">
             <span className={`px-2 py-0.5 rounded text-xs font-medium ${
               campaign.status === 'completed' ? 'bg-emerald-600/80 text-emerald-100' :

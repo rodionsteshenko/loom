@@ -330,8 +330,11 @@ export default function GamePlay() {
 
       <header className="border-b border-gray-800 bg-black/40 backdrop-blur sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
-          <div>
-            <h1 className="text-lg font-bold text-white">{campaign.name}</h1>
+          <div className="flex items-center gap-4">
+            <Link to="/" className="text-purple-400 hover:text-purple-300 font-bold text-sm">Loom</Link>
+            <div className="h-4 w-px bg-gray-700" />
+            <div>
+              <h1 className="text-lg font-bold text-white">{campaign.name}</h1>
             <div className="flex items-center gap-2 text-xs">
               <span className="text-gray-500">{campaign.character?.name}</span>
               {campaign.arc && (() => {
@@ -353,6 +356,7 @@ export default function GamePlay() {
                   </>
                 )
               })()}
+            </div>
             </div>
           </div>
           <div className="flex items-center gap-3">
